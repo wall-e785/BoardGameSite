@@ -1,5 +1,5 @@
 <?php
-    // require('header.php');
+    require('header.php');
     
     // Initialize variables
     $GameName = null;
@@ -92,10 +92,6 @@
        
 ?>
 
-<style>
-<?php include 'stylesheets/main.css'; ?>
-</style>
-
 <h1>Search</h1>
 <table style="border-collapse: separate; border-spacing: 20px 0px;">
     <form action="dbquery.php">
@@ -161,62 +157,80 @@
 </table>
 
 <?php
-    // // DB credentials 
-    // include("db_connect.php");
+    include("search-script.php");
+    
+    if(!isset($_GET['page-nr'])){
+        $page = 1;
+    }else{
+        $page = $_GET['page-nr'];
+    }
 
-    // // Create a connection to the database using the imported credentials
-    // @$db2 = new mysqli($dbserver,$dbuser,$dbpass,$dbname);
-
-    // // Check if connection is successful. If there is an error, terminate script
-    // if (mysqli_connect_errno()) {
-    //     die(mysqli_connect_errno());
-    // }
-
-    // // Create query string
-    // $query_str = "SELECT * FROM BoardGames JOIN hasMechanic, Mechanics";
-    // // Execute the query 
-    // $res2 = mysqli_query($db2, $query_str);
-
-    // // Check if there are any results
-    // if (mysqli_num_rows($res2) == 0 ){
-    //     echo "<p>Query failed and returned zero rows.</p>";
-    //     exit();
-    // }
-
-    // // Loop through the results and display them in a table
-    // echo "<table style=\"border: 1px solid black;\" >";
-    // echo "<tr>";
-    //     echo "<td style=\"border: 1px solid black;\">Name</td>";
-    //     echo "<td style=\"border: 1px solid black;\">Rating</td>";
-    //     echo "<td style=\"border: 1px solid black;\">Year</td>";
-    //     echo "<td style=\"border: 1px solid black;\">Min Time</td>";
-    //     echo "<td style=\"border: 1px solid black;\">Max Time</td>";
-    //     echo "<td style=\"border: 1px solid black;\">Min Players</td>";
-    //     echo "<td style=\"border: 1px solid black;\">Max Players</td>";
-    //     // echo "<td style=\"border: 1px solid black;\">Categories</td>";
-    //     // echo "<td style=\"border: 1px solid black;\">Mechanics</td>";
-    //     echo "<td style=\"border: 1px solid black;\">Owned</td>";
-    //     echo "<td style=\"border: 1px solid black;\">Designer</td>";
-    // echo "</tr>";
-    // while ($row = $res2->fetch_assoc()) {
-    //     echo "<tr>";
-    //     // If the column values aren't empty, then display them
-    //     echo "<td style=\"border: 1px solid black;\" >" . $row['names'] ."</td>";
-    //     echo "<td style=\"border: 1px solid black;\" >" . $row['avg_rating'] ."</td>";
-    //     echo "<td style=\"border: 1px solid black;\" >" . $row['year'] ."</td>";
-    //     echo "<td style=\"border: 1px solid black;\" >" . $row['min_time'] ."</td>";
-    //     echo "<td style=\"border: 1px solid black;\" >" . $row['max_time'] ."</td>";
-    //     echo "<td style=\"border: 1px solid black;\" >" . $row['min_players'] ."</td>";
-    //     echo "<td style=\"border: 1px solid black;\" >" . $row['max_players'] ."</td>";
-    //     echo "<td style=\"border: 1px solid black;\" >" . $row['owned'] ."</td>";
-    //     echo "<td style=\"border: 1px solid black;\" >" . $row['designer'] ."</td>";
+    echo "<p>Showing ".$page." of ". $pages ." pages</p>";
+    
+    
+    echo "<div class=\"pagination\">";
+        echo "<a href=\"?page-nr=1\">First</a>";
        
-    // };
-    // echo "</table>";
+        if(isset($_GET['page-nr']) && $_GET['page-nr'] > 1 ){
+            echo "<a href=\"?page-nr=". $_GET['page-nr']-1 ."\">Previous</a>";
+        }else{
+            echo "<a>Previous</a>";
+        }
+        echo "<div class=\"page-numbers\">";
+            
+            if($page < $pages-5){
+                for($counter = $page; $counter <= $page+4; $counter ++ ){
+                    echo "<a href=\"?page-nr=".$counter."\">$counter</a>"; 
+                }
+            }else{
+                for($counter = $pages-5; $counter <= $pages; $counter ++ ){
+                    echo "<a href=\"?page-nr=".$counter."\">$counter</a>"; 
+                }
+            }
+        echo "</div>";
 
-    // // Free the result 
-    // $res2->free_result();
+        if(!isset($_GET['page-nr'])){
+            echo "<a href=\"?page-nr=2\">Next</a>";
+        }else{
+            if($_GET['page-nr'] >= $pages){
+                echo "<a>Next</a>";
+            }else{ 
+                echo "<a href=\"?page-nr=". $_GET['page-nr']+1 ."\">Next</a>";
+            }
+        }
+        echo "<a href=\"?page-nr=". $pages ."\">Last</a>";
+    echo "</div>";
 
-    // // Close the database connection
-    // mysqli_close($db2);
+
+    // Loop through the results and display them in a table
+    echo "<table style=\"border: 1px solid black;\" >";
+    echo "<tr>";
+        echo "<td style=\"border: 1px solid black;\">Name</td>";
+        echo "<td style=\"border: 1px solid black;\">Rating</td>";
+        echo "<td style=\"border: 1px solid black;\">Year</td>";
+        echo "<td style=\"border: 1px solid black;\">Min Time</td>";
+        echo "<td style=\"border: 1px solid black;\">Max Time</td>";
+        echo "<td style=\"border: 1px solid black;\">Min Players</td>";
+        echo "<td style=\"border: 1px solid black;\">Max Players</td>";
+        // echo "<td style=\"border: 1px solid black;\">Categories</td>";
+        // echo "<td style=\"border: 1px solid black;\">Mechanics</td>";
+        echo "<td style=\"border: 1px solid black;\">Owned</td>";
+        echo "<td style=\"border: 1px solid black;\">Designer</td>";
+    echo "</tr>";
+    while ($row = $res2->fetch_assoc()) {
+        echo "<tr>";
+        // If the column values aren't empty, then display them
+        echo "<td style=\"border: 1px solid black;\" >" . $row['names'] ."</td>";
+        echo "<td style=\"border: 1px solid black;\" >" . $row['avg_rating'] ."</td>";
+        echo "<td style=\"border: 1px solid black;\" >" . $row['year'] ."</td>";
+        echo "<td style=\"border: 1px solid black;\" >" . $row['min_time'] ."</td>";
+        echo "<td style=\"border: 1px solid black;\" >" . $row['max_time'] ."</td>";
+        echo "<td style=\"border: 1px solid black;\" >" . $row['min_players'] ."</td>";
+        echo "<td style=\"border: 1px solid black;\" >" . $row['max_players'] ."</td>";
+        echo "<td style=\"border: 1px solid black;\" >" . $row['owned'] ."</td>";
+        echo "<td style=\"border: 1px solid black;\" >" . $row['designer'] ."</td>";
+       
+    };
+    echo "</table>";
+
 ?>
