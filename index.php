@@ -10,8 +10,10 @@
       // require('header.php');
 
         require_once('private/initialize.php');
-         echo "<a href=\"search.php\">To Search Page</a>";
+       
+        $searchpage = url_for('BoardGameSite/search.php');
         $signinpage = url_for('BoardGameSite/signin.php');
+        echo "<a href =" . $searchpage . ">To Search Page</a>";
         echo "<a href =" . $signinpage . ">Sign In</a>";
     ?>
 </body>

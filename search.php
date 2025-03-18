@@ -34,15 +34,17 @@
 
     // Retrieve Categories and Mechanics to populate search form.
     // DB credentials 
-    include("db_connect.php");
+    // include("db_connect.php");
 
-    // Create a connection to the database using the imported credentials
-    @$db = new mysqli($dbserver,$dbuser,$dbpass,$dbname);
+    // // Create a connection to the database using the imported credentials
+    // @$db = new mysqli($dbserver,$dbuser,$dbpass,$dbname);
 
-    // Check if connection is successful. If there is an error, terminate script
-    if (mysqli_connect_errno()) {
-        die(mysqli_connect_errno());
-    }
+    // // Check if connection is successful. If there is an error, terminate script
+    // if (mysqli_connect_errno()) {
+    //     die(mysqli_connect_errno());
+    // }
+
+    require_once("private/initialize.php");
 
     // Retrieve Categories
     // Create query string
@@ -84,11 +86,11 @@
     for ($x = 0; $x <= sizeof($mechanics)-1; $x++) {
         ${"mec" . $x} = null;
     }
-    // Free the result 
-    $res->free_result();
+    // // Free the result 
+    // $res->free_result();
 
-    // Close the database connection
-    mysqli_close($db);
+    // // Close the database connection
+    // mysqli_close($db);
        
 ?>
 

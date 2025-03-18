@@ -1,14 +1,16 @@
 <?php
-    // DB credentials 
-    include("db_connect.php");
+    // // DB credentials 
+    // include("db_connect.php");
 
-    // Create a connection to the database using the imported credentials
-    @$db2 = new mysqli($dbserver,$dbuser,$dbpass,$dbname);
+    // // Create a connection to the database using the imported credentials
+    // @$db2 = new mysqli($dbserver,$dbuser,$dbpass,$dbname);
 
-    // Check if connection is successful. If there is an error, terminate script
-    if (mysqli_connect_errno()) {
-        die(mysqli_connect_errno());
-    }
+    // // Check if connection is successful. If there is an error, terminate script
+    // if (mysqli_connect_errno()) {
+    //     die(mysqli_connect_errno());
+    // }
+
+    require_once("private/initialize.php");
 
     // Pagination learned from https://www.youtube.com/watch?v=3-5DpAiCHy8
     // What page to start on
@@ -19,7 +21,7 @@
     // find total number of rows
     $records_query = "SELECT * FROM BoardGames";
     // Execute the query 
-    $records = mysqli_query($db2, $records_query);
+    $records = mysqli_query($db, $records_query);
     $nr_of_rows = $records->num_rows;
     $pages = ceil($nr_of_rows / $rows_per_page);
 
@@ -34,7 +36,7 @@
     $query_str = "SELECT * FROM BoardGames  LIMIT $start, $rows_per_page";
 
     // Execute the query 
-    $res2 = mysqli_query($db2, $query_str);
+    $res2 = mysqli_query($db, $query_str);
 
     // Check if there are any results
     if (mysqli_num_rows($res2) == 0 ){
