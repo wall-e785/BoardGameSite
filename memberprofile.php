@@ -8,8 +8,8 @@
 <body>
     <?php
         require_once('private/initialize.php');
-        $signinpage = url_for('BoardGameSite/signout.php');
-        echo "<a href =" . $signinpage . ">Sign Out</a>";
+        $signoutpage = url_for('BoardGameSite/signout.php');
+        echo "<a href =" . $signoutpage . ">Sign Out</a>";
     ?>
 </body>
 </html>

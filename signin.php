@@ -60,5 +60,10 @@ if(is_post_request()) {
     <input type="password" name="password" value="" /><br />
     <input type="submit" />
   </form>
-
+  
+  <?php
+    require_once('private/initialize.php');
+    $signuppage = url_for('BoardGameSite/signup.php');
+    echo "<a href =" . $signuppage . ">Sign Up</a>";
+  ?>
 </div>

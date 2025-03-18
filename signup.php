@@ -71,9 +71,15 @@ if(is_post_request()) {
     Password:<br />
     <input type="password" name="password" value="" /><br />
     Confirm Password:<br />
-    <input type="confirm" name="confirm" value="" /><br />
+    <input type="password" name="confirm" value="" /><br />
 
     <input type="submit" />
   </form>
+
+  <?php
+    require_once('private/initialize.php');
+    $signinpage = url_for('BoardGameSite/signin.php');
+    echo "<a href =" . $signinpage . ">Sign In</a>";
+  ?>
 
 </div>
