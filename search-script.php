@@ -40,7 +40,7 @@
 
     // Check if there are any results
     if (mysqli_num_rows($res2) == 0 ){
-        echo "<p>Query failed and returned zero rows.</p>";
+        echo "<p>Query failed and returned zero rows. (SEARCH-SCRIPT PHP)</p>";
         exit();
     }
 

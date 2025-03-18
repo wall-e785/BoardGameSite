@@ -53,7 +53,7 @@
     $res = mysqli_query($db, $query_str);
     // Check if there are any results
     if (mysqli_num_rows($res) == 0 ){
-        echo "<p>Query failed and returned zero rows.</p>";
+        echo "<p>Query failed and returned zero rows. (SEARCH PHP - CAT)</p>";
         exit();
     }
     $categories = array();
@@ -74,7 +74,7 @@
     $res = mysqli_query($db, $query_str);
     // Check if there are any results
     if (mysqli_num_rows($res) == 0 ){
-        echo "<p>Query failed and returned zero rows.</p>";
+        echo "<p>Query failed and returned zero rows. (SEARCH PHP - MEC)</p>";
         exit();
     }
     $mechanics = array();
