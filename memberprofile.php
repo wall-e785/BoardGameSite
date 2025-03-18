@@ -8,6 +8,9 @@
 <body>
     <?php
         require_once('private/initialize.php');
+        
+        echo "<p>Username: " . $_SESSION['username'] . "</p>";
+
         $signoutpage = url_for('BoardGameSite/signout.php');
         echo "<a href =" . $signoutpage . ">Sign Out</a>";
     ?>
