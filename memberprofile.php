@@ -7,12 +7,12 @@
 </head>
 <body>
     <?php
-      // require('header.php');
-
         require_once('private/initialize.php');
-         echo "<a href=\"search.php\">To Search Page</a>";
-        $signinpage = url_for('BoardGameSite/signin.php');
-        echo "<a href =" . $signinpage . ">Sign In</a>";
+        
+        echo "<p>Username: " . $_SESSION['username'] . "</p>";
+
+        $signoutpage = url_for('BoardGameSite/signout.php');
+        echo "<a href =" . $signoutpage . ">Sign Out</a>";
     ?>
 </body>
 </html>
