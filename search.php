@@ -3,40 +3,6 @@
 
     include("search-script.php");
 
-    // Initialize variables
-    $GameName = null;
-    $GameYear = null;
-    $GameDesigner = null;
-    $PlayersMin = null;
-    $PlayersMax = null;
-    $TimeMax = null;
-    $TimeMin = null;
-    $RatingMax = null;
-    $RatingMin = null;
-    
-    $Category1 = null;
-    $Category2 = null;
-    $Category3 = null;
-    $Mechanic1 = null;
-    $Mechanic2 = null;
-    $Mechanic3 = null;
-    
-    // Retrieve form values
-    if( isset($_GET['gameName'])) $GameName=$_GET['gameName']; 
-    if( isset($_GET['gameYear'])) $GameYear=$_GET['gameYear']; 
-    if( isset($_GET['gameDesigner'])) $GameDesigner=$_GET['gameDesigner']; 
-    if( isset($_GET['playersMin'])) $PlayersMin=$_GET['playersMin']; 
-    if( isset($_GET['playersMax'])) $PlayersMax=$_GET['playersMax']; 
-    if( isset($_GET['timeMin'])) $TimeMin=$_GET['timeMin']; 
-    if( isset($_GET['timeMax'])) $TimeMax=$_GET['timeMax']; 
-    if( isset($_GET['ratingMin'])) $RatingMin=$_GET['ratingMin']; 
-    if( isset($_GET['ratingMax'])) $RatingMax=$_GET['ratingMax']; 
-    if( isset($_GET['category1'])) $Category1=$_GET['category1']; 
-    if( isset($_GET['category2'])) $Category2=$_GET['category2']; 
-    if( isset($_GET['category3'])) $Category3=$_GET['category3']; 
-    if( isset($_GET['mechanic1'])) $Mechanic1=$_GET['mechanic1']; 
-    if( isset($_GET['mechanic2'])) $Mechanic2=$_GET['mechanic2']; 
-    if( isset($_GET['mechanic3'])) $Mechanic3=$_GET['mechanic3']; 
 ?>
 
 <h1>Search</h1>
@@ -172,32 +138,10 @@
 </table>
 
 <?php
-    //Processing form into query ---------------------------------------
-
-    $query_str = "SELECT * FROM "; // Start of query string
-    
-    // Function for checking valid dates
-    // Learned from https://stackoverflow.com/questions/19271381/correctly-determine-if-date-string-is-a-valid-date-in-that-format
-    function checkIsAValidDate($myDateString){
-        return (bool)strtotime($myDateString);
-    }
-    
-    // Checking what order parameters to use
-    if (!empty($OrderNum)){ 
-        // If Order Number is not empty, add it to query
-        $query_str = $query_str." WHERE orders.orderNumber=".$OrderNum;
-    } else if (!empty($OrderDateFrom) && !empty($OrderDateTo) ){
-        //Make sure dates are in correct format
-        if (checkIsAValidDate($OrderDateFrom) && checkIsAValidDate($OrderDateTo)){
-            $query_str = $query_str." WHERE orders.orderDate BETWEEN '".$OrderDateFrom."' AND '".$OrderDateTo."'";
-        } else {
-            echo "<p>Please enter a valid date format.</p>";
-        }
-        
-    }
-    
+    // Displaying query string for debugging purposes 
     echo "<p>".$query_str."</p>"; // Prints query string
     
+    //Pagination code ---------------------------------------------
     if(!isset($_GET['page-nr'])){
         $page = 1;
     }else{
@@ -240,7 +184,7 @@
         echo "<a href=\"?page-nr=". $pages ."\">Last</a>";
     echo "</div>";
 
-
+    // Display Search results ---------------------------------------------
     // Loop through the results and display them in a table
     echo "<table style=\"border: 1px solid black;\" >";
     echo "<tr>";
@@ -251,8 +195,8 @@
         echo "<td style=\"border: 1px solid black;\">Max Time</td>";
         echo "<td style=\"border: 1px solid black;\">Min Players</td>";
         echo "<td style=\"border: 1px solid black;\">Max Players</td>";
-        // echo "<td style=\"border: 1px solid black;\">Categories</td>";
-        // echo "<td style=\"border: 1px solid black;\">Mechanics</td>";
+        echo "<td style=\"border: 1px solid black;\">Categories</td>";
+        echo "<td style=\"border: 1px solid black;\">Mechanics</td>";
         echo "<td style=\"border: 1px solid black;\">Owned</td>";
         echo "<td style=\"border: 1px solid black;\">Designer</td>";
     echo "</tr>";
@@ -266,6 +210,8 @@
         echo "<td style=\"border: 1px solid black;\" >" . $row['max_time'] ."</td>";
         echo "<td style=\"border: 1px solid black;\" >" . $row['min_players'] ."</td>";
         echo "<td style=\"border: 1px solid black;\" >" . $row['max_players'] ."</td>";
+        echo "<td style=\"border: 1px solid black;\" >" . $row['Categories'] ."</td>";
+        echo "<td style=\"border: 1px solid black;\" >" . $row['Mechanics'] ."</td>";
         echo "<td style=\"border: 1px solid black;\" >" . $row['owned'] ."</td>";
         echo "<td style=\"border: 1px solid black;\" >" . $row['designer'] ."</td>";
        
