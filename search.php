@@ -1,6 +1,8 @@
 <?php
     require('header.php');
-    
+
+    include("search-script.php");
+
     // Initialize variables
     $GameName = null;
     $GameYear = null;
@@ -12,91 +14,34 @@
     $RatingMax = null;
     $RatingMin = null;
     
-    $column1 = null;
-    $column2 = null;
-    $column3 = null;
-    $column4 = null;
-    $column5 = null;
-    $column6 = null;
-    $column7 = null;
+    $Category1 = null;
+    $Category2 = null;
+    $Category3 = null;
+    $Mechanic1 = null;
+    $Mechanic2 = null;
+    $Mechanic3 = null;
+    
     // Retrieve form values
-    if( isset($_GET['orderNum'])) $OrderNum=$_GET['orderNum']; 
-    if( isset($_GET['orderDateFrom'])) $OrderDateFrom=$_GET['orderDateFrom']; 
-    if( isset($_GET['orderDateTo'])) $OrderDateTo=$_GET['orderDateTo']; 
-    if( isset($_GET['column1'])) $column1=$_GET['column1']; 
-    if( isset($_GET['column2'])) $column2=$_GET['column2']; 
-    if( isset($_GET['column3'])) $column3=$_GET['column3']; 
-    if( isset($_GET['column4'])) $column4=$_GET['column4']; 
-    if( isset($_GET['column5'])) $column5=$_GET['column5']; 
-    if( isset($_GET['column6'])) $column6=$_GET['column6']; 
-    if( isset($_GET['column7'])) $column7=$_GET['column7']; 
-    
-
-    // Retrieve Categories and Mechanics to populate search form.
-    // DB credentials 
-    // include("db_connect.php");
-
-    // // Create a connection to the database using the imported credentials
-    // @$db = new mysqli($dbserver,$dbuser,$dbpass,$dbname);
-
-    // // Check if connection is successful. If there is an error, terminate script
-    // if (mysqli_connect_errno()) {
-    //     die(mysqli_connect_errno());
-    // }
-
-    require_once("private/initialize.php");
-
-    // Retrieve Categories
-    // Create query string
-    $query_str = "SELECT cat_name FROM Categories";
-    // Execute the query 
-    $res = mysqli_query($db, $query_str);
-    // Check if there are any results
-    if (mysqli_num_rows($res) == 0 ){
-        echo "<p>Query failed and returned zero rows. (SEARCH PHP - CAT)</p>";
-        exit();
-    }
-    $categories = array();
-    while ($row = $res->fetch_assoc()) {
-        array_push($categories, $row['cat_name']);
-    }
-    // initialize variables 
-    for ($x = 0; $x <= sizeof($categories)-1; $x++) {
-        ${"cat" . $x} = null;
-    }
-    // Free the result 
-    $res->free_result();
-
-    // Retrieve Mechanics
-    // Create query string
-    $query_str = "SELECT mec_name FROM Mechanics";
-    // Execute the query 
-    $res = mysqli_query($db, $query_str);
-    // Check if there are any results
-    if (mysqli_num_rows($res) == 0 ){
-        echo "<p>Query failed and returned zero rows. (SEARCH PHP - MEC)</p>";
-        exit();
-    }
-    $mechanics = array();
-    while ($row = $res->fetch_assoc()) {
-        array_push($mechanics, $row['mec_name']);
-    }
-    
-    // initialize variables 
-    for ($x = 0; $x <= sizeof($mechanics)-1; $x++) {
-        ${"mec" . $x} = null;
-    }
-    // // Free the result 
-    // $res->free_result();
-
-    // // Close the database connection
-    // mysqli_close($db);
-       
+    if( isset($_GET['gameName'])) $GameName=$_GET['gameName']; 
+    if( isset($_GET['gameYear'])) $GameYear=$_GET['gameYear']; 
+    if( isset($_GET['gameDesigner'])) $GameDesigner=$_GET['gameDesigner']; 
+    if( isset($_GET['playersMin'])) $PlayersMin=$_GET['playersMin']; 
+    if( isset($_GET['playersMax'])) $PlayersMax=$_GET['playersMax']; 
+    if( isset($_GET['timeMin'])) $TimeMin=$_GET['timeMin']; 
+    if( isset($_GET['timeMax'])) $TimeMax=$_GET['timeMax']; 
+    if( isset($_GET['ratingMin'])) $RatingMin=$_GET['ratingMin']; 
+    if( isset($_GET['ratingMax'])) $RatingMax=$_GET['ratingMax']; 
+    if( isset($_GET['category1'])) $Category1=$_GET['category1']; 
+    if( isset($_GET['category2'])) $Category2=$_GET['category2']; 
+    if( isset($_GET['category3'])) $Category3=$_GET['category3']; 
+    if( isset($_GET['mechanic1'])) $Mechanic1=$_GET['mechanic1']; 
+    if( isset($_GET['mechanic2'])) $Mechanic2=$_GET['mechanic2']; 
+    if( isset($_GET['mechanic3'])) $Mechanic3=$_GET['mechanic3']; 
 ?>
 
 <h1>Search</h1>
 <table style="border-collapse: separate; border-spacing: 20px 0px;">
-    <form action="dbquery.php">
+    <form action="search.php">
         <tr>
             <th align="left">
                 <label class="labelAbove" for="gameName">Board Game Name</label>
@@ -131,25 +76,93 @@
                 <!-- Php code for checked status learned from lecture1 page10 file -->
                 <p>Categories</p>
                 <?php
-                    // Looping through categories we retrieved from the database to create checkboxes
-                    for ($x = 0; $x <= sizeof($categories)-1; $x++) {
-                        echo "<input type=\"checkbox\" id=\"cat.$x\" name=\"cat.$x\" value=\"orders.orderNumber\" ";
-                        if (!empty( ${"cat" . $x} ) && ${"cat" . $x}=="orders.orderNumber") echo "checked >"; 
-                        echo "<label for=\"cat.$x\">".$categories[$x]."</label>";
+                    // // Looping through categories we retrieved from the database to create checkboxes
+                    // for ($x = 0; $x <= sizeof($categories)-1; $x++) {
+                    //     echo "<input type=\"checkbox\" id=\"cat.$x\" name=\"cat.$x\" value=\"orders.orderNumber\" ";
+                    //     if (!empty( ${"cat" . $x} ) && ${"cat" . $x}=="orders.orderNumber") echo "checked >"; 
+                    //     echo "<label for=\"cat.$x\">".$categories[$x]."</label>";
+                    // }
+                ?>
+                <label for="category1">Category 1</label>
+                <select name="category1" id="category1">
+                <option value="">   </option>
+                <?php
+                    // Looping through categories we retrieved from the database to create a dropdown
+                    for ($x = 0; $x <= sizeof($categories)-1; $x++) {            
+                        // Adapted from ChatGPT
+                        $selected = ($Category1 == $categories[$x]) ? 'selected' : ''; // Compare actual category name
+                        echo "<option value=\"$categories[$x]\" $selected>".$categories[$x]."</option>";
                     }
                 ?>
+                </select> 
+
+                <label for="category2">Category 2</label>
+                <select name="category2" id="category2">
+                <option value="">   </option>
+                <?php
+                    // Looping through categories we retrieved from the database to create a dropdown
+                    for ($x = 0; $x <= sizeof($categories)-1; $x++) {            
+                        // Adapted from ChatGPT
+                        $selected = ($Category2 == $categories[$x]) ? 'selected' : ''; // Compare actual category name
+                        echo "<option value=\"$categories[$x]\" $selected>".$categories[$x]."</option>";
+                    }
+                ?>
+                </select> 
+
+                <label for="category3">Category 3</label>
+                <select name="category3" id="category3">
+                <option value="">   </option>
+                <?php
+                    // Looping through categories we retrieved from the database to create a dropdown
+                    for ($x = 0; $x <= sizeof($categories)-1; $x++) {            
+                        // Adapted from ChatGPT
+                        $selected = ($Category3 == $categories[$x]) ? 'selected' : ''; // Compare actual category name
+                        echo "<option value=\"$categories[$x]\" $selected>".$categories[$x]."</option>";
+                    }
+                ?>
+                </select> 
             </th>
             <th align="left">
                 <!-- Php code for checked status learned from lecture1 page10 file -->
                 <p>Mechanics</p>
+                <label for="mechanic1">Mechanic 1</label>
+                <select name="mechanic1" id="mechanic1">
+                <option value="">   </option>
                 <?php
-                    // Looping through mechanics we retrieved from the database to create checkboxes
-                    for ($x = 0; $x <= sizeof($mechanics)-1; $x++) {
-                        echo "<input type=\"checkbox\" id=\"mec.$x\" name=\"mec.$x\" value=\"orders.orderNumber\" ";
-                        if (!empty( ${"mec" . $x} ) && ${"mec" . $x}=="orders.orderNumber") echo "checked >"; 
-                        echo "<label for=\"mec.$x\">".$mechanics[$x]."</label>";
+                    // Looping through categories we retrieved from the database to create a dropdown
+                    for ($x = 0; $x <= sizeof($mechanics)-1; $x++) {            
+                        // Adapted from ChatGPT
+                        $selected = ($Mechanic1 == $mechanics[$x]) ? 'selected' : ''; // Compare actual category name
+                        echo "<option value=\"$mechanics[$x]\" $selected>".$mechanics[$x]."</option>";
                     }
                 ?>
+                </select> 
+
+                <label for="mechanic2">Mechanic 2</label>
+                <select name="mechanic2" id="mechanic2">
+                <option value="">   </option>
+                <?php
+                    // Looping through categories we retrieved from the database to create a dropdown
+                    for ($x = 0; $x <= sizeof($mechanics)-1; $x++) {            
+                        // Adapted from ChatGPT
+                        $selected = ($Mechanic2 == $mechanics[$x]) ? 'selected' : ''; // Compare actual category name
+                        echo "<option value=\"$mechanics[$x]\" $selected>".$mechanics[$x]."</option>";
+                    }
+                ?>
+                </select> 
+
+                <label for="mechanic3">Mechanic 3</label>
+                <select name="mechanic3" id="mechanic3">
+                <option value="">   </option>
+                <?php
+                    // Looping through categories we retrieved from the database to create a dropdown
+                    for ($x = 0; $x <= sizeof($mechanics)-1; $x++) {            
+                        // Adapted from ChatGPT
+                        $selected = ($Mechanic3 == $mechanics[$x]) ? 'selected' : ''; // Compare actual category name
+                        echo "<option value=\"$mechanics[$x]\" $selected>".$mechanics[$x]."</option>";
+                    }
+                ?>
+                </select> 
             </th>
         </tr>
         <tr>
@@ -159,7 +172,31 @@
 </table>
 
 <?php
-    include("search-script.php");
+    //Processing form into query ---------------------------------------
+
+    $query_str = "SELECT * FROM "; // Start of query string
+    
+    // Function for checking valid dates
+    // Learned from https://stackoverflow.com/questions/19271381/correctly-determine-if-date-string-is-a-valid-date-in-that-format
+    function checkIsAValidDate($myDateString){
+        return (bool)strtotime($myDateString);
+    }
+    
+    // Checking what order parameters to use
+    if (!empty($OrderNum)){ 
+        // If Order Number is not empty, add it to query
+        $query_str = $query_str." WHERE orders.orderNumber=".$OrderNum;
+    } else if (!empty($OrderDateFrom) && !empty($OrderDateTo) ){
+        //Make sure dates are in correct format
+        if (checkIsAValidDate($OrderDateFrom) && checkIsAValidDate($OrderDateTo)){
+            $query_str = $query_str." WHERE orders.orderDate BETWEEN '".$OrderDateFrom."' AND '".$OrderDateTo."'";
+        } else {
+            echo "<p>Please enter a valid date format.</p>";
+        }
+        
+    }
+    
+    echo "<p>".$query_str."</p>"; // Prints query string
     
     if(!isset($_GET['page-nr'])){
         $page = 1;

@@ -1,16 +1,49 @@
 <?php
-    // // DB credentials 
-    // include("db_connect.php");
-
-    // // Create a connection to the database using the imported credentials
-    // @$db2 = new mysqli($dbserver,$dbuser,$dbpass,$dbname);
-
-    // // Check if connection is successful. If there is an error, terminate script
-    // if (mysqli_connect_errno()) {
-    //     die(mysqli_connect_errno());
-    // }
-
+    
+    // Initialize DB
     require_once("private/initialize.php");
+
+    // Retrieving all of the Mechanics and Categories  -----------------------------------
+
+    // Retrieve Categories
+    // Create query string
+    $query_str = "SELECT cat_name FROM Categories";
+    // Execute the query 
+    $res = mysqli_query($db, $query_str);
+    // Check if there are any results
+    if (mysqli_num_rows($res) == 0 ){
+        echo "<p>Query failed and returned zero rows. (SEARCH PHP - CAT)</p>";
+        exit();
+    }
+    $categories = array();
+    while ($row = $res->fetch_assoc()) {
+        array_push($categories, $row['cat_name']);
+    }
+    
+    // Free the result 
+    $res->free_result();
+
+    // Retrieve Mechanics
+    // Create query string
+    $query_str = "SELECT mec_name FROM Mechanics";
+    // Execute the query 
+    $res = mysqli_query($db, $query_str);
+    // Check if there are any results
+    if (mysqli_num_rows($res) == 0 ){
+        echo "<p>Query failed and returned zero rows. (SEARCH PHP - MEC)</p>";
+        exit();
+    }
+    $mechanics = array();
+    while ($row = $res->fetch_assoc()) {
+        array_push($mechanics, $row['mec_name']);
+    }
+    
+    
+    // Free the result 
+     $res->free_result();
+
+
+    // Search page query ------------------------------------------
 
     // Pagination learned from https://www.youtube.com/watch?v=3-5DpAiCHy8
     // What page to start on
