@@ -59,7 +59,7 @@ if(is_post_request()) {
 ?>
 
 <div id="content">
-  <h1>Sign Up</h1>
+  <h2>Sign Up</h2>
 
   <?php echo display_errors($errors); ?>
 

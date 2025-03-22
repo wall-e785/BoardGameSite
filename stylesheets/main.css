@@ -1,3 +1,101 @@
+html, body, * {
+    font-family: "Outfit", sans-serif;
+}
+
+.body{
+    margin: 1em 5em;
+}
+
+img {
+    display: block;
+    max-width: 100%
+}
+
+.material-symbols-rounded {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 100,
+    'GRAD' 0,
+    'opsz' 24;
+    color: #F1B63E;
+}
+
+h1 {
+    font-family: "Montserrat", sans-serif;
+    font-size: 6em;
+    font-weight: 600;
+    padding-bottom: 0.2em;
+}
+
+h2{
+    font-family: "Montserrat", sans-serif;
+    font-size: 2em;
+    font-weight: 500;
+}
+
+
+
+
+
+
+.header{
+    border-bottom: solid black 0.1em;
+}
+
+.flex{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.row{
+    flex-direction: row;
+}
+
+.navbar{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    
+    flex-direction: row;
+    /* align-items: flex-end; */
+    gap: 0.5em;
+    justify-content:flex-end;
+    width:100%;
+    align-items: stretch;
+}
+
+.navbar li{
+    /* border-left: 0.1em solid black; */
+    height:2em;
+    padding: 0em 1em;
+    align-content: center;
+    font-size: 1.5em;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+}
+
+.border-left{
+    border-left: 0.1em solid black;
+}
+.playtested {
+    border-left: none;
+    margin-right: auto;
+    align-content: center;
+}
+.navbar a{
+    text-decoration: none;
+    color:black;
+}
+.navbar a:hover{
+    color: #F1B63E;
+}
+
+
+
+  
+
 .labelAbove{
     display:flex;
     flex-direction:column;
@@ -19,3 +117,4 @@
 .page-numbers{
     display: inline-block;
 }
+

@@ -7,14 +7,19 @@
 </head>
 <body>
     <?php
-      // require('header.php');
-
-        require_once('private/initialize.php');
-       
-        $searchpage = url_for('BoardGameSite/search.php');
-        $signinpage = url_for('BoardGameSite/signin.php');
-        echo "<a href =" . $searchpage . ">To Search Page</a>";
-        echo "<a href =" . $signinpage . ">Sign In</a>";
+        require('header.php');
     ?>
+    <div class="body">
+    
+    
+    <div class="flex row">
+        <span style="font-size: 180px" class="material-symbols-rounded">auto_read_play</span>
+        <div>
+            <h1>Playtested.</h1>
+            <h2>By real people, like you. </h2>
+        </div> 
+    </div>
+    
+    </div>
 </body>
 </html>

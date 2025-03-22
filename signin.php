@@ -1,5 +1,7 @@
 <?php
 
+
+require('header.php');
 require_once('private/initialize.php');
 
 $errors = [];
@@ -76,7 +78,7 @@ if(is_post_request()) {
 ?>
 
 <div id="content">
-  <h1>Log in</h1>
+  <h2>Log in</h2>
 
   <?php echo display_errors($errors); ?>
 

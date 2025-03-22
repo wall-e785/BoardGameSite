@@ -94,7 +94,7 @@
        
 ?>
 
-<h1>Search</h1>
+<h2>Search</h2>
 <table style="border-collapse: separate; border-spacing: 20px 0px;">
     <form action="dbquery.php">
         <tr>
