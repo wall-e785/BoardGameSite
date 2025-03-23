@@ -13,10 +13,10 @@
     
     
     <div class="flex row">
-        <span style="font-size: 180px" class="material-symbols-rounded">auto_read_play</span>
+        <img class="playtested-icon" src="./imgs/playtested.svg">
         <div>
             <h1>Playtested.</h1>
-            <h2>By real people, like you. </h2>
+            <h3>By real people, like you. </h3>
         </div> 
     </div>
     

@@ -77,7 +77,33 @@ if(is_post_request()) {
 
 ?>
 
-<div id="content">
+<div id="signup">
+  <h2>Sign Up</h2>
+
+  <?php echo display_errors($errors); ?>
+
+  <form action="signup.php" method="post">
+    Email:<br />
+    <input type="email" name="email" value="" /><br />
+    Username:<br />
+    <input type="text" name="username" value="" /><br />
+    Password:<br />
+    <input type="password" name="password" value="" /><br />
+    Confirm Password:<br />
+    <input type="password" name="confirm" value="" /><br />
+
+    <input type="submit" />
+  </form>
+
+  <?php
+    // require_once('private/initialize.php');
+    // $signinpage = url_for('BoardGameSite/signin.php');
+    // echo "<a href =" . $signinpage . ">Sign In</a>";
+  ?>
+
+</div>
+
+<div id="login">
   <h2>Log in</h2>
 
   <?php echo display_errors($errors); ?>
@@ -91,8 +117,8 @@ if(is_post_request()) {
   </form>
   
   <?php
-    require_once('private/initialize.php');
-    $signuppage = url_for('BoardGameSite/signup.php');
-    echo "<a href =" . $signuppage . ">Sign Up</a>";
+    // require_once('private/initialize.php');
+    // $signuppage = url_for('BoardGameSite/signup.php');
+    // echo "<a href =" . $signuppage . ">Sign Up</a>";
   ?>
 </div>

@@ -9,8 +9,6 @@
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-    <!-- icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=auto_read_play" />
 </head>
 <body>
 <header class="header">
@@ -20,13 +18,22 @@
             require_once('private/initialize.php');
             $searchpage = url_for('BoardGameSite/search.php');
             $signinpage = url_for('BoardGameSite/signin.php');
+            $signoutpage = url_for('BoardGameSite/signout.php');
+            $profilepage = url_for('BoardGameSite/memberprofile.php');
             $index = url_for('BoardGameSite/index.php');
-            $profilepage = null; 
-            echo "<li class=\"playtested\"><a class=\"flex row\" href =" . $index . "> <span style=\"font-size: 30px\" class=\"material-symbols-rounded\">auto_read_play</span> Playtested.</a></li>";
+            echo "<li class=\"playtested\"><a class=\"flex row\" href =" . $index . "> <img src=\"./imgs/playtested.svg\"> Playtested.</a></li>";
             echo "<li class=\"border-left\"><a href =" . $searchpage . ">Search</a></li>";
-            echo "<li class=\"border-left\"><a href =" . $profilepage . ">Profile</a></li>";
-            echo "<li class=\"border-left\"><a href =" . $signinpage . ">Sign In</a></li>";
+
             
+            
+            // if there is a current user session, display profile and sign out
+            if(isset($_SESSION['username'])) {
+                echo "<li class=\"border-left\"><a href =" . $profilepage . ">Profile</a></li>";
+                echo "<li class=\"border-left\"><a href =" . $signoutpage . ">Sign Out</a></li>";
+            }else{
+                // else,  display sign in
+                echo "<li class=\"border-left\"><a href =" . $signinpage . ">Sign In</a></li>";
+            }
             ?> 
         </ul>
     </nav>

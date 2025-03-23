@@ -6,19 +6,6 @@ html, body, * {
     margin: 1em 5em;
 }
 
-img {
-    display: block;
-    max-width: 100%
-}
-
-.material-symbols-rounded {
-    font-variation-settings:
-    'FILL' 1,
-    'wght' 100,
-    'GRAD' 0,
-    'opsz' 24;
-    color: #F1B63E;
-}
 
 h1 {
     font-family: "Montserrat", sans-serif;
@@ -29,11 +16,37 @@ h1 {
 
 h2{
     font-family: "Montserrat", sans-serif;
+    font-size: 4em;
+    font-weight: 500;
+}
+
+h3{
+    font-family: "Montserrat", sans-serif;
     font-size: 2em;
     font-weight: 500;
 }
 
+h4{
+    font-size: 1.4em; 
+}
 
+p{
+    font-size: 1.2em; 
+}
+
+img {
+    display: block;
+    max-width: 100%
+}
+
+.collection-icon{
+    width:100%;
+    height:100%;
+}
+.playtested-icon{
+    width:12em;
+    height:100%;
+}
 
 
 
@@ -52,13 +65,17 @@ h2{
 .row{
     flex-direction: row;
 }
-
+.column{
+    flex-direction: column;
+}
+.wrap{
+    flex-direction: wrap;
+}
 .navbar{
     list-style-type: none;
     margin: 0;
     padding: 0;
     
-    flex-direction: row;
     /* align-items: flex-end; */
     gap: 0.5em;
     justify-content:flex-end;
@@ -91,10 +108,33 @@ h2{
 .navbar a:hover{
     color: #F1B63E;
 }
+.border-top{
+    border-top: solid black 0.1em;
+}
+.border-right{
+    border-right:solid black 0.1em;
+}
 
+.profile-body{
+    min-height:50em;
+}
+.profile-section{
 
+}
 
-  
+.activity{
+    border: solid black 0.1em;
+    padding: 1em 2em;
+}
+.collection-preview{
+    border: solid black 0.1em;
+    padding: 0.5em;
+}
+.collection-img{
+    width:16em;
+    height:16em;
+    background-color: #FFDE9C;
+}
 
 .labelAbove{
     display:flex;
