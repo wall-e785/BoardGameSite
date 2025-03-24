@@ -222,7 +222,8 @@
     while ($row = $res2->fetch_assoc()) {
         echo "<tr>";
         // If the column values aren't empty, then display them
-        echo "<td style=\"border: 1px solid black;\" >" . $row['names'] ."</td>";
+        $boardgamepage = url_for('BoardGameSite/viewboardgame.php');
+        echo "<td style=\"border: 1px solid black;\" ><a href=\"".$boardgamepage."?gameid=".$row['game_id']."\">" . $row['names'] ."</a></td>";
         echo "<td style=\"border: 1px solid black;\" >" . $row['avg_rating'] ."</td>";
         echo "<td style=\"border: 1px solid black;\" >" . $row['year'] ."</td>";
         echo "<td style=\"border: 1px solid black;\" >" . $row['min_time'] ."</td>";

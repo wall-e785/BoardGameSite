@@ -43,6 +43,13 @@ img {
     height:100%;
 }
 
+.view-game-img{
+    width:16em;
+    height:16em;
+    background-color:#F1B63E;
+    
+}
+
 .header{
     border-bottom: solid black 0.1em;
     position: absolute;
@@ -69,9 +76,22 @@ img {
     flex-direction: column;
     gap:1em;
 }
+
+.centered{
+    align-items: center;
+    text-align:center;
+}
+
 .wrap{
     flex-direction: wrap;
     gap:1em;
+}
+
+.space-evenly{
+    justify-content:space-evenly;
+}
+.space-between{
+    justify-content:space-between;
 }
 .navbar{
     list-style-type: none;
@@ -165,5 +185,22 @@ img {
 
 .page-numbers{
     display: inline-block;
+}
+
+.round-border{
+    border: 0.1em solid black;
+    border-radius: 20em;
+    margin:1em;
+    width:fit-content;
+    padding:0.3em;
+}
+
+.comment-box{
+    border: 0.1em solid black;
+    padding:0.3em;
+}
+
+.red{
+    color:red;
 }
 
