@@ -34,6 +34,26 @@ img {
     max-width: 100%
 }
 
+a{
+    text-decoration: none;
+    color:black;
+}
+a:hover{
+    color: #F1B63E;
+}
+
+textarea{
+    width:100%;
+    border: solid black 0.1em;
+    border-radius: 20em;
+    padding:1em;
+    resize: none;
+    box-sizing: border-box 
+}
+form{
+    width:100%;
+}
+
 .collection-icon{
     width:100%;
     height:100%;
@@ -44,10 +64,29 @@ img {
 }
 
 .view-game-img{
-    width:16em;
-    height:16em;
-    background-color:#F1B63E;
+    width:auto;
+    height:22em;
+}
+.view-game-img-padding{
+    padding:2em 2em;
+    width:fit-content;
     
+    flex-grow:1;
+}
+
+.game-details{
+    align-content: stretch;
+   height:auto;
+    flex: 1;
+}
+
+
+.game-info-container{
+    flex-grow:3;
+}
+
+.game-name{
+    width:100%;
 }
 
 .header{
@@ -74,12 +113,15 @@ img {
 }
 .column{
     flex-direction: column;
+}
+.gap1em{
     gap:1em;
 }
 
 .centered{
     align-items: center;
     text-align:center;
+    margin:auto;
 }
 
 .wrap{
@@ -143,9 +185,13 @@ img {
 .signin-item{
     flex-grow:1;    
 }
-.padding{
+.padding-lrg{
     padding:2em 5em;
 }
+.padding-sm{
+    padding:1em 2em;
+}
+
 .profile-body{
     min-height:50em;
 }
@@ -163,6 +209,11 @@ img {
     width:12em;
     height:12em;
     background-color: #FFDE9C;
+}
+
+.back-arrow{
+    width:5em;
+    height:5em;
 }
 
 .labelAbove{
@@ -187,10 +238,11 @@ img {
     display: inline-block;
 }
 
+
+
 .round-border{
     border: 0.1em solid black;
     border-radius: 20em;
-    margin:1em;
     width:fit-content;
     padding:0.3em;
 }
@@ -199,6 +251,14 @@ img {
     border: 0.1em solid black;
     padding:0.3em;
 }
+.comment-container{
+    width:100%;
+    flex:3;
+}
+.catmec-container{
+    flex:2;
+}
+
 
 .red{
     color:red;

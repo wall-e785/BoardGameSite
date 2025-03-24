@@ -81,7 +81,7 @@ if(is_post_request()) {
 
 <div class="flex row signin-body">
   <div class="border-right signin-item " id="signup">
-    <div class="padding flex column">
+    <div class="padding-lrg flex column gap1em">
     <h2>Sign Up</h2>
 
       <?php echo display_errors($errors); ?>
@@ -108,7 +108,7 @@ if(is_post_request()) {
   </div>
 
   <div class="signin-item" id="login">
-    <div class="padding flex column">
+    <div class="padding-lrg flex column gap1em">
       <h2>Log in</h2>
 
       <?php echo display_errors($errors); ?>
