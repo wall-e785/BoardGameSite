@@ -93,7 +93,7 @@
     // mysqli_close($db);
        
 ?>
-
+<div class="body">
 <h2>Search</h2>
 <table style="border-collapse: separate; border-spacing: 20px 0px;">
     <form action="dbquery.php">
@@ -234,5 +234,6 @@
        
     };
     echo "</table>";
-
+    
 ?>
+</div>

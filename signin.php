@@ -77,48 +77,58 @@ if(is_post_request()) {
 
 ?>
 
-<div id="signup">
-  <h2>Sign Up</h2>
+<div class="body">
 
-  <?php echo display_errors($errors); ?>
+<div class="flex row signin-body">
+  <div class="border-right signin-item " id="signup">
+    <div class="padding flex column">
+    <h2>Sign Up</h2>
 
-  <form action="signup.php" method="post">
-    Email:<br />
-    <input type="email" name="email" value="" /><br />
-    Username:<br />
-    <input type="text" name="username" value="" /><br />
-    Password:<br />
-    <input type="password" name="password" value="" /><br />
-    Confirm Password:<br />
-    <input type="password" name="confirm" value="" /><br />
+      <?php echo display_errors($errors); ?>
 
-    <input type="submit" />
-  </form>
+      <form action="signup.php" method="post">
+        Email:<br />
+        <input type="email" name="email" value="" /><br />
+        Username:<br />
+        <input type="text" name="username" value="" /><br />
+        Password:<br />
+        <input type="password" name="password" value="" /><br />
+        Confirm Password:<br />
+        <input type="password" name="confirm" value="" /><br />
 
-  <?php
-    // require_once('private/initialize.php');
-    // $signinpage = url_for('BoardGameSite/signin.php');
-    // echo "<a href =" . $signinpage . ">Sign In</a>";
-  ?>
+        <input type="submit" />
+      </form>
 
+      <?php
+        // require_once('private/initialize.php');
+        // $signinpage = url_for('BoardGameSite/signin.php');
+        // echo "<a href =" . $signinpage . ">Sign In</a>";
+      ?>
+    </div>
+  </div>
+
+  <div class="signin-item" id="login">
+    <div class="padding flex column">
+      <h2>Log in</h2>
+
+      <?php echo display_errors($errors); ?>
+
+      <form action="signin.php" method="post">
+        Username or Email:<br />
+        <input type="text" name="username" value="" /><br />
+        Password:<br />
+        <input type="password" name="password" value="" /><br />
+        <input type="submit" />
+      </form>
+      
+      <?php
+        // require_once('private/initialize.php');
+        // $signuppage = url_for('BoardGameSite/signup.php');
+        // echo "<a href =" . $signuppage . ">Sign Up</a>";
+      ?>
+    </div>
+    
+  </div>
+</div>
 </div>
 
-<div id="login">
-  <h2>Log in</h2>
-
-  <?php echo display_errors($errors); ?>
-
-  <form action="signin.php" method="post">
-    Username or Email:<br />
-    <input type="text" name="username" value="" /><br />
-    Password:<br />
-    <input type="password" name="password" value="" /><br />
-    <input type="submit" />
-  </form>
-  
-  <?php
-    // require_once('private/initialize.php');
-    // $signuppage = url_for('BoardGameSite/signup.php');
-    // echo "<a href =" . $signuppage . ">Sign Up</a>";
-  ?>
-</div>
