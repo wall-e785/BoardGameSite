@@ -85,7 +85,7 @@
 
     // Retrieving all of the Mechanics and Categories  -----------------------------------
 
-    // Retrieve Categories
+    // Retrieve Categories for the drop-downs
     // Create query string
     $query_str = "SELECT cat_name FROM Categories";
     // Execute the query 
@@ -103,7 +103,7 @@
     // Free the result 
     $res->free_result();
 
-    // Retrieve Mechanics
+    // Retrieve Mechanics for the drop-downs
     // Create query string
     $query_str = "SELECT mec_name FROM Mechanics";
     // Execute the query 
@@ -144,14 +144,20 @@
 
     // Search page query ------------------------------------------
 
-    // Create query string
-    $query_str = "SELECT BoardGames.*, 
-    GROUP_CONCAT(Categories.cat_name SEPARATOR ', ') AS Categories, 
-    GROUP_CONCAT(Mechanics.mec_name SEPARATOR ', ') AS Mechanics  FROM BoardGames 
-    JOIN HasCategory ON BoardGames.game_id = HasCategory.game_id 
-    JOIN Categories ON HasCategory.cat_id = Categories.cat_id 
-    JOIN HasMechanic ON BoardGames.game_id = HasMechanic.game_id
-    JOIN Mechanics ON HasMechanic.mec_id = Mechanics.mec_id";
+    //referenced group concat from: https://www.geeksforgeeks.org/mysql-group_concat-function/
+    //first select everything from BoardGames, then using two nested queries, associated and group the
+    //categories/mechanics with the same game_id into a single string
+    //join the nested queries onto the main BoardGames table so each game_id has one row
+    $query_str = "SELECT BoardGames.*, groupedCategories.Categories, groupedMechanics.Mechanics
+    FROM BoardGames 
+    LEFT JOIN (SELECT HasCategory.game_id, GROUP_CONCAT(Categories.cat_name SEPARATOR ', ') AS Categories
+           FROM HasCategory
+           INNER JOIN Categories ON HasCategory.cat_id  = Categories.cat_id
+           GROUP BY HasCategory.game_id) groupedCategories ON groupedCategories.game_id = BoardGames.game_id
+    LEFT JOIN 	(SELECT HasMechanic.game_id, GROUP_CONCAT(Mechanics.mec_name SEPARATOR ', ') AS Mechanics
+           FROM HasMechanic
+           INNER JOIN Mechanics ON HasMechanic.mec_id  = Mechanics.mec_id
+           GROUP BY HasMechanic.game_id) groupedMechanics ON groupedMechanics.game_id = BoardGames.game_id";
 
     // for ($x = 0; $x <= sizeof($FormInputArray); $x++) {
     //      echo $FormInputArray[$x];
@@ -159,17 +165,17 @@
   
 
     // Checking what the user inputted
-    if (!empty($GameName)){
-        // Find names that start with whatever the user inputted, not just exact matches
-        $query_str = $query_str." WHERE BoardGames.names LIKE '$GameName%'";
-    }
-    if(!empty($TimeMin)){
-        if(ctype_digit($TimeMin)){ // If its actually an int value
-            $query_str = $query_str."AND BoardGames.min_time =$TimeMin";
-        }else{
-            //throw an error that says to enter int values 
-        }
-    }
+    // if (!empty($GameName)){
+    //     // Find names that start with whatever the user inputted, not just exact matches
+    //     $query_str = $query_str." WHERE BoardGames.names LIKE '$GameName%'";
+    // }
+    // if(!empty($TimeMin)){
+    //     if(ctype_digit($TimeMin)){ // If its actually an int value
+    //         $query_str = $query_str."AND BoardGames.min_time =$TimeMin";
+    //     }else{
+    //         //throw an error that says to enter int values 
+    //     }
+    // }
 
     // ending query string
     $query_str = $query_str . " 
