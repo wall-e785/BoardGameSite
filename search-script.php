@@ -146,6 +146,42 @@
     $param_types = ""; // Store type definitions for bind_param (s = string, i = integer, d = double)
     $param_values = []; // Store values to bind
 
+    // The following code for handling categories and mechanics was adapted from ChatGPT
+    // Handle categories (user can select up to 3)
+    $selectedCategories = array_filter([$Category1, $Category2, $Category3]); // Remove empty values
+    if (!empty($selectedCategories)) {
+        $placeholderCats = implode(',', array_fill(0, count($selectedCategories), '?')); // Creates "?, ?, ?" dynamically
+        $conditions[] = "BoardGames.game_id IN (
+            SELECT HasCategory.game_id
+            FROM HasCategory
+            INNER JOIN Categories ON HasCategory.cat_id = Categories.cat_id
+            WHERE Categories.cat_name IN ($placeholderCats)
+            GROUP BY HasCategory.game_id
+            HAVING COUNT(DISTINCT HasCategory.cat_id) = ?
+        )";
+    
+        // Add category names and the required count to parameters
+        $param_types .= str_repeat("s", count($selectedCategories)) . "i";
+        $param_values = array_merge($param_values, $selectedCategories, [count($selectedCategories)]);
+    }
+    // Handle categories (user can select up to 3)
+    $selectedMechanics = array_filter([$Mechanic1, $Mechanic2, $Mechanic3]); // Remove empty values
+    if (!empty($selectedMechanics)) {
+        $placeholderMecs = implode(',', array_fill(0, count($selectedMechanics), '?')); // Creates "?, ?, ?" dynamically
+        $conditions[] = "BoardGames.game_id IN (
+            SELECT HasMechanic.game_id
+            FROM HasMechanic
+            INNER JOIN Mechanics ON HasMechanic.mec_id = Mechanics.mec_id
+            WHERE Mechanics.mec_name IN ($placeholderMecs)
+            GROUP BY HasMechanic.game_id
+            HAVING COUNT(DISTINCT HasMechanic.mec_id) = ?
+        )";
+    
+        // Add category names and the required count to parameters
+        $param_types .= str_repeat("s", count($selectedMechanics)) . "i";
+        $param_values = array_merge($param_values, $selectedMechanics, [count($selectedMechanics)]);
+    }
+
     if (!empty($GameName)) {
         // make sure game name is text
         $conditions[] = "BoardGames.names LIKE ?";
@@ -224,11 +260,12 @@
         }
     }
 
+
     // If there are conditions, join them with "AND" and append to query
     if (!empty($conditions)) {
         $query_str .= " WHERE " . implode(" AND ", $conditions);
     }
-    
+
     // ending query string
     $query_str = $query_str . " 
     GROUP BY BoardGames.game_id
