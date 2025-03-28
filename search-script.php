@@ -16,68 +16,50 @@
     $Mechanic2 = null;
     $Mechanic3 = null;
 
-    $FormInputArray = [];
-
-    // Retrieve form values
     if( isset($_GET['gameName']) && !empty($_GET['gameName'])){
-        $GameName=$_GET['gameName']; 
-        $FormInputArray = $GameName;
+        $GameName=trim($_GET['gameName']); 
     } 
     if( isset($_GET['gameYear']) && !empty($_GET['gameYear'])){ 
-        $GameYear=$_GET['gameYear']; 
-        $FormInputArray = $GameYear;
+        $GameYear=trim($_GET['gameYear']); 
     }
     if( isset($_GET['gameDesigner']) && !empty($_GET['gameDesigner'])) {
-        $GameDesigner=$_GET['gameDesigner'];
-        $FormInputArray = $GameDesigner;
+        $GameDesigner=trim($_GET['gameDesigner']);
     }
     if( isset($_GET['playersMin']) && !empty($_GET['playersMin'])){
         $PlayersMin=$_GET['playersMin']; 
-        $FormInputArray = $PlayersMin;
     } 
     if( isset($_GET['playersMax']) && !empty($_GET['playersMax'])) {
         $PlayersMax=$_GET['playersMax'];
-        $FormInputArray = $PlayersMax;
     }
     if( isset($_GET['timeMin']) && !empty($_GET['timeMin'])){
         $TimeMin=$_GET['timeMin']; 
-        $FormInputArray = $TimeMin; 
     } 
     if( isset($_GET['timeMax']) && !empty($_GET['timeMax'])){
         $TimeMax=$_GET['timeMax']; 
-        $FormInputArray = $TimeMax;
     } 
     if( isset($_GET['ratingMin']) && !empty($_GET['ratingMin'])){ 
         $RatingMin=$_GET['ratingMin']; 
-        $FormInputArray = $RatingMin;
     }
     if( isset($_GET['ratingMax']) && !empty($_GET['ratingMax'])){
         $RatingMax=$_GET['ratingMax']; 
-        $FormInputArray = $RatingMax;
     } 
     if( isset($_GET['category1']) && !empty($_GET['category1'])){ 
         $Category1=$_GET['category1']; 
-        $FormInputArray = $Category1;
     }
     if( isset($_GET['category2']) && !empty($_GET['category2'])){
         $Category2=$_GET['category2']; 
-        $FormInputArray = $Category2;
     } 
     if( isset($_GET['category3']) && !empty($_GET['category3'])){
        $Category3=$_GET['category3'];  
-       $FormInputArray = $Category3;
     } 
     if( isset($_GET['mechanic1']) && !empty($_GET['mechanic1'])){
         $Mechanic1=$_GET['mechanic1']; 
-        $FormInputArray = $Mechanic1;
     } 
     if( isset($_GET['mechanic2']) && !empty($_GET['mechanic2'])){
         $Mechanic2=$_GET['mechanic2']; 
-        $FormInputArray = $Mechanic2;
     } 
     if( isset($_GET['mechanic3']) && !empty($_GET['mechanic3'])){
         $Mechanic3=$_GET['mechanic3'];
-        $FormInputArray = $Mechanic3;
     } 
     
     // Initialize DB
@@ -159,36 +141,119 @@
            INNER JOIN Mechanics ON HasMechanic.mec_id  = Mechanics.mec_id
            GROUP BY HasMechanic.game_id) groupedMechanics ON groupedMechanics.game_id = BoardGames.game_id";
 
-    // for ($x = 0; $x <= sizeof($FormInputArray); $x++) {
-    //      echo $FormInputArray[$x];
-    // }
-  
 
-    // Checking what the user inputted
-    // if (!empty($GameName)){
-    //     // Find names that start with whatever the user inputted, not just exact matches
-    //     $query_str = $query_str." WHERE BoardGames.names LIKE '$GameName%'";
-    // }
-    // if(!empty($TimeMin)){
-    //     if(ctype_digit($TimeMin)){ // If its actually an int value
-    //         $query_str = $query_str."AND BoardGames.min_time =$TimeMin";
-    //     }else{
-    //         //throw an error that says to enter int values 
-    //     }
-    // }
+    $conditions = []; // Array to store individual conditions
+    $param_types = ""; // Store type definitions for bind_param (s = string, i = integer, d = double)
+    $param_values = []; // Store values to bind
 
+    if (!empty($GameName)) {
+        // make sure game name is text
+        $conditions[] = "BoardGames.names LIKE ?";
+        $param_types .= "s";  // "s" for string
+        $param_values[] = "$GameName%"; // Add wildcard for LIKE
+    }
+
+    if (!empty($GameYear) ){
+        if(ctype_digit($GameYear) && strlen($GameYear) === 4) {
+            $conditions[] = "BoardGames.year = ?";
+            $param_types .= "i";  // "i" for integer
+            $param_values[] = (int)$GameYear;
+        }else{
+            // error: year must be a 4 digit number
+        }
+    }
+
+    if (!empty($GameDesigner)){
+        $conditions[] = "BoardGames.designer LIKE ?";
+        $param_types .= "s";  // "s" for string
+        $param_values[] = "$GameDesigner%";
+    }
+
+    if (!empty($PlayersMin)){
+        if(ctype_digit($PlayersMin)){
+            $conditions[] = "BoardGames.min_players = ?";
+            $param_types .= "i";  // "i" for integer
+            $param_values[] = (int)$PlayersMin;
+        }else{
+            // error: must be number
+        }
+    }
+    if (!empty($PlayersMax)){
+        if(ctype_digit($PlayersMax)){
+            $conditions[] = "BoardGames.max_players = ?";
+            $param_types .= "i";  // "i" for integer
+            $param_values[] = (int)$PlayersMax;
+        }else{
+            // error: must be number
+        }
+    }
+    if (!empty($TimeMin)){
+        if(ctype_digit($TimeMin)){
+            $conditions[] = "BoardGames.min_time = ?";
+            $param_types .= "i";  // "i" for integer
+            $param_values[] = (int)$TimeMin;
+        }else{
+            // error: must be number
+        }
+    }
+    if (!empty($TimeMax)){
+        if(ctype_digit($TimeMax)){
+            $conditions[] = "BoardGames.max_time = ?";
+            $param_types .= "i";  // "i" for integer
+            $param_values[] = (int)$TimeMax;
+        }else{
+            // error: must be number
+        }
+    }
+    if (!empty($RatingMin)){
+        if(is_numeric($RatingMin)){
+            $conditions[] = "BoardGames.avg_rating >= ?";
+            $param_types .= "d";  // "d" for double (float)
+            $param_values[] = (float)$RatingMin;
+        }else{
+            // error: must be number
+        }
+    }
+    if (!empty($RatingMax)){
+        if(is_numeric($RatingMax)){
+            $conditions[] = "BoardGames.avg_rating <= ?";
+            $param_types .= "d";  // "d" for double (float)
+            $param_values[] = (float)$RatingMax;
+        }else{
+            // error: must be number
+        }
+    }
+
+    // If there are conditions, join them with "AND" and append to query
+    if (!empty($conditions)) {
+        $query_str .= " WHERE " . implode(" AND ", $conditions);
+    }
+    
     // ending query string
     $query_str = $query_str . " 
     GROUP BY BoardGames.game_id
     LIMIT $start, $rows_per_page";
 
+    // Prepare statement
+    $stmt = $db->prepare($query_str);
+
+    // Bind parameters dynamically
+    if (!empty($param_values)) {
+        $stmt->bind_param($param_types, ...$param_values);
+    }
+
+
+    
+
     // Execute the query 
-    $res2 = mysqli_query($db, $query_str);
+    // $res2 = mysqli_query($db, $query_str);
+    $stmt->execute();
+    $res2 = $stmt->get_result();
 
     // Check if there are any results
     if (mysqli_num_rows($res2) == 0 ){
         echo "<p>Query failed and returned zero rows. (SEARCH-SCRIPT PHP)</p>";
-        exit();
+        // exit();
     }
 
       // Free the result 
