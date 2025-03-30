@@ -60,6 +60,7 @@ form{
     display: -ms-flexbox;
     display: flex;
     flex-direction: row;
+    border-bottom: black solid 0.1em;
 }
 .index-header-signup{
     display: -webkit-box;
@@ -72,6 +73,7 @@ form{
 .index-header-signedin{
     justify-content: center;
     margin:5em 2em;
+    border-bottom: black solid 0.1em;
 }
 .index-title{
     display: -webkit-box;
@@ -118,7 +120,9 @@ form{
     max-height: 15em; /* Prevent growing */
     width:auto;
 }
-
+#top-ranked {
+    border-bottom: black solid 0.1em;
+}
 
 /* ------//End index page ------- */
 

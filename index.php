@@ -38,12 +38,12 @@
             }
         ?>
         
-        <div>
+        <div id="top-ranked">
             <h2>Top Ranked Games</h2>
             <div class="">
                 <p>See a list of all games in order of highest rank</p>
                 <img src="./imgs/arrow-right.svg">
-            <div>
+            </div>
             <div class="index-img-scroll-container">
                 <?php
                     while ($row = $res->fetch_assoc()) {
@@ -58,7 +58,7 @@
                 ?>
             </div>
         </div>
-        <div>
+        <div id="two-player">
             <h2>Best Two Player Games</h2>
             <div class="index-img-scroll-container">
                 <?php
