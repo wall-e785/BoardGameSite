@@ -105,6 +105,7 @@
                     </div>
                     <h4>Wishlist<h4>
                 </div>
+                
                 <div class="collection-preview">
                     <div class="collection-img">
                         <img class="collection-icon" src="./imgs/heart-filled.svg">

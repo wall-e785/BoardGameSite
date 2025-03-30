@@ -125,7 +125,7 @@ form{
 }
 
 .wrap{
-    flex-direction: wrap;
+    flex-wrap: wrap;
     gap:1em;
 }
 
@@ -218,10 +218,19 @@ form{
     height:12em;
     background-color: #FFDE9C;
 }
-
 .back-arrow{
     width:5em;
     height:5em;
+}
+
+.make-collection-wrap{
+    flex-wrap: wrap;
+    gap:1em;
+}
+
+.make-collection-img{
+    width: auto;
+    height:8em;
 }
 
 .labelAbove{

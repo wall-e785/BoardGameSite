@@ -113,11 +113,14 @@
                     </div>
                     <h4>Favourites<h4>
                 </div>
+                
                 <div class="collection-preview">
                     <div class="collection-img">
                         <img class="collection-icon" src="./imgs/plus-filled.svg">
                     </div>
-                    <a>New Collection</a>
+                    <?php
+                        echo "<a href=\"" . url_for('BoardGameSite/makecollection.php') . "\">New Collection</a>";
+                    ?>
                 </div>
             </div>
             </div>
