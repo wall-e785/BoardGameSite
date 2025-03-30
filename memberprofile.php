@@ -35,7 +35,21 @@
                     echo "<p>Commented: " . mysqli_num_rows($res) . "</p>";
                 }
                 $res -> free_result();
-                echo "<p>Collections: </p>";
+
+                // Loop through comments
+                $collections_query = "SELECT * 
+                FROM Collections
+                WHERE username = '". $_SESSION['username'] . "'";
+
+                // Execute the query 
+                $res = mysqli_query($db, $collections_query);
+                // Check if there are any results
+                if (mysqli_num_rows($res) == 0 ){
+                    echo "<p>Collections: 0</p>";
+                }else if(mysqli_num_rows($res) != 0) {
+                    echo "<p>Collections: " . mysqli_num_rows($res) . "</p>";
+                }
+                $res -> free_result();
             ?>
             <!-- settings page button?? -->
             </div>
@@ -113,7 +127,27 @@
                     </div>
                     <h4>Favourites<h4>
                 </div>
-                
+                <?php
+                    // Loop through comments
+                    $collections_query = "SELECT collection_name, collection_id 
+                    FROM Collections
+                    WHERE username = '". $_SESSION['username'] . "'";
+
+                    // Execute the query 
+                    $res = mysqli_query($db, $collections_query);
+                    // Check if there are any collections to display
+                    if (mysqli_num_rows($res) != 0 ){
+                        while($row= mysqli_fetch_assoc($res)){
+                            echo "<div class=\"collection-preview\">";
+                                echo "<div class=\"collection-img\">";
+                                    echo "<img class=\"collection-icon\" src=\"./imgs/heart-outline.svg\">";
+                                echo "</div>";
+                                echo "<a href=\"" . url_for('BoardGameSite/collectionpage.php') . "?collectionid=" . $row['collection_id'] . "\">" . $row['collection_name'] ."</a>";
+                            echo "</div>"; 
+                        }
+                        $res->free_result();
+                    }
+                ?>
                 <div class="collection-preview">
                     <div class="collection-img">
                         <img class="collection-icon" src="./imgs/plus-filled.svg">
