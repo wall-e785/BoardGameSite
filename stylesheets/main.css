@@ -201,6 +201,11 @@ form{
     border: solid black 0.1em;
     padding: 1em 2em;
 }
+
+.activity a{
+    font-size: 1.2em;
+    padding-left: .25em;
+}
 .collection-preview{
     border: solid black 0.1em;
     padding: 0.5em;

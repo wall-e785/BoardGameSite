@@ -20,7 +20,21 @@
             <?php
                 echo "<p>Owned: </p>";
                 echo "<p>Rated: </p>";
-                echo "<p>Commented: </p>";
+
+                 // Loop through comments
+                 $comments_query = "SELECT * 
+                 FROM Comments
+                 WHERE username = '". $_SESSION['username'] . "'";
+
+                // Execute the query 
+                $res = mysqli_query($db, $comments_query);
+                // Check if there are any results
+                if (mysqli_num_rows($res) == 0 ){
+                    echo "<p>Commented: 0</p>";
+                }else if(mysqli_num_rows($res) != 0) {
+                    echo "<p>Commented: " . mysqli_num_rows($res) . "</p>";
+                }
+                $res -> free_result();
                 echo "<p>Collections: </p>";
             ?>
             <!-- settings page button?? -->
@@ -32,10 +46,47 @@
         <div class="border-right">
             <div class="padding flex column">
                 <h3>Recent Activity</h3>
-                <div class="flex row activity"> 
-                    <p>Commented on Gloomhaven<p>
-                    <img src="./imgs/arrow-right.svg">
-                </div>
+    
+                <?php
+                // Loop through comments
+                 $comments_query = "SELECT * 
+                 FROM Comments
+                 WHERE username = '". $_SESSION['username'] . "'";
+
+                // Execute the query 
+                $res = mysqli_query($db, $comments_query);
+                // Check if there are any results
+                if (mysqli_num_rows($res) == 0 ){
+                    echo "<div class=\"flex row activity\">";
+                        echo "<p>No activity yet!</p>";
+                        echo "<img src=\"./imgs/arrow-right.svg\">";
+                    echo "</div>";   
+                }else if(mysqli_num_rows($res) != 0) {
+                    while($row= mysqli_fetch_assoc($res)){
+                        echo "<div class=\"flex row activity\">";
+                            echo "<p>Commented on</p>";
+
+                            $game_query = "SELECT names, game_id
+                            FROM BoardGames
+                            WHERE game_id =" . $row['game_id'];
+        
+                            $name = mysqli_query($db, $game_query);
+                            
+                            if(mysqli_num_rows($name) == 0){
+                                echo "<p>Name not found</p>";
+                            }else{
+                                while($gameinfo= mysqli_fetch_assoc($name)){
+                                    echo "<a href=\"". url_for('BoardGameSite/viewboardgame.php?gameid=') . $gameinfo['game_id'] ."\">". $gameinfo['names'] ."</a>";
+                                    echo "<img src=\"./imgs/arrow-right.svg\">";
+                                }
+                            }
+                            
+                        echo "</div>";   
+                    }
+                }
+                $res -> free_result();
+
+                ?>
             </div>
         </div>
         <div>

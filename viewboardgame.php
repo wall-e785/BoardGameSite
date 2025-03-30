@@ -194,7 +194,7 @@
                         $res = mysqli_query($db, $comments_query);
                         // Check if there are any results
                         if (mysqli_num_rows($res) == 0 ){
-                            echo "<p>Query failed and returned zero rows. (SEARCH PHP - CAT)</p>";
+                            echo "<p>No Comments yet!</p>";
                             exit();
                         }
                         // Save variables
@@ -209,6 +209,8 @@
                                 echo "</div>";
                             }
                         }
+
+                        $res->free_result();
                     ?>
                 </div>
             </div>
