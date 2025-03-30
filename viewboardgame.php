@@ -5,8 +5,11 @@
 <div class="body">
     <?php
         require('header.php');
+        include("./private/rating-script.php");
         // Retrieve the game ID of the game clicked on.
         if(isset($_GET["gameid"]) && !empty($_GET["gameid"])) $gameid = $_GET["gameid"];
+        //current URL
+        $currentURL = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
         // Create query string
         $query_str = "SELECT BoardGames.*, groupedCategories.Categories, groupedMechanics.Mechanics
@@ -130,7 +133,20 @@
                         </div>
                     </div>
                     <div class="padding-sm">
-                        <p>leave a rating</p>
+                        <form action="" method="post">
+                            <label for="rating">Leave a Rating:</label>
+                            <select name="rating" id="rating">
+                                <option value="">   </option> <!-- First option blank -->
+                                <?php
+                                    // Looping to create numbers
+                                    for ($x = 1; $x <11; $x++) {    
+                                        $selected = ($Rating == $x) ? 'selected' : ''; // Displays user's rating if previously submitted     
+                                        echo "<option value=\"$x\" $selected>".$x."</option>";
+                                    }
+                                ?>
+                            </select> 
+                            <input type="submit" value="Submit Rating"/>
+                        </form>
                     </div>
                 </div>
             </div>
