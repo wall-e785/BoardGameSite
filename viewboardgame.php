@@ -9,7 +9,18 @@
         if(isset($_GET["gameid"]) && !empty($_GET["gameid"])) $gameid = $_GET["gameid"];
 
         // Create query string
-        $query_str = "SELECT * FROM BoardGames WHERE game_id=$gameid";
+        $query_str = "SELECT BoardGames.*, groupedCategories.Categories, groupedMechanics.Mechanics
+        FROM BoardGames 
+        LEFT JOIN (SELECT HasCategory.game_id, GROUP_CONCAT(Categories.cat_name SEPARATOR ', ') AS Categories
+               FROM HasCategory
+               INNER JOIN Categories ON HasCategory.cat_id  = Categories.cat_id
+               GROUP BY HasCategory.game_id) groupedCategories ON groupedCategories.game_id = BoardGames.game_id
+        LEFT JOIN 	(SELECT HasMechanic.game_id, GROUP_CONCAT(Mechanics.mec_name SEPARATOR ', ') AS Mechanics
+               FROM HasMechanic
+               INNER JOIN Mechanics ON HasMechanic.mec_id  = Mechanics.mec_id
+               GROUP BY HasMechanic.game_id) groupedMechanics ON groupedMechanics.game_id = BoardGames.game_id
+        WHERE BoardGames.game_id=$gameid";
+
         // Execute the query 
         $res = mysqli_query($db, $query_str);
         // Check if there are any results
@@ -32,6 +43,10 @@
                 $avg_time = $row['avg_time'];
                 $min_time = $row['min_time'];
                 $max_time = $row['max_time'];
+                $mechanics_str = $row['Mechanics'];
+                $mechanics_array = explode(",", $mechanics_str);
+                $categories_str = $row['Categories'];
+                $categories_array = explode(",", $categories_str);
             }
         }
 
@@ -128,22 +143,24 @@
             <div class="border-right catmec-container">
                 <div id="categories" class="padding-lrg flex column gap1em">
                     <h3>Categories: </h3>
-                    <div class="flex wrap gap1em">
+                    <div class="categories-container">
                         <?php
                             // Loop through categories
-                            echo "<p class=\"round-border\">category</p>";
-                            echo "<p class=\"round-border\">category</p>";
+                            foreach ($categories_array as $category){
+                                echo "<p class=\"\">".$category."</p>";
+                            }
                         ?>
                     </div>
                 </div>
 
                 <div id="mechanics" class="border-top padding-lrg flex column gap1em">
                     <h3>Mechanics: </h3>
-                    <div class="flex wrap gap1em">
+                    <div class="categories-container">
                         <?php
                             // Loop through mechanics
-                            echo "<p class=\"round-border\">mechanic</p>";
-                            echo "<p class=\"round-border\">mechanic</p>";
+                            foreach ($mechanics_array as $mechanic){
+                                echo "<p class=\"\">".$mechanic."</p>";
+                            }
                         ?>
                     </div>
                 </div>
