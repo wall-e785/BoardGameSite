@@ -97,9 +97,7 @@
                     <div class="collection-img">
                         <img class="collection-icon" src="./imgs/bookmark-filled.svg">
                     </div>
-                    <?php
-                        echo "<a href=\"". url_for("BoardGameSite/collectionpage.php" ."\">Owned</a>")
-                    ?>
+                    <h4>Owned<h4>
                 </div>
                 <div class="collection-preview">
                     <div class="collection-img">
