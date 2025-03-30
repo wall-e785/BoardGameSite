@@ -185,14 +185,30 @@
                 <!-- box that holds all comments -->
                 <div class=""> 
                     <?php
-                      
-                        echo "<div class=\"comment-box flex column gap1em\">";
-                            echo "<div class=\"flex row space-between\">";
-                                echo "<p>username</p>";
-                                echo "<p>datetime</p>";
-                            echo "</div>";
-                            echo "<p>comment desc</p>";
-                        echo "</div>";
+                        // Loop through comments
+                        $comments_query = "SELECT * 
+                                            FROM Comments
+                                            WHERE game_id =". $_GET['gameid'];
+
+                        // Execute the query 
+                        $res = mysqli_query($db, $comments_query);
+                        // Check if there are any results
+                        if (mysqli_num_rows($res) == 0 ){
+                            echo "<p>Query failed and returned zero rows. (SEARCH PHP - CAT)</p>";
+                            exit();
+                        }
+                        // Save variables
+                        if(mysqli_num_rows($res) != 0) {
+                            while($row= mysqli_fetch_assoc($res)) {
+                                echo "<div class=\"comment-box flex column gap1em\">";
+                                echo "<div class=\"flex row space-between\">";
+                                echo "<p>". $row["username"] ."</p>";
+                                echo "<p>". $row["comment_date"] ."</p>";
+                                echo "</div>";
+                                echo "<p>". $row["comment_desc"] ."</p>";
+                                echo "</div>";
+                            }
+                        }
                     ?>
                 </div>
             </div>
