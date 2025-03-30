@@ -59,10 +59,18 @@
             // Check if logged in
             if(isset($_SESSION['username'])) {
                 // Check if comment box has text in it
-                if(!empty($_POST['comment']) && !empty($_POST['post-comment'])){ 
+                if(!empty($_POST['comment'])){ 
                     // Save user comment
-                    echo htmlspecialchars($_POST['comment']);
+                    //referenced prepared statements: https://www.w3schools.com/php/php_mysql_prepared_statements.asp
+                    $insert_str = $db -> prepare("INSERT INTO Comments (comment_desc, comment_date, game_id, username) VALUES (?, ?, ?, ?)");
+                    //referenced date/time from: https://www.w3schools.com/php/php_date.asp
+                    $insert_str->bind_param("ssis", $comment, $datetime, $gameid, $username);
                     
+                    $comment = $_POST['comment'];
+                    $datetime = date("Y-m-d") . " " . date("H:i:s");
+                    $gameid = $_GET['gameid'];
+                    $username = $_SESSION['username'];
+                    $insert_str->execute();           
                 }else{
                     // Give error that comment box must not be empty
                     array_push($errors, 'Comment box must not be empty.');
@@ -177,7 +185,7 @@
                 <!-- box that holds all comments -->
                 <div class=""> 
                     <?php
-                        // Loop through comments
+                      
                         echo "<div class=\"comment-box flex column gap1em\">";
                             echo "<div class=\"flex row space-between\">";
                                 echo "<p>username</p>";
