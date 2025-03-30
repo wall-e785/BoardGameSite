@@ -207,11 +207,13 @@
                                             echo "<div class=\"flex row\">";
                                                 echo "<p>". $row["comment_date"] ."</p>";
                                                 //only show delete if the comment is by the logged in user
-                                                if($row["username"] == $_SESSION["username"]){
-                                                    echo "<a href=\"" . url_for('BoardGameSite/deletecomment.php?commentid=') . $row["comment_id"] . "&gameid=". $row["game_id"] . "\">";
-                                                        echo "<img class=\"comment-delete\" src=\"./imgs/delete.svg\">";
-                                                    echo "</a>";
-                                                }   
+                                                if(!empty($_SESSION["username"])){
+                                                    if($row["username"] == $_SESSION["username"]){
+                                                        echo "<a href=\"" . url_for('BoardGameSite/deletecomment.php?commentid=') . $row["comment_id"] . "&gameid=". $row["game_id"] . "\">";
+                                                            echo "<img class=\"comment-delete\" src=\"./imgs/delete.svg\">";
+                                                        echo "</a>";
+                                                    }   
+                                                }
                                             echo "</div>";
                                     echo "</div>";
                                 echo "<p>". $row["comment_desc"] ."</p>";
