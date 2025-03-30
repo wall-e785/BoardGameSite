@@ -6,5 +6,6 @@
 
     // Initialize DB
     require_once("private/initialize.php");
+
     
 ?>

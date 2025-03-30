@@ -76,6 +76,71 @@
             }
             
         }
+
+    //Check if rating exists for this user
+    $rating_query_str = "SELECT * FROM `Ratings` WHERE game_id=$gameid";
+    // Execute the query 
+    $res = mysqli_query($db, $rating_query_str);
+    // Check if there are any results
+    $isRating = NULL;
+    $ratingID = NULL;
+    $Rating = NULL;
+    if (mysqli_num_rows($res) == 0){
+        $isRating = FALSE; // User has not yet set a rating
+    }else{
+        $isRating = TRUE; // User has a rating for this game
+        while ($row = $res->fetch_assoc()) {
+            $ratingID = $row['rating_id'];
+            $Rating = $row['rating_num'];
+        }
+    }
+
+    // Free the result 
+    $res->free_result();
+
+
+    // Rating submission 
+    $errorsRating = [];
+    if(is_post_request()) {
+        // Check if logged in
+        if(isset($_SESSION['username'])) {
+            // Check if rating select has been set
+            if(!empty($_POST['rating'])){ 
+                 // If user does not have a rating for this game, insert a new rating
+                if ($isRating == FALSE){
+                    //referenced prepared statements: https://www.w3schools.com/php/php_mysql_prepared_statements.asp
+                    $insert_str = $db -> prepare("INSERT INTO Ratings (rating_num, rating_date, game_id, username) VALUES (?, ?, ?, ?)");
+                    //referenced date/time from: https://www.w3schools.com/php/php_date.asp
+                    $insert_str->bind_param("ssis", $rating, $datetime, $gameid, $username);
+
+                    $rating = $_POST['rating'];
+                    $datetime = date("Y-m-d") . " " . date("H:i:s");
+                    $gameid = $_GET['gameid'];
+                    $username = $_SESSION['username'];
+                    $insert_str->execute();  
+                }else{ // Update the existing rating instead of reating a new row
+                    $update_str = "UPDATE Ratings SET rating_num = ? WHERE rating_id = ?";
+                    $statement = mysqli_prepare($db, $update_str);
+                    if (!$statement){
+                        die("Error is: ".mysqli_error($db));
+                    }
+                    mysqli_stmt_bind_param($statement, 'ii', $rating, $ratingID);
+                    $rating = $_POST['rating'];
+                
+                    // Execute the update
+                    mysqli_stmt_execute($statement); 
+                }
+                          
+             }else{
+                 // Give error that comment box must not be empty
+                 array_push($errorsRating, 'Rating must not be empty.');
+             }
+         }else{
+             // If not logged in, throw error that user must make an account or sign in.
+             array_push($errorsRating, 'Log in or make an account to leave a rating.');
+         }
+
+    }
     ?>    
         <div class="flex row">
             <div class="border-right game-info-container flex column">
@@ -135,6 +200,7 @@
                     <div class="padding-sm">
                         <form action="" method="post">
                             <label for="rating">Leave a Rating:</label>
+                            <?php echo display_errors($errorsRating); ?>
                             <select name="rating" id="rating">
                                 <option value="">   </option> <!-- First option blank -->
                                 <?php
