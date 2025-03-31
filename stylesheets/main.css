@@ -125,7 +125,7 @@ form{
 }
 
 .wrap{
-    flex-direction: wrap;
+    flex-wrap: wrap;
     gap:1em;
 }
 
@@ -201,19 +201,36 @@ form{
     border: solid black 0.1em;
     padding: 1em 2em;
 }
+
+.activity a{
+    font-size: 1.2em;
+    padding-left: .25em;
+}
 .collection-preview{
     border: solid black 0.1em;
     padding: 0.5em;
+}
+.collection-preview a{
+    font-size: 1.4em; 
 }
 .collection-img{
     width:12em;
     height:12em;
     background-color: #FFDE9C;
 }
-
 .back-arrow{
     width:5em;
     height:5em;
+}
+
+.make-collection-wrap{
+    flex-wrap: wrap;
+    gap:1em;
+}
+
+.make-collection-img{
+    width: auto;
+    height:8em;
 }
 
 .labelAbove{
@@ -255,6 +272,21 @@ form{
     width:100%;
     flex:3;
 }
+
+.comment-delete{
+    width:auto;
+    height:1.25em;
+    padding-left: .2em;
+}
+
+.comment-delete{
+    color: black;
+}
+
+.comment-delete:hover{
+    color: #F1B63E;
+}
+
 .catmec-container{
     flex:2;
 }

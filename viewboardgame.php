@@ -80,10 +80,18 @@
             // Check if logged in
             if(isset($_SESSION['username'])) {
                 // Check if comment box has text in it
-                if(!empty($_POST['comment']) && !empty($_POST['post-comment'])){ 
+                if(!empty($_POST['comment'])){ 
                     // Save user comment
-                    echo htmlspecialchars($_POST['comment']);
+                    //referenced prepared statements: https://www.w3schools.com/php/php_mysql_prepared_statements.asp
+                    $insert_str = $db -> prepare("INSERT INTO Comments (comment_desc, comment_date, game_id, username) VALUES (?, ?, ?, ?)");
+                    //referenced date/time from: https://www.w3schools.com/php/php_date.asp
+                    $insert_str->bind_param("ssis", $comment, $datetime, $gameid, $username);
                     
+                    $comment = $_POST['comment'];
+                    $datetime = date("Y-m-d") . " " . date("H:i:s");
+                    $gameid = $_GET['gameid'];
+                    $username = $_SESSION['username'];
+                    $insert_str->execute();           
                 }else{
                     // Give error that comment box must not be empty
                     array_push($errors, 'Comment box must not be empty.');
@@ -320,13 +328,42 @@
                 <div class=""> 
                     <?php
                         // Loop through comments
-                        echo "<div class=\"comment-box flex column gap1em\">";
-                            echo "<div class=\"flex row space-between\">";
-                                echo "<p>username</p>";
-                                echo "<p>datetime</p>";
-                            echo "</div>";
-                            echo "<p>comment desc</p>";
-                        echo "</div>";
+                        $comments_query = "SELECT * 
+                                            FROM Comments
+                                            WHERE game_id =". $_GET['gameid'];
+
+                        // Execute the query 
+                        $res = mysqli_query($db, $comments_query);
+                        // Check if there are any results
+                        if (mysqli_num_rows($res) == 0 ){
+                            echo "<p>No Comments yet!</p>";
+                            exit();
+                        }
+                        // Save variables
+                        if(mysqli_num_rows($res) != 0) {
+                            while($row= mysqli_fetch_assoc($res)) {
+                                //custom data referenced from: https://www.w3schools.com/tags/att_data-.asp
+                                echo "<div class=\"comment-box flex column gap1em\" data-comment-id=\"". $row["comment_id"]."\">";
+                                    echo "<div class=\"flex row space-between\">";
+                                        echo "<p>". $row["username"] ."</p>";
+                                            echo "<div class=\"flex row\">";
+                                                echo "<p>". $row["comment_date"] ."</p>";
+                                                //only show delete if the comment is by the logged in user
+                                                if(!empty($_SESSION["username"])){
+                                                    if($row["username"] == $_SESSION["username"]){
+                                                        echo "<a href=\"" . url_for('BoardGameSite/deletecomment.php?commentid=') . $row["comment_id"] . "&gameid=". $row["game_id"] . "\">";
+                                                            echo "<img class=\"comment-delete\" src=\"./imgs/delete.svg\">";
+                                                        echo "</a>";
+                                                    }   
+                                                }
+                                            echo "</div>";
+                                    echo "</div>";
+                                echo "<p>". $row["comment_desc"] ."</p>";
+                                echo "</div>";
+                            }
+                        }
+
+                        $res->free_result();
                     ?>
                 </div>
             </div>
