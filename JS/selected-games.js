@@ -19,7 +19,7 @@ $(document).ready(function() {
                 }
             });
         }else{
-            alert("Error creating collection");
+            alert("Error creating collection: Please select at least one game!");
         }
         
     });

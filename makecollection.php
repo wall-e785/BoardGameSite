@@ -57,7 +57,7 @@
         </div>
 
         <div class="flex row">
-            <h3>2. Select Games (Optional)</h3>
+            <h3>2. Select Games</h3>
         </div>
 
         <div class="flex make-collection-wrap">
