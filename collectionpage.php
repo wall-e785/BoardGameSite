@@ -1,121 +1,89 @@
+<!--used to display a collection-->
 <!DOCTYPE html>
 <html lang="en">
 
 <body>
-    <?php
-        require('header.php');
-        require_once('private/initialize.php');
-    ?>
     <div class="body">
-    
-    <div class="flex row">
-        <div class="border-right" id="username">
-            <div class="padding">
-                <!-- add user profile image?? -->
-                <?php  echo "<h2>" . $_SESSION['username'] . "</h2>"; ?>
-            </div>
+
+
+    <?php
+
+    require('header.php');
+    require_once('private/initialize.php');
+
+    $name = $_GET['name']; 
+
+
+    echo "<div class=\"flex row\">";
+    echo "<h2>" . $name ."</h2>";
+    echo "</div>";
+
+    $errors = [];
+
+    if(is_post_request()) {
+        $name = $_POST['name'];
+
+        if(!empty($name) && !empty($_SESSION['username'])){
+            // Save user comment
+            //referenced prepared statements: https://www.w3schools.com/php/php_mysql_prepared_statements.asp
+            $insert_str = $db -> prepare("INSERT INTO Collections (collection_name, collection_date, username) VALUES (?, ?, ?)");
+            //referenced date/time from: https://www.w3schools.com/php/php_date.asp
+            $insert_str->bind_param("sss", $name, $datetime, $username);
+            
+            $name = $_POST['name'];
+            $datetime = date("Y-m-d") . " " . date("H:i:s");
+            $username = $_SESSION['username'];
+            $insert_str->execute();  
+            
+            redirect_to(url_for('BoardGameSite/memberprofile.php'));
+        }else{
+            array_push($errors, "Enter a name for this collection!");
+        }
+
+
+        echo display_errors($errors);
+    }
+
+    ?>
+
+        <div class="flex column">
+            <h3>1. Name your Collection </h3>
+            <form action="makecollection.php" method="post">
+            Name<br />
+            <input type="text" name="name" value="" /><br />
+            <input type="submit" />
+            </form>
+
         </div>
-        <div class="flex wrap" id="userstats">
-            <div class="padding">
+
+        <div class="flex row">
+            <h3>2. Select Games (Optional)</h3>
+        </div>
+
+        <div class="flex make-collection-wrap">
             <?php
-                echo "<p>Owned: </p>";
-                echo "<p>Rated: </p>";
+            $boardgames = "SELECT game_id, names, image_url 
+                            FROM BoardGames";
 
-                 // Loop through comments
-                 $comments_query = "SELECT * 
-                 FROM Comments
-                 WHERE username = '". $_SESSION['username'] . "'";
-
-                // Execute the query 
-                $res = mysqli_query($db, $comments_query);
-                // Check if there are any results
-                if (mysqli_num_rows($res) == 0 ){
-                    echo "<p>Commented: 0</p>";
-                }else if(mysqli_num_rows($res) != 0) {
-                    echo "<p>Commented: " . mysqli_num_rows($res) . "</p>";
+            // Execute the query 
+            $res = mysqli_query($db, $boardgames);
+            // Check if there are any results
+            if (mysqli_num_rows($res) == 0 ){
+                echo "<h4>Error: Could not retrieve games, try again later.</h4>";
+            }else if(mysqli_num_rows($res) != 0) {
+                while($row= mysqli_fetch_assoc($res)){
+                    echo "<div class=\"collection-preview\">";
+                        echo "<div class=\"collection-preview\">";
+                            echo "<img class=\"make-collection-img\" src=\"" . $row['image_url'] . "\">";
+                        echo "</div>";
+                        echo "<h4>". $row['names'] . "</h4>";
+                    echo "</div>";
                 }
-                $res -> free_result();
-                echo "<p>Collections: </p>";
+            }
             ?>
-            <!-- settings page button?? -->
-            </div>
         </div>
     </div>
 
-    <div class="flex row border-top profile-body">
-        <div class="border-right">
-            <div class="padding flex column">
-                <h3>Recent Activity</h3>
-    
-                <?php
-                // Loop through comments
-                 $comments_query = "SELECT * 
-                 FROM Comments
-                 WHERE username = '". $_SESSION['username'] . "'";
-
-                // Execute the query 
-                $res = mysqli_query($db, $comments_query);
-                // Check if there are any results
-                if (mysqli_num_rows($res) == 0 ){
-                    echo "<div class=\"flex row activity\">";
-                        echo "<p>No activity yet!</p>";
-                        echo "<img src=\"./imgs/arrow-right.svg\">";
-                    echo "</div>";   
-                }else if(mysqli_num_rows($res) != 0) {
-                    while($row= mysqli_fetch_assoc($res)){
-                        echo "<div class=\"flex row activity\">";
-                            echo "<p>Commented on</p>";
-
-                            $game_query = "SELECT names, game_id
-                            FROM BoardGames
-                            WHERE game_id =" . $row['game_id'];
-        
-                            $name = mysqli_query($db, $game_query);
-                            
-                            if(mysqli_num_rows($name) == 0){
-                                echo "<p>Name not found</p>";
-                            }else{
-                                while($gameinfo= mysqli_fetch_assoc($name)){
-                                    echo "<a href=\"". url_for('BoardGameSite/viewboardgame.php?gameid=') . $gameinfo['game_id'] ."\">". $gameinfo['names'] ."</a>";
-                                    echo "<img src=\"./imgs/arrow-right.svg\">";
-                                }
-                            }
-                            
-                        echo "</div>";   
-                    }
-                }
-                $res -> free_result();
-
-                ?>
-            </div>
-        </div>
-        <div>
-            <div class="padding flex column">
-            <h3>Collections</h3>
-            <div class="flex wrap">
-                <div class="collection-preview">
-                    <div class="collection-img">
-                        <img class="collection-icon" src="./imgs/bookmark-filled.svg">
-                    </div>
-                    <h4>Owned<h4>
-                </div>
-                <div class="collection-preview">
-                    <div class="collection-img">
-                        <img class="collection-icon" src="./imgs/star-filled.svg">
-                    </div>
-                    <h4>Wishlist<h4>
-                </div>
-                
-                <div class="collection-preview">
-                    <div class="collection-img">
-                        <img class="collection-icon" src="./imgs/heart-filled.svg">
-                    </div>
-                    <h4>Favourites<h4>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
-    </div>
 </body>
 </html>
+

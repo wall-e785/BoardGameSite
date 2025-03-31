@@ -142,7 +142,7 @@
                                 echo "<div class=\"collection-img\">";
                                     echo "<img class=\"collection-icon\" src=\"./imgs/heart-outline.svg\">";
                                 echo "</div>";
-                                echo "<a href=\"" . url_for('BoardGameSite/collectionpage.php') . "?collectionid=" . $row['collection_id'] . "\">" . $row['collection_name'] ."</a>";
+                                echo "<a href=\"" . url_for('BoardGameSite/collectionpage.php') . "?collectionid=" . $row['collection_id'] . "&name=" . $row['collection_name'] . "\">" . $row['collection_name'] ."</a>";
                             echo "</div>"; 
                         }
                         $res->free_result();
