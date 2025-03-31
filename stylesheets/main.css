@@ -31,7 +31,7 @@ p{
 
 img {
     display: block;
-    max-width: 100%
+    max-width: 100%;
 }
 
 a{
@@ -53,13 +53,81 @@ textarea{
 form{
     width:100%;
 }
-
-.collection-icon{
-    width:100%;
-    height:100%;
+/* -----Index Page------ */
+.index-header-no-user{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    border-bottom: black solid 0.1em;
+}
+.index-header-signup{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    margin:3em 2em;
+}
+.index-header-signedin{
+    justify-content: center;
+    margin:5em 2em;
+    border-bottom: black solid 0.1em;
+}
+.index-title{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    margin:3em 0em;
 }
 .playtested-icon{
     width:12em;
+    height:100%;
+}
+.index-img-scroll-container{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    gap:2em;
+    padding:3em 0em;
+    /* Allows for the row to be scrollable */
+    overflow: auto;
+    white-space:nowrap;
+}
+.index-gallery-item{
+    border: solid black 0.1em;
+    display: flex;
+    flex-direction: column;
+    width:fit-content;
+    min-width:fit-content;
+    max-width: fit-content;
+}
+.index-gallery-text{
+    margin:1em 2em;
+    word-wrap: break-word; /* Ensures long words wrap */
+    overflow-wrap: break-word;
+    white-space: normal; /* Allows wrapping */
+    max-width: 10em; 
+}
+.index-gallery-img{
+    height: 15em; /* Enforce a fixed width */
+    min-height: 15em; /* Prevent shrinking */
+    max-height: 15em; /* Prevent growing */
+    width:auto;
+}
+#top-ranked {
+    border-bottom: black solid 0.1em;
+}
+
+/* ------//End index page ------- */
+
+.collection-icon{
+    width:100%;
     height:100%;
 }
 
@@ -298,7 +366,6 @@ form{
 
 /* ----View board game page ------- */
 
-
 .categories-container{
     display: -webkit-box;
     display: -webkit-flex;
@@ -315,4 +382,3 @@ form{
     width:fit-content;
 }
 
-/* ----//END View board game page ------- */
