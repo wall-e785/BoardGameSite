@@ -29,7 +29,7 @@ df.columns = [col.lower().replace(" ", "_") for col in df.columns]
 df = df[[
     "game_id", "names", "min_players", "max_players", 
     "avg_time", "min_time", "max_time", "year", "avg_rating", "image_url", "age", 
-    "owned", "designer"
+    "owned", "designer", "num_votes"
 ]]
 
 # WORKS 2 ARTISTS
@@ -51,8 +51,8 @@ insert_query = """
 INSERT INTO BoardGames (
     game_id, names, min_players, max_players,
     avg_time, min_time, max_time, year, avg_rating, image_url, age,
-    owned, designer
-) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    owned, designer, num_votes
+) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
 """
 
 # WORKS 2 ARTISTS

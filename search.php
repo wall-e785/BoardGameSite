@@ -1,7 +1,7 @@
 <?php
     require('header.php');
 
-    include("search-script.php");
+    include("./private/search-script.php");
 
 ?>
 <div class="body">

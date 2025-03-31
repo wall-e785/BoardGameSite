@@ -5,11 +5,25 @@
 <div class="body">
     <?php
         require('header.php');
+        
         // Retrieve the game ID of the game clicked on.
         if(isset($_GET["gameid"]) && !empty($_GET["gameid"])) $gameid = $_GET["gameid"];
+        //current URL
+        $currentURL = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
         // Create query string
-        $query_str = "SELECT * FROM BoardGames WHERE game_id=$gameid";
+        $query_str = "SELECT BoardGames.*, groupedCategories.Categories, groupedMechanics.Mechanics
+        FROM BoardGames 
+        LEFT JOIN (SELECT HasCategory.game_id, GROUP_CONCAT(Categories.cat_name SEPARATOR ', ') AS Categories
+               FROM HasCategory
+               INNER JOIN Categories ON HasCategory.cat_id  = Categories.cat_id
+               GROUP BY HasCategory.game_id) groupedCategories ON groupedCategories.game_id = BoardGames.game_id
+        LEFT JOIN 	(SELECT HasMechanic.game_id, GROUP_CONCAT(Mechanics.mec_name SEPARATOR ', ') AS Mechanics
+               FROM HasMechanic
+               INNER JOIN Mechanics ON HasMechanic.mec_id  = Mechanics.mec_id
+               GROUP BY HasMechanic.game_id) groupedMechanics ON groupedMechanics.game_id = BoardGames.game_id
+        WHERE BoardGames.game_id=$gameid";
+
         // Execute the query 
         $res = mysqli_query($db, $query_str);
         // Check if there are any results
@@ -21,7 +35,8 @@
         if(mysqli_num_rows($res) != 0) {
             while($row= mysqli_fetch_assoc($res)) {
                 $game_name = $row['names'];
-                $avg_rating = round($row['avg_rating'], 2); // Round the rating to 2 decimals 
+                $existing_avg = round($row['avg_rating'], 2); // Round the rating to 2 decimals 
+                $num_votes = $row['num_votes'];
                 $designer = $row['designer'];
                 $img_url = $row['image_url'];
                 $age = $row['age'];
@@ -32,9 +47,30 @@
                 $avg_time = $row['avg_time'];
                 $min_time = $row['min_time'];
                 $max_time = $row['max_time'];
+                $mechanics_str = $row['Mechanics'];
+                $mechanics_array = explode(",", $mechanics_str);
+                $categories_str = $row['Categories'];
+                $categories_array = explode(",", $categories_str);
             }
         }
+        // Free the result 
+        $res->free_result();
 
+        //calculate avg rating-------------
+        $avg_rating_query_str = "SELECT game_id, rating_num FROM `Ratings` WHERE game_id=$gameid";
+        // Execute the query 
+        $res = mysqli_query($db, $avg_rating_query_str);
+        if(mysqli_num_rows($res) != 0) {
+            $new_count = mysqli_num_rows($res);
+            $new_sum = 0;
+            while($row= mysqli_fetch_assoc($res)) {
+                $new_sum += floatval($row['rating_num']);
+            }
+            $avg_rating = round(($existing_avg * $num_votes + $new_sum) / ($num_votes + $new_count), 2);
+        }else{
+            // there are no new ratings for this game, so display the existing avg.
+            $avg_rating = $existing_avg;
+        }
         // Free the result 
         $res->free_result();
 
@@ -44,10 +80,18 @@
             // Check if logged in
             if(isset($_SESSION['username'])) {
                 // Check if comment box has text in it
-                if(!empty($_POST['comment']) && !empty($_POST['post-comment'])){ 
+                if(!empty($_POST['comment'])){ 
                     // Save user comment
-                    echo htmlspecialchars($_POST['comment']);
+                    //referenced prepared statements: https://www.w3schools.com/php/php_mysql_prepared_statements.asp
+                    $insert_str = $db -> prepare("INSERT INTO Comments (comment_desc, comment_date, game_id, username) VALUES (?, ?, ?, ?)");
+                    //referenced date/time from: https://www.w3schools.com/php/php_date.asp
+                    $insert_str->bind_param("ssis", $comment, $datetime, $gameid, $username);
                     
+                    $comment = $_POST['comment'];
+                    $datetime = date("Y-m-d") . " " . date("H:i:s");
+                    $gameid = $_GET['gameid'];
+                    $username = $_SESSION['username'];
+                    $insert_str->execute();           
                 }else{
                     // Give error that comment box must not be empty
                     array_push($errors, 'Comment box must not be empty.');
@@ -58,6 +102,83 @@
             }
             
         }
+
+        //Check if ratings exist for this user -------------------
+        // is user logged in?
+        if(isset($_SESSION['username'])){
+            $username = $_SESSION['username'];
+            // Check if there is any rows for this game and this user
+            $rating_query_str = "SELECT * FROM `Ratings` WHERE game_id=$gameid AND username='$username'";
+            // Execute the query 
+            $res = mysqli_query($db, $rating_query_str);
+            // Check if there are any results
+            $isRating = NULL;
+            $ratingID = NULL;
+            $Rating = NULL;
+            if (mysqli_num_rows($res) == 0){
+                $isRating = FALSE; // User has not yet set a rating
+            }else{
+                $isRating = TRUE; // User has a rating for this game
+                while ($row = $res->fetch_assoc()) {
+                    $ratingID = $row['rating_id'];
+                    $Rating = $row['rating_num'];
+                }
+            }
+            // Free the result 
+            $res->free_result();
+
+        } 
+    
+        // Rating submission  -------------------
+        $errorsRating = [];
+        $errorsCollection = [];
+        if(is_post_request()) {
+            // Check if logged in
+            if(isset($_SESSION['username'])) {
+                // Check if rating select has been set
+                if(!empty($_POST['rating'])){ 
+                    // If user does not have a rating for this game, insert a new rating
+                    if ($isRating == FALSE){
+                        //referenced prepared statements: https://www.w3schools.com/php/php_mysql_prepared_statements.asp
+                        $insert_str = $db -> prepare("INSERT INTO Ratings (rating_num, rating_date, game_id, username) VALUES (?, ?, ?, ?)");
+                        //referenced date/time from: https://www.w3schools.com/php/php_date.asp
+                        $insert_str->bind_param("ssis", $rating, $datetime, $gameid, $username);
+
+                        $rating = $_POST['rating'];
+                        $datetime = date("Y-m-d") . " " . date("H:i:s");
+                        $gameid = $_GET['gameid'];
+                        $username = $_SESSION['username'];
+                        $insert_str->execute();  
+                    }else{ // Update the existing rating instead of reating a new row
+                        $update_str = "UPDATE Ratings SET rating_num = ? WHERE rating_id = ?";
+                        $statement = mysqli_prepare($db, $update_str);
+                        if (!$statement){
+                            die("Error is: ".mysqli_error($db));
+                        }
+                        mysqli_stmt_bind_param($statement, 'ii', $rating, $ratingID);
+                        $rating = $_POST['rating'];
+                        // Execute the update
+                        mysqli_stmt_execute($statement); 
+                    }     
+                }else{
+                    // Give error that comment box must not be empty
+                    array_push($errorsRating, 'Please select a rating.');
+                }
+                // Check if add-to-collection select has been set
+                if(!empty($_POST['add-to-collection'])){
+                    //Retrieve string value of the name of the collection they want to add to
+                    $selectedCollectionID = $_POST['add-to-collection']; 
+                    // TO DO: Add this game to the selected collection using the collection ID
+
+                }else{
+                    // Give error that comment box must not be empty
+                    array_push($errorsCollection, 'Please select a collection.');
+                }
+            }else{
+                // If not logged in, throw error that user must make an account or sign in.
+                array_push($errorsRating, 'Log in or make an account to leave ratings or add to collections.');
+            }
+        } 
     ?>    
         <div class="flex row">
             <div class="border-right game-info-container flex column">
@@ -78,7 +199,9 @@
 
                     <div class="centered padding-sm">
                         <p>Avg. Rating</p>
-                        <?php echo "<h3>".$avg_rating."</h3>"; ?>
+                        <?php 
+                        
+                        echo "<h3>".$avg_rating."</h3>"; ?>
                     </div>
                 </div>
 
@@ -115,7 +238,49 @@
                         </div>
                     </div>
                     <div class="padding-sm">
-                        <p>leave a rating</p>
+                        <!---------- Leave ratings ----------->
+                        <form action="" method="post">
+                            <label for="rating">Leave a Rating:</label>
+                            <?php echo display_errors($errorsRating); ?>
+                            <select name="rating" id="rating">
+                                <option value="">   </option> <!-- First option blank -->
+                                <?php
+                                    // Looping to create numbers
+                                    for ($x = 1; $x <11; $x++) {    
+                                        $selected = ($Rating == $x) ? 'selected' : ''; // Displays user's rating if previously submitted     
+                                        echo "<option value=\"$x\" $selected>".$x."</option>";
+                                    }
+                                ?>
+                            </select> 
+                            <input type="submit" value="Submit Rating"/>
+                        </form>
+
+                        <!----------- Add to a collection --------->
+                        <form action="" method="post">
+                            <label for="add-to-collection">Add to a collection:</label>
+                            <?php echo display_errors($errorsCollection); ?>
+                            <select name="add-to-collection" id="add-to-collection">
+                                <option value="">   </option> <!-- First option blank -->
+                                <?php
+                                    if(isset($_SESSION['username'])){ // Only if the user is logged in
+                                        // Check what collections user has
+                                        $collection_query_str = "SELECT collection_name, collection_id FROM `Collections` WHERE username='$username'";
+                                        $res = mysqli_query($db, $collection_query_str);
+                                        
+                                        if (mysqli_num_rows($res) != 0){
+                                            // fail!
+                                        } 
+                                        // Looping through collections that user has
+                                        while ($row = $res->fetch_assoc()) {
+                                            echo "<option value=\"".$row['collection_id']."\">".$row['collection_name']."</option>";
+                                        }
+                                        // Free the result 
+                                        $res->free_result();
+                                    } 
+                                ?>
+                            </select> 
+                            <input type="submit" value="Add"/>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -128,22 +293,24 @@
             <div class="border-right catmec-container">
                 <div id="categories" class="padding-lrg flex column gap1em">
                     <h3>Categories: </h3>
-                    <div class="flex wrap gap1em">
+                    <div class="categories-container">
                         <?php
                             // Loop through categories
-                            echo "<p class=\"round-border\">category</p>";
-                            echo "<p class=\"round-border\">category</p>";
+                            foreach ($categories_array as $category){
+                                echo "<p class=\"\">".$category."</p>";
+                            }
                         ?>
                     </div>
                 </div>
 
                 <div id="mechanics" class="border-top padding-lrg flex column gap1em">
                     <h3>Mechanics: </h3>
-                    <div class="flex wrap gap1em">
+                    <div class="categories-container">
                         <?php
                             // Loop through mechanics
-                            echo "<p class=\"round-border\">mechanic</p>";
-                            echo "<p class=\"round-border\">mechanic</p>";
+                            foreach ($mechanics_array as $mechanic){
+                                echo "<p class=\"\">".$mechanic."</p>";
+                            }
                         ?>
                     </div>
                 </div>
@@ -161,18 +328,46 @@
                 <div class=""> 
                     <?php
                         // Loop through comments
-                        echo "<div class=\"comment-box flex column gap1em\">";
-                            echo "<div class=\"flex row space-between\">";
-                                echo "<p>username</p>";
-                                echo "<p>datetime</p>";
-                            echo "</div>";
-                            echo "<p>comment desc</p>";
-                        echo "</div>";
+                        $comments_query = "SELECT * 
+                                            FROM Comments
+                                            WHERE game_id =". $_GET['gameid'];
+
+                        // Execute the query 
+                        $res = mysqli_query($db, $comments_query);
+                        // Check if there are any results
+                        if (mysqli_num_rows($res) == 0 ){
+                            echo "<p>No Comments yet!</p>";
+                            exit();
+                        }
+                        // Save variables
+                        if(mysqli_num_rows($res) != 0) {
+                            while($row= mysqli_fetch_assoc($res)) {
+                                //custom data referenced from: https://www.w3schools.com/tags/att_data-.asp
+                                echo "<div class=\"comment-box flex column gap1em\" data-comment-id=\"". $row["comment_id"]."\">";
+                                    echo "<div class=\"flex row space-between\">";
+                                        echo "<p>". $row["username"] ."</p>";
+                                            echo "<div class=\"flex row\">";
+                                                echo "<p>". $row["comment_date"] ."</p>";
+                                                //only show delete if the comment is by the logged in user
+                                                if(!empty($_SESSION["username"])){
+                                                    if($row["username"] == $_SESSION["username"]){
+                                                        echo "<a href=\"" . url_for('BoardGameSite/deletecomment.php?commentid=') . $row["comment_id"] . "&gameid=". $row["game_id"] . "\">";
+                                                            echo "<img class=\"comment-delete\" src=\"./imgs/delete.svg\">";
+                                                        echo "</a>";
+                                                    }   
+                                                }
+                                            echo "</div>";
+                                    echo "</div>";
+                                echo "<p>". $row["comment_desc"] ."</p>";
+                                echo "</div>";
+                            }
+                        }
+
+                        $res->free_result();
                     ?>
                 </div>
             </div>
         </div>
-    
-</div>
+    </div>
 </body>
 </html>
