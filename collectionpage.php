@@ -48,7 +48,7 @@
                         echo "<div class=\"collection-preview\">";
                             echo "<img class=\"make-collection-img\" src=\"" . $game['image_url'] . "\">";
                         echo "</div>";
-                        echo "<h4>". $game['names'] . "</h4>";
+                        echo "<a href=\"". url_for('BoardGameSite/viewboardgame.php?gameid=') . $game['game_id'] ."\">". $game['names'] . "</a>";
                     echo "</div>";
                 }
             }
