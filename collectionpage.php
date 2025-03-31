@@ -8,20 +8,28 @@
 
     <?php
 
-    require('header.php');
-    require_once('private/initialize.php');
+        require('header.php');
+        require_once('private/initialize.php');
 
-    $name = $_GET['name']; 
+        $name = $_GET['name']; 
 
 
-    echo "<div class=\"flex row\">";
-    echo "<h2>" . $name ."</h2>";
-    echo "</div>";
+        echo "<div class=\"flex row\">";
+        echo "<h2>" . $name ."</h2>";
+
+        $query = "SELECT username, collection_date
+                        FROM Collections
+                        WHERE collection_id =" . $_GET['collectionid'];
+        
+        $res = mysqli_query($db, $query);
+
+        if (mysqli_num_rows($res) > 0){
+            $collection=mysqli_fetch_assoc($res);
+            echo "<h3>Created by " . $collection['username'] . " on " . substr($collection['collection_date'], 0, 10) .  "</h3>";
+        }
+
+        echo "</div>";
     ?>
-
-        <div class="flex row">
-            <h3>2. Select Games (Optional)</h3>
-        </div>
 
         <div class="flex make-collection-wrap">
             <?php
