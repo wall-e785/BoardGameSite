@@ -5,7 +5,7 @@
 <div class="body">
     <?php
         require('header.php');
-        include("./private/rating-script.php");
+        
         // Retrieve the game ID of the game clicked on.
         if(isset($_GET["gameid"]) && !empty($_GET["gameid"])) $gameid = $_GET["gameid"];
         //current URL
@@ -35,7 +35,8 @@
         if(mysqli_num_rows($res) != 0) {
             while($row= mysqli_fetch_assoc($res)) {
                 $game_name = $row['names'];
-                $avg_rating = round($row['avg_rating'], 2); // Round the rating to 2 decimals 
+                $existing_avg = round($row['avg_rating'], 2); // Round the rating to 2 decimals 
+                $num_votes = $row['num_votes'];
                 $designer = $row['designer'];
                 $img_url = $row['image_url'];
                 $age = $row['age'];
@@ -52,7 +53,24 @@
                 $categories_array = explode(",", $categories_str);
             }
         }
+        // Free the result 
+        $res->free_result();
 
+        //calculate avg rating-------------
+        $avg_rating_query_str = "SELECT game_id, rating_num FROM `Ratings` WHERE game_id=$gameid";
+        // Execute the query 
+        $res = mysqli_query($db, $avg_rating_query_str);
+        if(mysqli_num_rows($res) != 0) {
+            $new_count = mysqli_num_rows($res);
+            $new_sum = 0;
+            while($row= mysqli_fetch_assoc($res)) {
+                $new_sum += floatval($row['rating_num']);
+            }
+            $avg_rating = round(($existing_avg * $num_votes + $new_sum) / ($num_votes + $new_count), 2);
+        }else{
+            // there are no new ratings for this game, so display the existing avg.
+            $avg_rating = $existing_avg;
+        }
         // Free the result 
         $res->free_result();
 
@@ -77,70 +95,82 @@
             
         }
 
-    //Check if rating exists for this user
-    $rating_query_str = "SELECT * FROM `Ratings` WHERE game_id=$gameid";
-    // Execute the query 
-    $res = mysqli_query($db, $rating_query_str);
-    // Check if there are any results
-    $isRating = NULL;
-    $ratingID = NULL;
-    $Rating = NULL;
-    if (mysqli_num_rows($res) == 0){
-        $isRating = FALSE; // User has not yet set a rating
-    }else{
-        $isRating = TRUE; // User has a rating for this game
-        while ($row = $res->fetch_assoc()) {
-            $ratingID = $row['rating_id'];
-            $Rating = $row['rating_num'];
-        }
-    }
-
-    // Free the result 
-    $res->free_result();
-
-
-    // Rating submission 
-    $errorsRating = [];
-    if(is_post_request()) {
-        // Check if logged in
-        if(isset($_SESSION['username'])) {
-            // Check if rating select has been set
-            if(!empty($_POST['rating'])){ 
-                 // If user does not have a rating for this game, insert a new rating
-                if ($isRating == FALSE){
-                    //referenced prepared statements: https://www.w3schools.com/php/php_mysql_prepared_statements.asp
-                    $insert_str = $db -> prepare("INSERT INTO Ratings (rating_num, rating_date, game_id, username) VALUES (?, ?, ?, ?)");
-                    //referenced date/time from: https://www.w3schools.com/php/php_date.asp
-                    $insert_str->bind_param("ssis", $rating, $datetime, $gameid, $username);
-
-                    $rating = $_POST['rating'];
-                    $datetime = date("Y-m-d") . " " . date("H:i:s");
-                    $gameid = $_GET['gameid'];
-                    $username = $_SESSION['username'];
-                    $insert_str->execute();  
-                }else{ // Update the existing rating instead of reating a new row
-                    $update_str = "UPDATE Ratings SET rating_num = ? WHERE rating_id = ?";
-                    $statement = mysqli_prepare($db, $update_str);
-                    if (!$statement){
-                        die("Error is: ".mysqli_error($db));
-                    }
-                    mysqli_stmt_bind_param($statement, 'ii', $rating, $ratingID);
-                    $rating = $_POST['rating'];
-                
-                    // Execute the update
-                    mysqli_stmt_execute($statement); 
+        //Check if ratings exist for this user -------------------
+        // is user logged in?
+        if(isset($_SESSION['username'])){
+            $username = $_SESSION['username'];
+            // Check if there is any rows for this game and this user
+            $rating_query_str = "SELECT * FROM `Ratings` WHERE game_id=$gameid AND username='$username'";
+            // Execute the query 
+            $res = mysqli_query($db, $rating_query_str);
+            // Check if there are any results
+            $isRating = NULL;
+            $ratingID = NULL;
+            $Rating = NULL;
+            if (mysqli_num_rows($res) == 0){
+                $isRating = FALSE; // User has not yet set a rating
+            }else{
+                $isRating = TRUE; // User has a rating for this game
+                while ($row = $res->fetch_assoc()) {
+                    $ratingID = $row['rating_id'];
+                    $Rating = $row['rating_num'];
                 }
-                          
-             }else{
-                 // Give error that comment box must not be empty
-                 array_push($errorsRating, 'Rating must not be empty.');
-             }
-         }else{
-             // If not logged in, throw error that user must make an account or sign in.
-             array_push($errorsRating, 'Log in or make an account to leave a rating.');
-         }
+            }
+            // Free the result 
+            $res->free_result();
 
-    }
+        } 
+    
+        // Rating submission  -------------------
+        $errorsRating = [];
+        $errorsCollection = [];
+        if(is_post_request()) {
+            // Check if logged in
+            if(isset($_SESSION['username'])) {
+                // Check if rating select has been set
+                if(!empty($_POST['rating'])){ 
+                    // If user does not have a rating for this game, insert a new rating
+                    if ($isRating == FALSE){
+                        //referenced prepared statements: https://www.w3schools.com/php/php_mysql_prepared_statements.asp
+                        $insert_str = $db -> prepare("INSERT INTO Ratings (rating_num, rating_date, game_id, username) VALUES (?, ?, ?, ?)");
+                        //referenced date/time from: https://www.w3schools.com/php/php_date.asp
+                        $insert_str->bind_param("ssis", $rating, $datetime, $gameid, $username);
+
+                        $rating = $_POST['rating'];
+                        $datetime = date("Y-m-d") . " " . date("H:i:s");
+                        $gameid = $_GET['gameid'];
+                        $username = $_SESSION['username'];
+                        $insert_str->execute();  
+                    }else{ // Update the existing rating instead of reating a new row
+                        $update_str = "UPDATE Ratings SET rating_num = ? WHERE rating_id = ?";
+                        $statement = mysqli_prepare($db, $update_str);
+                        if (!$statement){
+                            die("Error is: ".mysqli_error($db));
+                        }
+                        mysqli_stmt_bind_param($statement, 'ii', $rating, $ratingID);
+                        $rating = $_POST['rating'];
+                        // Execute the update
+                        mysqli_stmt_execute($statement); 
+                    }     
+                }else{
+                    // Give error that comment box must not be empty
+                    array_push($errorsRating, 'Please select a rating.');
+                }
+                // Check if add-to-collection select has been set
+                if(!empty($_POST['add-to-collection'])){
+                    //Retrieve string value of the name of the collection they want to add to
+                    $selectedCollectionID = $_POST['add-to-collection']; 
+                    // TO DO: Add this game to the selected collection using the collection ID
+
+                }else{
+                    // Give error that comment box must not be empty
+                    array_push($errorsCollection, 'Please select a collection.');
+                }
+            }else{
+                // If not logged in, throw error that user must make an account or sign in.
+                array_push($errorsRating, 'Log in or make an account to leave ratings or add to collections.');
+            }
+        } 
     ?>    
         <div class="flex row">
             <div class="border-right game-info-container flex column">
@@ -161,7 +191,9 @@
 
                     <div class="centered padding-sm">
                         <p>Avg. Rating</p>
-                        <?php echo "<h3>".$avg_rating."</h3>"; ?>
+                        <?php 
+                        
+                        echo "<h3>".$avg_rating."</h3>"; ?>
                     </div>
                 </div>
 
@@ -198,6 +230,7 @@
                         </div>
                     </div>
                     <div class="padding-sm">
+                        <!---------- Leave ratings ----------->
                         <form action="" method="post">
                             <label for="rating">Leave a Rating:</label>
                             <?php echo display_errors($errorsRating); ?>
@@ -212,6 +245,33 @@
                                 ?>
                             </select> 
                             <input type="submit" value="Submit Rating"/>
+                        </form>
+
+                        <!----------- Add to a collection --------->
+                        <form action="" method="post">
+                            <label for="add-to-collection">Add to a collection:</label>
+                            <?php echo display_errors($errorsCollection); ?>
+                            <select name="add-to-collection" id="add-to-collection">
+                                <option value="">   </option> <!-- First option blank -->
+                                <?php
+                                    if(isset($_SESSION['username'])){ // Only if the user is logged in
+                                        // Check what collections user has
+                                        $collection_query_str = "SELECT collection_name, collection_id FROM `Collections` WHERE username='$username'";
+                                        $res = mysqli_query($db, $collection_query_str);
+                                        
+                                        if (mysqli_num_rows($res) != 0){
+                                            // fail!
+                                        } 
+                                        // Looping through collections that user has
+                                        while ($row = $res->fetch_assoc()) {
+                                            echo "<option value=\"".$row['collection_id']."\">".$row['collection_name']."</option>";
+                                        }
+                                        // Free the result 
+                                        $res->free_result();
+                                    } 
+                                ?>
+                            </select> 
+                            <input type="submit" value="Add"/>
                         </form>
                     </div>
                 </div>
@@ -271,7 +331,6 @@
                 </div>
             </div>
         </div>
-    
-</div>
+    </div>
 </body>
 </html>
