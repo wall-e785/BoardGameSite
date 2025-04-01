@@ -301,6 +301,11 @@ form{
     height:8em;
 }
 
+.collection-delete-img{
+    width:auto;
+    height: 2em;
+}
+
 .labelAbove{
     display:flex;
     flex-direction:column;

@@ -28,6 +28,10 @@
             echo "<h3>Created by " . $collection['username'] . " on " . substr($collection['collection_date'], 0, 10) .  "</h3>";
         }
 
+        if($name != "Owned" && $name != "Wishlist" && $name != "Favourites"){
+            echo "<a href=\"" .  url_for('BoardGameSite/deletecollection.php' . "?collectionid=" . $_GET['collectionid']) . "\"><img class=\"collection-delete-img\" src=\"./imgs/delete.svg\"></a>";
+        }
+        
         echo "</div>";
     ?>
 
