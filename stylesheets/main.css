@@ -68,11 +68,15 @@ form{
     display: -ms-flexbox;
     display: flex;
     flex-direction: column;
-    margin:3em 2em;
+    margin:3em 3em;
+}
+.index-header-no-user-container{
+    padding:2em 3em;   
+    border-right: black solid 0.1em;
 }
 .index-header-signedin{
     justify-content: center;
-    margin:5em 2em;
+    padding:2em 0em;
     border-bottom: black solid 0.1em;
 }
 .index-title{
@@ -81,7 +85,7 @@ form{
     display: -ms-flexbox;
     display: flex;
     flex-direction: row;
-    margin:3em 0em;
+    /* margin:3em 0em; */
 }
 .playtested-icon{
     width:12em;
@@ -120,8 +124,11 @@ form{
     max-height: 15em; /* Prevent growing */
     width:auto;
 }
-#top-ranked {
+.border-bottom{
     border-bottom: black solid 0.1em;
+}
+.index-section {
+   padding:2em 3em;
 }
 
 /* ------//End index page ------- */

@@ -20,4 +20,27 @@
         echo "<p>Query failed and returned zero rows. (INDEX PHP - TWO PLAYER)</p>";
         exit();
     }
+
+    $horror_query = "SELECT BoardGames.*, groupedCategories.Categories
+        FROM BoardGames
+        LEFT JOIN (
+            SELECT HasCategory.game_id, GROUP_CONCAT(Categories.cat_name SEPARATOR ', ') AS Categories
+            FROM HasCategory
+            INNER JOIN Categories ON HasCategory.cat_id = Categories.cat_id
+            GROUP BY HasCategory.game_id
+        ) groupedCategories ON groupedCategories.game_id = BoardGames.game_id
+        WHERE EXISTS (
+            SELECT 1
+            FROM HasCategory
+            WHERE HasCategory.game_id = BoardGames.game_id
+            AND HasCategory.cat_id = 19
+        )
+        ORDER BY avg_rating DESC
+        LIMIT 10";
+    $res3 = mysqli_query($db, $horror_query);
+    // Check if there are any results
+    if (mysqli_num_rows($res3) == 0 ){
+        echo "<p>Query failed and returned zero rows. (INDEX PHP - TWO PLAYER)</p>";
+        exit();
+    }
 ?>

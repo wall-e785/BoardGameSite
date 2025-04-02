@@ -12,7 +12,7 @@
             if(!isset($_SESSION['username'])){
                 // not logged in, display seciton to sign up
                 echo "<div class=\"index-header-no-user\">";
-                    echo "<div class=\"border-right\">";
+                    echo "<div class=\"index-header-no-user-container\">";
                         echo "<div class=\"index-title\">";
                             echo "<img class=\"playtested-icon\" src=\"./imgs/playtested.svg\">";
                             echo "<div>";
@@ -38,7 +38,7 @@
             }
         ?>
         
-        <div id="top-ranked">
+        <div id="top-ranked" class="index-section border-bottom">
             <h2>Top Ranked Games</h2>
             <div class="index-img-scroll-container">
                 <?php
@@ -54,11 +54,27 @@
                 ?>
             </div>
         </div>
-        <div id="two-player">
+        <div id="two-player" class="index-section border-bottom" >
             <h2>Best Two Player Games</h2>
             <div class="index-img-scroll-container">
                 <?php
                     while ($row = $res2->fetch_assoc()) {
+                        echo "<div class=\"index-gallery-item\">";
+                            echo "<img class=\"index-gallery-img\" src=\"".$row['image_url']."\">";
+                            echo "<div class=\"index-gallery-text\">";
+                                echo "<h3>".round($row['avg_rating'], 2)."</h3>";
+                                echo "<a href=\"". url_for('BoardGameSite/viewboardgame.php?gameid=') . $row['game_id'] ."\"><p>". $row['names'] . "</p></a>";
+                            echo "</div>";
+                        echo "</div>";
+                    }
+                ?>
+            </div>
+        </div>
+        <div id="horror" class="index-section">
+            <h2>Best Horror Games</h2>
+            <div class="index-img-scroll-container">
+                <?php
+                    while ($row = $res3->fetch_assoc()) {
                         echo "<div class=\"index-gallery-item\">";
                             echo "<img class=\"index-gallery-img\" src=\"".$row['image_url']."\">";
                             echo "<div class=\"index-gallery-text\">";
