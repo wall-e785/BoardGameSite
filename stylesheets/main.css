@@ -67,10 +67,13 @@ form{
 }
 input{
     border:solid black 0.1em;
+    font-size: 1em;
 }
 input[type=submit] {
     background-color: #FFDE9C;
     border:none;
+    padding:1em;
+    border-radius: 10em;
 }
 input[type=submit]:hover {
     background-color: #F1B63E;
@@ -78,9 +81,54 @@ input[type=submit]:hover {
 select {
     background-color: white;
     border:solid black 0.1em;
+    font-size: 1em;
 }
 
-/* -----Index Page------ */
+/* ----------------------- Nav bar ------------------------ */
+.header{
+    border-bottom: solid black 0.1em;
+    position: absolute;
+    top:0;
+    width:100%;
+}
+.body{
+    margin-top:3em;
+}
+.navbar{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    
+    /* align-items: flex-end; */
+    gap: 0.5em;
+    justify-content:flex-end;
+    width:100%;
+    align-items: stretch;
+}
+.navbar li{
+    /* border-left: 0.1em solid black; */
+    height:2em;
+    padding: 0em 1em;
+    align-content: center;
+    font-size: 1.5em;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+}
+.playtested {
+    border-left: none;
+    margin-right: auto;
+    align-content: center;
+}
+.navbar a{
+    text-decoration: none;
+    color:black;
+}
+.navbar a:hover{
+    color: #F1B63E;
+}
+/* ----------------------- END Nav bar ------------------------ */
+
+/* ----------------------- Index Page ------------------------ */
 .index-header-no-user{
     display: -webkit-box;
     display: -webkit-flex;
@@ -192,18 +240,21 @@ select {
 .signin-item .submit-button{
     width: 50%;
     min-width:10em;
-    
     margin: auto;  /* This will center the button */
     margin-top:1em;
     display: block;  
 }
 /* ------ END Sign in page ------- */
 
+
+
 .collection-icon{
     width:100%;
     height:100%;
 }
 
+
+/* --------------------- View board game page ---------------- */
 .view-game-img{
     width:auto;
     height:22em;
@@ -214,32 +265,131 @@ select {
     
     flex-grow:1;
 }
-
 .game-details{
     align-content: stretch;
    height:auto;
     flex: 1;
 }
-
-
 .game-info-container{
     flex-grow:3;
 }
-
 .game-name{
     width:100%;
 }
+/* --------------------- END View board game page ---------------- */
 
-.header{
-    border-bottom: solid black 0.1em;
-    position: absolute;
-    top:0;
+/* ---------------- Search page --------------- */
+.labelAbove{
+    display:flex;
+    flex-direction:column;
+}
+.pagination a{
+    display:inline-block;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: thin solid black;
+    color: black;
+}
+.pagination a:active{
+    background-color: black;
+    color:white;
+}
+.page-numbers{
+    display: inline-block;
+}
+td{
+    font-size: 1.2em;
+    border: solid black 0.1em;
+    padding:0.4em;
+}
+.gamestable{
+    width:90%;
+    margin:auto;
+}
+.table-header{
+    font-size: 1.4em;
+
+}
+#SearchForm{
+    padding:2em 5em;
+}
+.search-form-container{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    gap:2em;
+    padding-top:1em;
+}
+.search-column{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction:column;
+    gap:0.5em;
+    width:25%;
+}
+.search-form-numfield{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction:row;
+    gap:1em;
+}
+.search-form-numfield input {
+    width:30%;
+}
+
+
+/* ----View board game page ------- */
+
+.categories-container{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    gap:1em;
+}
+.categories-container p{
+    border: 0.1em solid black;
+    border-radius: 20em;
+    /* width:fit-content; */
+    padding:0.3em;
+    width:fit-content;
+}
+.comment-box{
+    border: 0.1em solid black;
+    padding:0.3em;
+}
+.comment-container{
     width:100%;
+    flex:3;
 }
 
-.body{
-    margin-top:3em;
+.comment-delete{
+    width:auto;
+    height:1.25em;
+    padding-left: .2em;
 }
+
+.comment-delete{
+    color: black;
+}
+
+.comment-delete:hover{
+    color: #F1B63E;
+}
+
+.catmec-container{
+    flex:2;
+}
+/* ---------------- END View board game page ------------------- */
+
+
 
 
 .flex{
@@ -276,50 +426,19 @@ select {
 .space-between{
     justify-content:space-between;
 }
-.navbar{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    
-    /* align-items: flex-end; */
-    gap: 0.5em;
-    justify-content:flex-end;
-    width:100%;
-    align-items: stretch;
-}
 
-.navbar li{
-    /* border-left: 0.1em solid black; */
-    height:2em;
-    padding: 0em 1em;
-    align-content: center;
-    font-size: 1.5em;
-    font-family: "Montserrat", sans-serif;
-    font-weight: 500;
-}
 
-.border-left{
-    border-left: 0.1em solid black;
-}
-.playtested {
-    border-left: none;
-    margin-right: auto;
-    align-content: center;
-}
-.navbar a{
-    text-decoration: none;
-    color:black;
-}
-.navbar a:hover{
-    color: #F1B63E;
-}
+
+
 .border-top{
     border-top: solid black 0.1em;
 }
 .border-right{
     border-right:solid black 0.1em;
 }
-
+.border-left{
+    border-left: 0.1em solid black;
+}
 
 .padding-lrg{
     padding:2em 5em;
@@ -373,70 +492,4 @@ select {
     border-radius: 20em;
     width:fit-content;
     padding:0.3em;
-}
-
-
-/* ---------------- Search page --------------- */
-.labelAbove{
-    display:flex;
-    flex-direction:column;
-}
-.pagination a{
-    display:inline-block;
-    text-decoration: none;
-    padding: 10px 20px;
-    border: thin solid black;
-    color: black;
-}
-.pagination a:active{
-    background-color: black;
-    color:white;
-}
-.page-numbers{
-    display: inline-block;
-}
-
-
-/* ----View board game page ------- */
-
-.categories-container{
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    flex-wrap: wrap;
-    gap:1em;
-}
-.categories-container p{
-    border: 0.1em solid black;
-    border-radius: 20em;
-    /* width:fit-content; */
-    padding:0.3em;
-    width:fit-content;
-}
-.comment-box{
-    border: 0.1em solid black;
-    padding:0.3em;
-}
-.comment-container{
-    width:100%;
-    flex:3;
-}
-
-.comment-delete{
-    width:auto;
-    height:1.25em;
-    padding-left: .2em;
-}
-
-.comment-delete{
-    color: black;
-}
-
-.comment-delete:hover{
-    color: #F1B63E;
-}
-
-.catmec-container{
-    flex:2;
 }
