@@ -79,10 +79,10 @@ if(is_post_request()) {
 
 <div class="body">
 
-<div class="flex row signin-body">
-  <div class="border-right signin-item " id="signup">
-    <div class="padding-lrg flex column gap1em">
-    <h2>Sign Up</h2>
+<div class="signin-body">
+  <div class="border-right signin-item-container" id="signup">
+    <div class="signin-item">
+    <h2>Sign up</h2>
 
       <?php echo display_errors($errors); ?>
 
@@ -96,7 +96,7 @@ if(is_post_request()) {
         Confirm Password:<br />
         <input type="password" name="confirm" value="" /><br />
 
-        <input type="submit" />
+        <input type="submit" class="submit-button" value="Sign up"/>
       </form>
 
       <?php
@@ -107,8 +107,8 @@ if(is_post_request()) {
     </div>
   </div>
 
-  <div class="signin-item" id="login">
-    <div class="padding-lrg flex column gap1em">
+  <div class="signin-item-container" id="login">
+    <div class="signin-item">
       <h2>Log in</h2>
 
       <?php echo display_errors($errors); ?>
@@ -118,7 +118,7 @@ if(is_post_request()) {
         <input type="text" name="username" value="" /><br />
         Password:<br />
         <input type="password" name="password" value="" /><br />
-        <input type="submit" />
+        <input type="submit" class="submit-button" value="Log in"/>
       </form>
       
       <?php

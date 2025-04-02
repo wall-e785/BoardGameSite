@@ -4,42 +4,36 @@
 
 <body>
     <div class="body">
-
-
     <?php
-
         require('header.php');
-    
+        include("./private/edit-collection-script.php");
         require_once('private/initialize.php');
-        
-
         $name = $_GET['name']; 
         $collectionid = $_GET['collectionid'];
+    ?>
+        <?php echo"<a href=\"javascript:history.go(-1)\">"; ?>
+        <div class="back-arrow centered ">
+            <img class="collection-icon" src="./imgs/arrow-left.svg">
+            <h6>cancel</h6>
+        </div></a>
 
-        echo "<div class=\"flex row\">";
-        echo "<h2>" . $name ."</h2>";
 
+        <form action='edit-collection.php'>
+            <div class="flex column">
+                <h3>Edit Your Collection</h3>
+                <label class="labelAbove" for="collectionName">Collection Name:</label>
+                <input type="text" name="collectionName" class="collection-name" value="<?php echo $name?>" /><br />
+                 <!-- Hidden field for collection ID -->
+                <input type="hidden" name="collectionid" value="<?php echo $collectionid ?>" />
+                <input type="submit" id="submit" value="Save"/>
+            </div>
+        </form>
+    <?php
         $query = "SELECT username, collection_date
                         FROM Collections
                         WHERE collection_id =" . $collectionid;
         
-        $res = mysqli_query($db, $query);
-
-        if (mysqli_num_rows($res) > 0){
-            $collection=mysqli_fetch_assoc($res);
-            echo "<h3>Created by " . $collection['username'] . " on " . substr($collection['collection_date'], 0, 10) .  "</h3>";
-        }
-
-
-        if($name != "Owned" && $name != "Wishlist" && $name != "Favourites"){
-            
-            echo "<a href=\"" .  url_for('BoardGameSite/deletecollection.php' . "?collectionid=" . $_GET['collectionid']) . "\"><img class=\"collection-delete-img\" src=\"./imgs/delete.svg\"></a>";
-            // display edit button only if logged in
-            if(isset($_SESSION['username'])){
-                echo "<a class=\"editButton\" href=\"edit-collection.php?name=".urlencode($name)."&collectionid=".urlencode($collectionid)."\">Edit</a>";
-
-        }
-        
+        $res = mysqli_query($db, $query);    
         echo "</div>";
     ?>
 
@@ -78,4 +72,5 @@
 
 </body>
 </html>
+
 
