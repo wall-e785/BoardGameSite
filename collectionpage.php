@@ -38,6 +38,7 @@
             if(isset($_SESSION['username'])){
                 echo "<a class=\"editButton\" href=\"edit-collection.php?name=".urlencode($name)."&collectionid=".urlencode($collectionid)."\">Edit</a>";
 
+            }
         }
         
         echo "</div>";
