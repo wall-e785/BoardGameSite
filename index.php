@@ -40,10 +40,6 @@
         
         <div id="top-ranked">
             <h2>Top Ranked Games</h2>
-            <div class="">
-                <p>See a list of all games in order of highest rank</p>
-                <img src="./imgs/arrow-right.svg">
-            </div>
             <div class="index-img-scroll-container">
                 <?php
                     while ($row = $res->fetch_assoc()) {
@@ -51,7 +47,7 @@
                             echo "<img class=\"index-gallery-img\" src=\"".$row['image_url']."\">";
                             echo "<div class=\"index-gallery-text\">";
                                 echo "<h3>".round($row['avg_rating'], 2)."</h3>";
-                                echo "<p>".$row['names']."</p>";
+                                echo "<a href=\"". url_for('BoardGameSite/viewboardgame.php?gameid=') . $row['game_id'] ."\"><p>". $row['names'] . "</p></a>";
                             echo "</div>";
                         echo "</div>";
                     }
@@ -67,7 +63,7 @@
                             echo "<img class=\"index-gallery-img\" src=\"".$row['image_url']."\">";
                             echo "<div class=\"index-gallery-text\">";
                                 echo "<h3>".round($row['avg_rating'], 2)."</h3>";
-                                echo "<p>".$row['names']."</p>";
+                                echo "<a href=\"". url_for('BoardGameSite/viewboardgame.php?gameid=') . $row['game_id'] ."\"><p>". $row['names'] . "</p></a>";
                             echo "</div>";
                         echo "</div>";
                     }
