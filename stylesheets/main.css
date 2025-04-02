@@ -361,8 +361,18 @@ form{
     color: #F1B63E;
 }
 
-.edit-button, .done-button{
+.edit-button{
     width: 3em;
+    height: auto;
+}
+
+.done-button{
+    width: 3.5em;
+    height: auto;
+}
+
+.cancel-button{
+    width: 5em;
     height: auto;
 }
 
