@@ -1,3 +1,4 @@
+/* General text elements  */
 html, body, * {
     font-family: "Outfit", sans-serif;
 }
@@ -34,6 +35,16 @@ img {
     max-width: 100%;
 }
 
+/* Highlight selection colour */
+::-moz-selection { /* Code for Firefox */
+    color: black;
+    background: #F1B63E;
+  }
+  
+  ::selection {
+    color: black;
+    background: #F1B63E;
+}
 a{
     text-decoration: none;
     color:black;
@@ -42,6 +53,7 @@ a:hover{
     color: #F1B63E;
 }
 
+/* Forms general style */
 textarea{
     width:100%;
     border: solid black 0.1em;
@@ -53,6 +65,21 @@ textarea{
 form{
     width:100%;
 }
+input{
+    border:solid black 0.1em;
+}
+input[type=submit] {
+    background-color: #FFDE9C;
+    border:none;
+}
+input[type=submit]:hover {
+    background-color: #F1B63E;
+}
+select {
+    background-color: white;
+    border:solid black 0.1em;
+}
+
 /* -----Index Page------ */
 .index-header-no-user{
     display: -webkit-box;
@@ -69,10 +96,12 @@ form{
     display: flex;
     flex-direction: column;
     margin:3em 3em;
+    flex-shrink:4;
 }
 .index-header-no-user-container{
     padding:2em 3em;   
     border-right: black solid 0.1em;
+    flex-grow:3;
 }
 .index-header-signedin{
     justify-content: center;
@@ -132,6 +161,43 @@ form{
 }
 
 /* ------//End index page ------- */
+
+
+/* ------ Sign in page ------- */
+.signin-body{
+    height:100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+}
+.signin-item-container{
+    flex-grow:1;    
+}
+.signin-item{
+    padding:2em 5em;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    gap:1em;
+}
+.signin-item form input{
+    width:100%;
+    padding:1em;
+    margin:1em 0em;
+}
+.signin-item .submit-button{
+    width: 50%;
+    min-width:10em;
+    
+    margin: auto;  /* This will center the button */
+    margin-top:1em;
+    display: block;  
+}
+/* ------ END Sign in page ------- */
 
 .collection-icon{
     width:100%;
@@ -254,12 +320,7 @@ form{
     border-right:solid black 0.1em;
 }
 
-.signin-body{
-    height:100%;
-}
-.signin-item{
-    flex-grow:1;    
-}
+
 .padding-lrg{
     padding:2em 5em;
 }
@@ -307,31 +368,6 @@ form{
     width: auto;
     height:8em;
 }
-
-.labelAbove{
-    display:flex;
-    flex-direction:column;
-}
-
-.pagination a{
-    display:inline-block;
-    text-decoration: none;
-    padding: 10px 20px;
-    border: thin solid black;
-    color: black;
-}
-
-.pagination a:active{
-    background-color: black;
-    color:white;
-}
-
-.page-numbers{
-    display: inline-block;
-}
-
-
-
 .round-border{
     border: 0.1em solid black;
     border-radius: 20em;
@@ -339,6 +375,45 @@ form{
     padding:0.3em;
 }
 
+
+/* ---------------- Search page --------------- */
+.labelAbove{
+    display:flex;
+    flex-direction:column;
+}
+.pagination a{
+    display:inline-block;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: thin solid black;
+    color: black;
+}
+.pagination a:active{
+    background-color: black;
+    color:white;
+}
+.page-numbers{
+    display: inline-block;
+}
+
+
+/* ----View board game page ------- */
+
+.categories-container{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    gap:1em;
+}
+.categories-container p{
+    border: 0.1em solid black;
+    border-radius: 20em;
+    /* width:fit-content; */
+    padding:0.3em;
+    width:fit-content;
+}
 .comment-box{
     border: 0.1em solid black;
     padding:0.3em;
@@ -365,27 +440,3 @@ form{
 .catmec-container{
     flex:2;
 }
-
-
-.red{
-    color:red;
-}
-
-/* ----View board game page ------- */
-
-.categories-container{
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    flex-wrap: wrap;
-    gap:1em;
-}
-.categories-container p{
-    border: 0.1em solid black;
-    border-radius: 20em;
-    /* width:fit-content; */
-    padding:0.3em;
-    width:fit-content;
-}
-
