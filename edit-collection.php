@@ -11,6 +11,13 @@
         $name = $_GET['name']; 
         $collectionid = $_GET['collectionid'];
     ?>
+        <?php echo"<a href=\"javascript:history.go(-1)\">"; ?>
+        <div class="back-arrow centered ">
+            <img class="collection-icon" src="./imgs/arrow-left.svg">
+            <h6>cancel</h6>
+        </div></a>
+
+
         <form action='edit-collection.php'>
             <div class="flex column">
                 <h3>Edit Your Collection</h3>
@@ -18,7 +25,7 @@
                 <input type="text" name="collectionName" class="collection-name" value="<?php echo $name?>" /><br />
                  <!-- Hidden field for collection ID -->
                 <input type="hidden" name="collectionid" value="<?php echo $collectionid ?>" />
-                <input type="submit" id="submit"/>
+                <input type="submit" id="submit" value="Save"/>
             </div>
         </form>
     <?php
