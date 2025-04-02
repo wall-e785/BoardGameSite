@@ -29,10 +29,15 @@
             $collection=mysqli_fetch_assoc($res);
             echo "<h3>Created by " . $collection['username'] . " on " . substr($collection['collection_date'], 0, 10) .  "</h3>";
         }
-        
-        // display edit button only if logged in
-        if(isset($_SESSION['username'])){
-            echo "<a class=\"editButton\" href=\"edit-collection.php?name=".urlencode($name)."&collectionid=".urlencode($collectionid)."\">Edit</a>";
+
+
+        if($name != "Owned" && $name != "Wishlist" && $name != "Favourites"){
+            
+            echo "<a href=\"" .  url_for('BoardGameSite/deletecollection.php' . "?collectionid=" . $_GET['collectionid']) . "\"><img class=\"collection-delete-img\" src=\"./imgs/delete.svg\"></a>";
+            // display edit button only if logged in
+            if(isset($_SESSION['username'])){
+                echo "<a class=\"editButton\" href=\"edit-collection.php?name=".urlencode($name)."&collectionid=".urlencode($collectionid)."\">Edit</a>";
+
         }
         
         echo "</div>";

@@ -358,7 +358,12 @@
                                                 }
                                             echo "</div>";
                                     echo "</div>";
-                                echo "<p>". $row["comment_desc"] ."</p>";
+                                echo "<p data-comment-id=\"". $row["comment_id"] ."\">". $row["comment_desc"] ."</p>";
+                                if(!empty($_SESSION["username"])){
+                                    if($row["username"] == $_SESSION["username"]){
+                                        echo "<button type=\"button\" class=\"edit-button\" data-comment-id=\"".$row["comment_id"]."\">Edit</button>";
+                                    }
+                                }
                                 echo "</div>";
                             }
                         }
@@ -370,4 +375,6 @@
         </div>
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="JS/edit-comments.js"></script>
 </html>

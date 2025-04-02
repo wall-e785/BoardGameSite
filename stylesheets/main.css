@@ -62,6 +62,7 @@ textarea{
     resize: none;
     box-sizing: border-box 
 }
+
 form{
     width:100%;
 }
@@ -487,9 +488,103 @@ td{
     width: auto;
     height:8em;
 }
+
+
+.collection-delete-img{
+    width:auto;
+    height: 2em;
+}
+
+.labelAbove{
+    display:flex;
+    flex-direction:column;
+}
+
+.pagination a{
+    display:inline-block;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: thin solid black;
+    color: black;
+}
+
+.pagination a:active{
+    background-color: black;
+    color:white;
+}
+
+.page-numbers{
+    display: inline-block;
+}
+
 .round-border{
     border: 0.1em solid black;
     border-radius: 20em;
     width:fit-content;
     padding:0.3em;
+}
+
+.comment-box{
+    border: 0.1em solid black;
+    padding:0.3em;
+}
+.comment-container{
+    width:100%;
+    flex:3;
+}
+
+.comment-delete{
+    width:auto;
+    height:1.25em;
+    padding-left: .2em;
+}
+
+.comment-delete{
+    color: black;
+}
+
+.comment-delete:hover{
+    color: #F1B63E;
+}
+
+.edit-button{
+    width: 3em;
+    height: auto;
+}
+
+.done-button{
+    width: 3.5em;
+    height: auto;
+}
+
+.cancel-button{
+    width: 5em;
+    height: auto;
+}
+
+.catmec-container{
+    flex:2;
+}
+
+
+.red{
+    color:red;
+}
+
+/* ----View board game page ------- */
+
+.categories-container{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    gap:1em;
+}
+.categories-container p{
+    border: 0.1em solid black;
+    border-radius: 20em;
+    /* width:fit-content; */
+    padding:0.3em;
+    width:fit-content;
 }
