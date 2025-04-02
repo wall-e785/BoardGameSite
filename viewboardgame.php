@@ -168,12 +168,17 @@
                 if(!empty($_POST['add-to-collection'])){
                     //Retrieve string value of the name of the collection they want to add to
                     $selectedCollectionID = $_POST['add-to-collection']; 
-                    // TO DO: Add this game to the selected collection using the collection ID
+                    $game_id = $_GET['gameid'];
 
-                }else{
-                    // Give error that comment box must not be empty
-                    array_push($errorsCollection, 'Please select a collection.');
-                }
+                    $belongto_query = $db->prepare("INSERT INTO BelongTo (collection_id, game_id) VALUES (?, ?)");
+                    $belongto_query->bind_param("ii", $selectedCollectionID, $game_id);
+
+                    $belongto_query->execute();  
+
+                    }else{
+                        // Give error that collection box must not be empty
+                        array_push($errorsCollection, 'Please select a collection.');
+                    }
             }else{
                 // If not logged in, throw error that user must make an account or sign in.
                 array_push($errorsRating, 'Log in or make an account to leave ratings or add to collections.');

@@ -38,15 +38,11 @@
                     $belongto_query->bind_param("ii", $id, $game_id);
                     $belongto_query->execute();  
                 }
+                redirect_to(url_for('BoardGameSite/memberprofile.php'));
             }
 
-            redirect_to(url_for('BoardGameSite/memberprofile.php'));
-        }else{
-            array_push($errors, "Enter a name for this collection!");
         }
 
-
-        echo display_errors($errors);
     }
 
 
