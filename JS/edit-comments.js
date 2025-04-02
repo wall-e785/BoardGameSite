@@ -55,7 +55,7 @@ $(document).ready(function() {
             //call deletecomment to run query
             $.ajax({
                 method: 'POST',
-                url: 'deletecomment.php',
+                url: 'editcomment.php',
                 data: {commentid: comment_id, newtext: newComment},
                 success: function(response){
                     alert("Success. Comment saved!");
