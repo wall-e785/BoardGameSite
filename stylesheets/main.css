@@ -50,6 +50,7 @@ textarea{
     resize: none;
     box-sizing: border-box 
 }
+
 form{
     width:100%;
 }
@@ -358,6 +359,11 @@ form{
 
 .comment-delete:hover{
     color: #F1B63E;
+}
+
+.edit-button, .done-button{
+    width: 3em;
+    height: auto;
 }
 
 .catmec-container{
