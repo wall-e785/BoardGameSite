@@ -88,7 +88,7 @@
 
                         if(mysqli_query($db, $insert_user_query)){
                             //INSERT is successful, save a session then redirect to dashboard
-                            $_SESSION['signup-username'] = $_POST['signup-username'];
+                            $_SESSION['username'] = $_POST['signup-username'];
                             redirect_to(url_for('BoardGameSite/memberprofile.php'));
                             }else{
                             //Display the mysql error if failed
