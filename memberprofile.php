@@ -107,26 +107,6 @@
             <div class="padding flex column">
             <h3>Collections</h3>
             <div class="flex wrap">
-                <div class="collection-preview">
-                    <div class="collection-img">
-                        <img class="collection-icon" src="./imgs/bookmark-filled.svg">
-                    </div>
-                    <?php
-                        echo "<a href=\"". url_for("BoardGameSite/collectionpage.php" ."\">Owned</a>")
-                    ?>
-                </div>
-                <div class="collection-preview">
-                    <div class="collection-img">
-                        <img class="collection-icon" src="./imgs/star-filled.svg">
-                    </div>
-                    <h4>Wishlist<h4>
-                </div>
-                <div class="collection-preview">
-                    <div class="collection-img">
-                        <img class="collection-icon" src="./imgs/heart-filled.svg">
-                    </div>
-                    <h4>Favourites<h4>
-                </div>
                 <?php
                     // Loop through comments
                     $collections_query = "SELECT collection_name, collection_id 
@@ -140,7 +120,15 @@
                         while($row= mysqli_fetch_assoc($res)){
                             echo "<div class=\"collection-preview\">";
                                 echo "<div class=\"collection-img\">";
+                                if ($row["collection_name"] == "Owned"){
+                                    echo "<img class=\"collection-icon\" src=\"./imgs/star-filled.svg\">";
+                                }else if($row["collection_name"] == "Wishlist"){
+                                    echo "<img class=\"collection-icon\" src=\"./imgs/bookmark-filled.svg\">";
+                                }else if($row["collection_name"] == "Favourites"){
+                                    echo "<img class=\"collection-icon\" src=\"./imgs/heart-filled.svg\">";
+                                }else{
                                     echo "<img class=\"collection-icon\" src=\"./imgs/heart-outline.svg\">";
+                                }
                                 echo "</div>";
                                 echo "<a href=\"" . url_for('BoardGameSite/collectionpage.php') . "?collectionid=" . $row['collection_id'] . "&name=" . $row['collection_name'] . "\">" . $row['collection_name'] ."</a>";
                             echo "</div>"; 

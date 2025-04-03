@@ -168,12 +168,17 @@
                 if(!empty($_POST['add-to-collection'])){
                     //Retrieve string value of the name of the collection they want to add to
                     $selectedCollectionID = $_POST['add-to-collection']; 
-                    // TO DO: Add this game to the selected collection using the collection ID
+                    $game_id = $_GET['gameid'];
 
-                }else{
-                    // Give error that comment box must not be empty
-                    array_push($errorsCollection, 'Please select a collection.');
-                }
+                    $belongto_query = $db->prepare("INSERT INTO BelongTo (collection_id, game_id) VALUES (?, ?)");
+                    $belongto_query->bind_param("ii", $selectedCollectionID, $game_id);
+
+                    $belongto_query->execute();  
+
+                    }else{
+                        // Give error that collection box must not be empty
+                        array_push($errorsCollection, 'Please select a collection.');
+                    }
             }else{
                 // If not logged in, throw error that user must make an account or sign in.
                 array_push($errorsRating, 'Log in or make an account to leave ratings or add to collections.');
@@ -358,7 +363,12 @@
                                                 }
                                             echo "</div>";
                                     echo "</div>";
-                                echo "<p>". $row["comment_desc"] ."</p>";
+                                echo "<p data-comment-id=\"". $row["comment_id"] ."\">". $row["comment_desc"] ."</p>";
+                                if(!empty($_SESSION["username"])){
+                                    if($row["username"] == $_SESSION["username"]){
+                                        echo "<button type=\"button\" class=\"edit-button\" data-comment-id=\"".$row["comment_id"]."\">Edit</button>";
+                                    }
+                                }
                                 echo "</div>";
                             }
                         }
@@ -370,4 +380,6 @@
         </div>
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="JS/edit-comments.js"></script>
 </html>

@@ -9,17 +9,23 @@ $(document).ready(function() {
 
         var collect_name = $('.collection-name').val();
         
-        if(selected_games.length > 0){
+        if(selected_games.length > 0 && collect_name.trim().length != 0){
             $.ajax({
                 method: 'POST',
                 url: 'processcollection.php',
                 data: {checked: selected_games, name: collect_name},
                 success: function(response){
-                    alert(response);
+                    alert("Success. Collection created");
                 }
             });
         }else{
-            alert("Error creating collection: Please select at least one game!");
+            if(selected_games.length <= 0){
+                alert("Error creating collection: Please select at least one game!");
+            }else if(collect_name.trim().length <=0){
+                alert("Error creating collection: Name cannot be blank!");
+            }else{
+                alert("Error creating collection: Please try again.");
+            }
         }
         
     });
