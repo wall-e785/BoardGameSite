@@ -89,6 +89,27 @@
                         if(mysqli_query($db, $insert_user_query)){
                             //INSERT is successful, save a session then redirect to dashboard
                             $_SESSION['username'] = $_POST['signup-username'];
+
+                            //if the signup was successful, create the preset collections for the user
+                            $insert_str = $db -> prepare("INSERT INTO Collections (collection_name, collection_date, username) VALUES (?, ?, ?)");
+                            //referenced date/time from: https://www.w3schools.com/php/php_date.asp
+                            $insert_str->bind_param("sss", $name, $datetime, $username);
+
+                            $name = "Owned";
+                            $datetime = date("Y-m-d") . " " . date("H:i:s");
+                            $username = $_SESSION['username'];
+                            $insert_str->execute();  
+
+                            $name = "Wishlist";
+                            $datetime = date("Y-m-d") . " " . date("H:i:s");
+                            $username = $_SESSION['username'];
+                            $insert_str->execute();  
+
+                            $name = "Favourites";
+                            $datetime = date("Y-m-d") . " " . date("H:i:s");
+                            $username = $_SESSION['username'];
+                            $insert_str->execute();  
+
                             redirect_to(url_for('BoardGameSite/memberprofile.php'));
                             }else{
                             //Display the mysql error if failed
