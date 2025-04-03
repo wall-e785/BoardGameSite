@@ -217,7 +217,7 @@
             </div>
             <div id="comments" class="padding-lrg comment-container flex column gap1em">
                 <!-- Leave a comment form -->
-                <?php echo display_errors($errors); ?>
+                <?php echo display_errors($errorsComments); ?>
                 <form action="viewboardgame.php?gameid=<?php echo $gameid?>" method="post">
                     <textarea name="comment" id="comment" placeholder="Post your Comment Here ..."></textarea><br>
                     <input type="submit" name="post-comment" value="Comment"/>

@@ -47,11 +47,12 @@
                         $insert_str = $db -> prepare("INSERT INTO Ratings (rating_num, rating_date, game_id, username) VALUES (?, ?, ?, ?)");
                         //referenced date/time from: https://www.w3schools.com/php/php_date.asp
                         $insert_str->bind_param("ssis", $rating, $datetime, $gameid, $username);
-
-                        $rating = $_POST['rating'];
-                        $datetime = date("Y-m-d") . " " . date("H:i:s");
-                        $gameid = $_GET['gameid'];
-                        $username = $_SESSION['username'];
+                        if(is_int($_POST['rating'])){ // Make sure rating is in fact type int 
+                            $rating = $_POST['rating'];
+                            $datetime = date("Y-m-d") . " " . date("H:i:s");
+                            $gameid = $_GET['gameid'];
+                            $username = $_SESSION['username'];
+                        }
                         $insert_str->execute();  
                     }else{ // Update the existing rating instead of reating a new row
                         $update_str = "UPDATE Ratings SET rating_num = ? WHERE rating_id = ?";
@@ -117,11 +118,11 @@
                     $insert_str->execute();           
                 }else{
                     // Give error that comment box must not be empty
-                    array_push($errors, 'Comment box must not be empty.');
+                    array_push($errorsComments, 'Comment box must not be empty.');
                 }
             }else{
                 // If not logged in, throw error that user must make an account or sign in.
-                array_push($errors, 'Log in or make an account to leave a comment.');
+                array_push($errorsComments, 'Log in or make an account to leave a comment.');
             }
         }
     } 
