@@ -503,6 +503,10 @@ td{
     display: flex;
     flex-direction: row;
 }
+#username{
+    flex:1;
+    
+}
 .username {
     width:fit-content;
     padding:2em 3em;  
@@ -513,7 +517,7 @@ td{
 #userstats{
     padding:2em 3em;  
     width:100%;
-    
+    flex: 1;
 }
 .userstats-container{
     display: -webkit-box;

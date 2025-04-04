@@ -12,7 +12,7 @@
         <div class="border-right" id="username">
             <div class="username">
                 <!-- add user profile image?? -->
-                <?php  echo "<h2 class=\"\">" . $_SESSION['username'] . "</h2>"; ?> <!-- Display username -->
+                <?php  echo "<h2>" . $_SESSION['username'] . "</h2>"; ?> <!-- Display username -->
             </div>
         </div>
         <div id="userstats">
