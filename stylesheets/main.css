@@ -1,4 +1,4 @@
-/* General text elements  */
+/* ------------------------------ General text elements ------------------------------ */
 html, body, * {
     font-family: "Outfit", sans-serif;
 }
@@ -85,7 +85,7 @@ select {
     font-size: 1em;
 }
 
-/* ----------------------- Nav bar ------------------------ */
+/* ------------------------------ Nav bar ------------------------------ */
 .header{
     border-bottom: solid black 0.1em;
     position: absolute;
@@ -127,9 +127,9 @@ select {
 .navbar a:hover{
     color: #F1B63E;
 }
-/* ----------------------- END Nav bar ------------------------ */
+/* ------------------------------ //END Nav bar ------------------------------ */
 
-/* ----------------------- Index Page ------------------------ */
+/* ------------------------------ Index Page ------------------------------ */
 .index-header-no-user{
     display: -webkit-box;
     display: -webkit-flex;
@@ -209,10 +209,10 @@ select {
    padding:2em 3em;
 }
 
-/* ------//End index page ------- */
+/* ------------------------------ //END index page ------------------------------ */
 
 
-/* ------ Sign in page ------- */
+/* ------------------------------ Sign in page ------------------------------ */
 .signin-body{
     height:100%;
     display: -webkit-box;
@@ -245,41 +245,181 @@ select {
     margin-top:1em;
     display: block;  
 }
-/* ------ END Sign in page ------- */
+/* ------------------------------ //END Sign in page ------------------------------ */
 
-
-
-.collection-icon{
-    width:100%;
-    height:100%;
+/* ------------------------------ View board game page ------------------------------ */
+.flex-row{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
 }
-
-
-/* --------------------- View board game page ---------------- */
 .view-game-img{
     width:auto;
     height:22em;
 }
-.view-game-img-padding{
+.view-game-img-container{
     padding:2em 2em;
     width:fit-content;
-    
     flex-grow:1;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content:space-evenly;
 }
-.game-details{
+.details-rating-container{
     align-content: stretch;
-   height:auto;
+    height:auto;
+    flex: 1;
+    justify-content: stretch;
+}
+.game-details-container{
+    flex: 1; 
+}
+.leave-rating-container{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    padding: 2em 3em;
+    justify-content: center;
+    gap:1em;
     flex: 1;
 }
+.rating-colletion-form{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction:row;
+    gap:1em;
+    justify-content: center;
+    align-items: center;
+}
+.rating-colletion-form label{
+    font-size: 1.4em;
+}
+.rating-colletion-form select{
+    padding:0.5em;
+}
+.game-details{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    padding:2em 5em;
+    gap:1em; /* I want to do justify content:space evenly but it wasnt working */
+}
 .game-info-container{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
     flex-grow:3;
 }
 .game-name{
     width:100%;
+    padding:2em 3em;
 }
-/* --------------------- END View board game page ---------------- */
+.back-button-container {
+    padding:0em 2em;
+    text-align:center;
+    height:100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.avg-rating{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding:0em 3em;
+    gap:0.5em;
+}
+.game-info-row{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding:2em 3em;
+}
+.categories-container{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    gap:1em;
+}
+.categories-container p{
+    border: 0.1em solid black;
+    border-radius: 20em;
+    /* width:fit-content; */
+    padding:0.3em;
+    width:fit-content;
+}
+.comment-box{
+    border: 0.1em solid black;
+    padding:0.3em;
+}
+.comment-container{
+    width:100%;
+    flex:3;
+}
+.comment-delete{
+    width:auto;
+    height:1.25em;
+    padding-left: .2em;
+}
+.comment-delete{
+    color: black;
+}
+.comment-delete:hover{
+    color: #F1B63E;
+}
+.catmec-container{
+    flex:2;
+}
+.edit-button{
+    width: 3em;
+    height: auto;
+}
+.done-button{
+    width: 3.5em;
+    height: auto;
+}
+.cancel-button{
+    width: 5em;
+    height: auto;
+}
+.comments-container{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    gap:1em;
+}
+.comment-form{
+    margin-bottom: 1em;
+}
+/* ------------------------------ //END View board game page ------------------------------ */
 
-/* ---------------- Search page --------------- */
+/* ------------------------------ Search page ------------------------------ */
 .labelAbove{
     display:flex;
     flex-direction:column;
@@ -343,121 +483,56 @@ td{
 .search-form-numfield input {
     width:30%;
 }
+.back-arrow{
+    width:5em;
+    height:5em;
+}
+/* ------------------------------ //END Search page ------------------------------ */
 
 
-/* ----View board game page ------- */
 
-.categories-container{
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    flex-wrap: wrap;
-    gap:1em;
-}
-.categories-container p{
-    border: 0.1em solid black;
-    border-radius: 20em;
-    /* width:fit-content; */
-    padding:0.3em;
-    width:fit-content;
-}
-.comment-box{
-    border: 0.1em solid black;
-    padding:0.3em;
-}
-.comment-container{
+/* ------------------------------ Member profile page ------------------------------ */
+.collection-icon{
     width:100%;
-    flex:3;
+    height:100%;
 }
-
-.comment-delete{
-    width:auto;
-    height:1.25em;
-    padding-left: .2em;
-}
-
-.comment-delete{
-    color: black;
-}
-
-.comment-delete:hover{
-    color: #F1B63E;
-}
-
-.catmec-container{
-    flex:2;
-}
-/* ---------------- END View board game page ------------------- */
-
-
-
-
-.flex{
+.profile-header{
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-}
-
-.row{
     flex-direction: row;
 }
-.column{
-    flex-direction: column;
+.username {
+    width:fit-content;
+    padding:2em 3em;  
 }
-.gap1em{
-    gap:1em;
+.username h2{
+    display: inline-block;
 }
-
-.centered{
-    align-items: center;
-    text-align:center;
-    margin:auto;
+#userstats{
+    padding:2em 3em;  
+    width:100%;
+    
 }
-
-.wrap{
+.userstats-container{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
     flex-wrap: wrap;
-    gap:1em;
+    justify-content: space-between;
+    height:100%;
+    align-content:center;
+    gap:2em;
 }
-
-.space-evenly{
-    justify-content:space-evenly;
-}
-.space-between{
-    justify-content:space-between;
-}
-
-
-
-
-.border-top{
-    border-top: solid black 0.1em;
-}
-.border-right{
-    border-right:solid black 0.1em;
-}
-.border-left{
-    border-left: 0.1em solid black;
-}
-
-.padding-lrg{
-    padding:2em 5em;
-}
-.padding-sm{
-    padding:1em 2em;
-}
-
 .profile-body{
     min-height:50em;
 }
-
-
 .activity{
     border: solid black 0.1em;
     padding: 1em 2em;
 }
-
 .activity a{
     font-size: 1.2em;
     padding-left: .25em;
@@ -474,9 +549,78 @@ td{
     height:12em;
     background-color: #FFDE9C;
 }
-.back-arrow{
-    width:5em;
-    height:5em;
+.activity-collections-container{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    gap:2em;
+    padding:2em 3em;
+}
+.recent-activity{
+    min-width: 20em;
+}
+
+.collections-container{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap:wrap;
+    gap:2em;
+}
+/* ------------------------------ //END Member profile page ------------------------------ */
+
+
+
+.border-top{
+    border-top: solid black 0.1em;
+}
+.border-right{
+    border-right:solid black 0.1em;
+}
+.border-left{
+    border-left: 0.1em solid black;
+}
+
+.flex{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    
+}
+
+.row{
+    flex-direction: row;
+}
+.column{
+    flex-direction: column;
+}
+.gap1em{
+    gap:1em;
+}
+
+
+
+.wrap{
+    flex-wrap: wrap;
+    gap:1em;
+}
+
+.space-evenly{
+    justify-content:space-evenly;
+}
+.space-between{
+    justify-content:space-between;
+}
+
+.padding-lrg{
+    padding:2em 5em;
+}
+.padding-sm{
+    padding:1em 2em;
 }
 
 .make-collection-wrap{
@@ -489,102 +633,7 @@ td{
     height:8em;
 }
 
-
 .collection-delete-img{
     width:auto;
     height: 2em;
-}
-
-.labelAbove{
-    display:flex;
-    flex-direction:column;
-}
-
-.pagination a{
-    display:inline-block;
-    text-decoration: none;
-    padding: 10px 20px;
-    border: thin solid black;
-    color: black;
-}
-
-.pagination a:active{
-    background-color: black;
-    color:white;
-}
-
-.page-numbers{
-    display: inline-block;
-}
-
-.round-border{
-    border: 0.1em solid black;
-    border-radius: 20em;
-    width:fit-content;
-    padding:0.3em;
-}
-
-.comment-box{
-    border: 0.1em solid black;
-    padding:0.3em;
-}
-.comment-container{
-    width:100%;
-    flex:3;
-}
-
-.comment-delete{
-    width:auto;
-    height:1.25em;
-    padding-left: .2em;
-}
-
-.comment-delete{
-    color: black;
-}
-
-.comment-delete:hover{
-    color: #F1B63E;
-}
-
-.edit-button{
-    width: 3em;
-    height: auto;
-}
-
-.done-button{
-    width: 3.5em;
-    height: auto;
-}
-
-.cancel-button{
-    width: 5em;
-    height: auto;
-}
-
-.catmec-container{
-    flex:2;
-}
-
-
-.red{
-    color:red;
-}
-
-/* ----View board game page ------- */
-
-.categories-container{
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    flex-wrap: wrap;
-    gap:1em;
-}
-.categories-container p{
-    border: 0.1em solid black;
-    border-radius: 20em;
-    /* width:fit-content; */
-    padding:0.3em;
-    width:fit-content;
 }

@@ -80,55 +80,54 @@
         $res->free_result();
 
     ?>    
-        <div class="flex row">
-            <div class="border-right game-info-container flex column">
-                <div class="flex row">
+        <div class="flex-row">
+            <div class="game-info-container border-right">
+                <div class="flex-row">
                     <div class="border-right">
                         <!-- Back URL from https://stackoverflow.com/questions/2548566/go-back-to-previous-page -->
-                        <?php echo"<a href=\"javascript:history.go(-1)\">"; ?>
-                            <div class="back-arrow centered ">
-                                <img class="collection-icon" src="./imgs/arrow-left.svg">
-                                <h6>back</h6>
+                            <div class="back-button-container">
+                                <div class="back-arrow">
+                                    <?php echo"<a href=\"javascript:history.go(-1)\">"; ?><img class="collection-icon" src="./imgs/arrow-left.svg"></a>
+                                </div>
+                                <?php echo"<a href=\"javascript:history.go(-1)\">"; ?><h6>back</h6></a>
                             </div>
-                        </a>
+                        
                     </div>
                     
-                    <div class="border-right game-name padding-sm">
+                    <div class="game-name border-right">
                         <?php echo "<h2>".$game_name."</h2>"; ?>
                     </div>
 
-                    <div class="centered padding-sm">
+                    <div class="avg-rating">
                         <p>Avg. Rating</p>
-                        <?php 
-                        
-                        echo "<h3>".$avg_rating."</h3>"; ?>
+                        <?php echo "<h3>".$avg_rating."</h3>"; ?>
                     </div>
                 </div>
 
-                <div class="flex row space-evenly border-top padding-sm">
+                <div class="game-info-row border-top ">
                 <?php
                     // If min and max time are the same, only display avg time.
                     if($min_time == $max_time){
-                        echo "<p>Avg. Time: ".$avg_time." min</p>";
+                        echo "<h3>Avg. Time: ".$avg_time." min</h3>";
                     }else{
                     // Else, display both min, max, and avg time
-                        echo "<p>Time: ".$min_time."-".$max_time." min</p>";
-                        echo "<p>Avg. Time: ".$avg_time." min</p>";
+                        echo "<h3>Time: ".$min_time."-".$max_time." min</h3>";
+                        echo "<h3>Avg. Time: ".$avg_time." min</h3>";
                     }
                     
                     // If min and max players are the same, only display one.
                     if($min_players==$max_players){
-                        echo "<p>Players: ".$min_players."</p>";
+                        echo "<h3>Players: ".$min_players."</h3>";
                     }else{
                         // Else, display both min and max.
-                        echo "<p>Players: ".$min_players."-".$max_players."</p>";
+                        echo "<h3>Players: ".$min_players."-".$max_players."</h3>";
                     }
                 ?>
                 </div>
 
-                <div class="border-top flex row game-details">
-                    <div class="border-right">
-                        <div class="padding-lrg">
+                <div class="border-top flex-row details-rating-container">
+                    <div class="game-details-container border-right">
+                        <div class="game-details">
                         <?php
                             echo "<p>Year Published: ".$year."</p>";
                             echo "<p>Designer: ".$designer."</p>";
@@ -137,9 +136,9 @@
                         ?>
                         </div>
                     </div>
-                    <div class="padding-sm">
+                    <div class="leave-rating-container">
                         <!---------- Leave ratings ----------->
-                        <form action="" method="post">
+                        <form class="rating-colletion-form" action="" method="post">
                             <label for="rating">Leave a Rating:</label>
                             <?php echo display_errors($errorsRating); ?>
                             <select name="rating" id="rating">
@@ -156,7 +155,7 @@
                         </form>
 
                         <!----------- Add to a collection --------->
-                        <form action="" method="post">
+                        <form class="rating-colletion-form" action="" method="post">
                             <label for="add-to-collection">Add to a collection:</label>
                             <?php echo display_errors($errorsCollection); ?>
                             <select name="add-to-collection" id="add-to-collection">
@@ -184,7 +183,7 @@
                     </div>
                 </div>
             </div>
-            <div class="view-game-img-padding flex space-evenly">
+            <div class="view-game-img-container">
                 <?php echo "<img class=\"view-game-img\" src=\"$img_url\">"; ?>
             </div>
         </div> 
@@ -219,13 +218,13 @@
                 <!-- Leave a comment form -->
                 <?php echo display_errors($errorsComments); ?>
                 <form action="viewboardgame.php?gameid=<?php echo $gameid?>" method="post">
-                    <textarea name="comment" id="comment" placeholder="Post your Comment Here ..."></textarea><br>
+                    <textarea class="comment-form" name="comment" id="comment" placeholder="Post your Comment Here ..."></textarea><br>
                     <input type="submit" name="post-comment" value="Comment"/>
                 </form>
 
                 <h3>Comments</h3>
                 <!-- box that holds all comments -->
-                <div class=""> 
+                <div class="comments-container"> 
                     <?php
                         // Loop through comments
                         $comments_query = "SELECT * 

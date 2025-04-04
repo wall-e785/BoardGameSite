@@ -8,18 +8,18 @@
     ?>
     <div class="body">
     
-    <div class="flex row">
+    <div class="profile-header">
         <div class="border-right" id="username">
-            <div class="padding">
+            <div class="username">
                 <!-- add user profile image?? -->
-                <?php  echo "<h2>" . $_SESSION['username'] . "</h2>"; ?>
+                <?php  echo "<h2 class=\"\">" . $_SESSION['username'] . "</h2>"; ?> <!-- Display username -->
             </div>
         </div>
-        <div class="flex wrap" id="userstats">
-            <div class="padding">
+        <div id="userstats">
+            <div class="userstats-container">
             <?php
-                echo "<p>Owned: </p>";
-                echo "<p>Rated: </p>";
+                echo "<h3>Owned: </h3>";
+                echo "<h3>Rated: </h3>";
 
                  // Loop through comments
                  $comments_query = "SELECT * 
@@ -30,9 +30,9 @@
                 $res = mysqli_query($db, $comments_query);
                 // Check if there are any results
                 if (mysqli_num_rows($res) == 0 ){
-                    echo "<p>Commented: 0</p>";
+                    echo "<h3>Commented: 0</h3>";
                 }else if(mysqli_num_rows($res) != 0) {
-                    echo "<p>Commented: " . mysqli_num_rows($res) . "</p>";
+                    echo "<h3>Commented: " . mysqli_num_rows($res) . "</h3>";
                 }
                 $res -> free_result();
 
@@ -45,9 +45,9 @@
                 $res = mysqli_query($db, $collections_query);
                 // Check if there are any results
                 if (mysqli_num_rows($res) == 0 ){
-                    echo "<p>Collections: 0</p>";
+                    echo "<h3>Collections: 0</h3>";
                 }else if(mysqli_num_rows($res) != 0) {
-                    echo "<p>Collections: " . mysqli_num_rows($res) . "</p>";
+                    echo "<h3>Collections: " . mysqli_num_rows($res) . "</h3>";
                 }
                 $res -> free_result();
             ?>
@@ -58,7 +58,7 @@
 
     <div class="flex row border-top profile-body">
         <div class="border-right">
-            <div class="padding flex column">
+            <div class="activity-collections-container recent-activity">
                 <h3>Recent Activity</h3>
     
                 <?php
@@ -73,7 +73,6 @@
                 if (mysqli_num_rows($res) == 0 ){
                     echo "<div class=\"flex row activity\">";
                         echo "<p>No activity yet!</p>";
-                        echo "<img src=\"./imgs/arrow-right.svg\">";
                     echo "</div>";   
                 }else if(mysqli_num_rows($res) != 0) {
                     while($row= mysqli_fetch_assoc($res)){
@@ -104,9 +103,9 @@
             </div>
         </div>
         <div>
-            <div class="padding flex column">
+            <div class="activity-collections-container">
             <h3>Collections</h3>
-            <div class="flex wrap">
+            <div class="collections-container">
                 <?php
                     // Loop through comments
                     $collections_query = "SELECT collection_name, collection_id 
