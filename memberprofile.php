@@ -62,22 +62,36 @@
                 <h3>Recent Activity</h3>
     
                 <?php
-                // Loop through comments
-                 $comments_query = "SELECT * 
-                 FROM Comments
-                 WHERE username = '". $_SESSION['username'] . "'";
+                //referenced sql order by date here: https://stackoverflow.com/questions/24567274/sql-order-by-datetime-desc
+                //referenced unioning tables from: https://www.w3schools.com/sql/sql_ref_union_all.asp
+                // Select from comments, then union the selection from ratings. Use variable type to keep track of which is which
+                $recent_query = "(SELECT comment_id AS id, comment_date AS created, game_id, 'comment' AS type
+                FROM Comments
+                UNION ALL
+                SELECT rating_id AS id, rating_date AS created, game_id, 'rating' AS type
+                FROM Ratings
+                WHERE username = '". $_SESSION['username'] . "')
+                ORDER BY created DESC
+                LIMIT 10";
 
                 // Execute the query 
-                $res = mysqli_query($db, $comments_query);
+                $recent_res = mysqli_query($db, $recent_query);
+
                 // Check if there are any results
-                if (mysqli_num_rows($res) == 0 ){
+                if (mysqli_num_rows($recent_res) == 0){
                     echo "<div class=\"flex row activity\">";
                         echo "<p>No activity yet!</p>";
                     echo "</div>";   
-                }else if(mysqli_num_rows($res) != 0) {
-                    while($row= mysqli_fetch_assoc($res)){
+                }else if(mysqli_num_rows($recent_res) != 0) {
+                    while($row= mysqli_fetch_assoc($recent_res)){
                         echo "<div class=\"flex row activity\">";
-                            echo "<p>Commented on</p>";
+
+                            //display proper header depending on the activity type
+                            if($row['type'] == 'comment'){
+                                echo "<p>Commented on</p>";
+                            }else if($row['type'] == 'rating'){
+                                echo "<p>Rated</p>";
+                            }
 
                             $game_query = "SELECT names, game_id
                             FROM BoardGames
@@ -94,10 +108,11 @@
                                 }
                             }
                             
-                        echo "</div>";   
+                        echo "</div>";  
                     }
                 }
-                $res -> free_result();
+                $recent_res -> free_result();
+
 
                 ?>
             </div>
