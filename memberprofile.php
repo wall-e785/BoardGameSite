@@ -18,10 +18,30 @@
         <div id="userstats">
             <div class="userstats-container">
             <?php
-                echo "<h3>Owned: </h3>";
+
+                //referenced this to review nested queries https://learnsql.com/blog/sql-nested-select/
+                //select all of the games that belong to the user's owned collection.
+                //nested query retrives the collection_id of the owned collection, then referenced
+                //by the main query to count how many entries in BelongTo have that collection_id
+                $owned_query = "SELECT BelongTo.collection_id
+                FROM BelongTo
+                WHERE BelongTo.collection_id IN (
+                    SELECT collection_id
+                    FROM Collections
+                    WHERE username = '". $_SESSION['username'] . "' AND collection_name = 'Owned')";
+
+                //Execute the query
+                $owned_res = mysqli_query($db, $owned_query);
+
+                // Check if there are any results
+                if (mysqli_num_rows($owned_res) == 0 ){
+                    echo "<h3>Owned: 0</h3>";
+                }else if(mysqli_num_rows($owned_res) != 0) {
+                    echo "<h3>Owned: " . mysqli_num_rows($owned_res) . "</h3>";
+                }
 
                  // Loop through ratings
-                 $ratings_query = "SELECT * 
+                 $ratings_query = "SELECT rating_id 
                  FROM Ratings
                  WHERE username = '". $_SESSION['username'] . "'";
 
@@ -36,7 +56,7 @@
                 $rating_res -> free_result();
 
                  // Loop through comments
-                 $comments_query = "SELECT * 
+                 $comments_query = "SELECT comment_id 
                  FROM Comments
                  WHERE username = '". $_SESSION['username'] . "'";
 
