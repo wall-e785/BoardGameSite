@@ -19,7 +19,21 @@
             <div class="userstats-container">
             <?php
                 echo "<h3>Owned: </h3>";
-                echo "<h3>Rated: </h3>";
+
+                 // Loop through ratings
+                 $ratings_query = "SELECT * 
+                 FROM Ratings
+                 WHERE username = '". $_SESSION['username'] . "'";
+
+                // Execute the query 
+                $rating_res = mysqli_query($db, $ratings_query);
+                // Check if there are any results
+                if (mysqli_num_rows($rating_res) == 0 ){
+                    echo "<h3>Rated: 0</h3>";
+                }else if(mysqli_num_rows($rating_res) != 0) {
+                    echo "<h3>Rated: " . mysqli_num_rows($rating_res) . "</h3>";
+                }
+                $rating_res -> free_result();
 
                  // Loop through comments
                  $comments_query = "SELECT * 
@@ -27,14 +41,14 @@
                  WHERE username = '". $_SESSION['username'] . "'";
 
                 // Execute the query 
-                $res = mysqli_query($db, $comments_query);
+                $comment_res = mysqli_query($db, $comments_query);
                 // Check if there are any results
-                if (mysqli_num_rows($res) == 0 ){
+                if (mysqli_num_rows($comment_res) == 0 ){
                     echo "<h3>Commented: 0</h3>";
-                }else if(mysqli_num_rows($res) != 0) {
-                    echo "<h3>Commented: " . mysqli_num_rows($res) . "</h3>";
+                }else if(mysqli_num_rows($comment_res) != 0) {
+                    echo "<h3>Commented: " . mysqli_num_rows($comment_res) . "</h3>";
                 }
-                $res -> free_result();
+                $comment_res -> free_result();
 
                 // Loop through comments
                 $collections_query = "SELECT * 
