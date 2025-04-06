@@ -138,9 +138,8 @@
                     </div>
                     <div class="leave-rating-container">
                         <!---------- Leave ratings ----------->
-                        <form class="rating-colletion-form" action="" method="post">
+                        <form class="rating-collection-form">
                             <label for="rating">Leave a Rating:</label>
-                            <?php echo display_errors($errorsRating); ?>
                             <select name="rating" id="rating">
                                 <option value="">   </option> <!-- First option blank -->
                                 <?php
@@ -151,11 +150,11 @@
                                     }
                                 ?>
                             </select> 
-                            <input name="rating-submit" type="submit" value="Submit Rating"/>
+                            <?php echo "<button type=\"button\" id=\"submit-rating\" data-game-id=\"" . $_GET["gameid"] . "\">Submit Rating</button>"; ?>
                         </form>
 
                         <!----------- Add to a collection --------->
-                        <form class="rating-colletion-form" action="" method="post">
+                        <form class="rating-collection-form" action="" method="post">
                             <label for="add-to-collection">Add to a collection:</label>
                             <?php echo display_errors($errorsCollection); ?>
                             <select name="add-to-collection" id="add-to-collection">
@@ -276,4 +275,5 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="JS/edit-comments.js"></script>
+<script src="JS/submit-rating.js"></script>
 </html>

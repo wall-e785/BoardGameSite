@@ -77,12 +77,22 @@ input[type=submit] {
     border-radius: 10em;
 }
 input[type=submit]:hover {
-    background-color: #F1B63E;
 }
 select {
     background-color: white;
     border:solid black 0.1em;
     font-size: 1em;
+}
+button{
+    background-color: #FFDE9C;
+    border:none;
+    padding:1em;
+    border-radius: 10em;
+}
+
+button:hover{
+    background-color: #F1B63E;
+
 }
 
 /* ------------------------------ Nav bar ------------------------------ */
@@ -289,7 +299,7 @@ select {
     gap:1em;
     flex: 1;
 }
-.rating-colletion-form{
+.rating-collection-form{
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -299,10 +309,10 @@ select {
     justify-content: center;
     align-items: center;
 }
-.rating-colletion-form label{
+.rating-collection-form label{
     font-size: 1.4em;
 }
-.rating-colletion-form select{
+.rating-collection-form select{
     padding:0.5em;
 }
 .game-details{
