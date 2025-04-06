@@ -541,15 +541,28 @@ td{
     gap:2em;
 }
 .profile-body{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
     min-height:50em;
+
 }
 .activity{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    gap:1em;
     border: solid black 0.1em;
     padding: 1em 2em;
+    justify-content: space-between;
 }
-.activity a{
+.activity-game-name{
     font-size: 1.2em;
-    padding-left: .25em;
+    width:fit-content;
 }
 .collection-img{
     width:12em;
@@ -565,11 +578,18 @@ td{
     flex-direction: column;
     gap:2em;
     padding:2em 3em;
+    flex:1;
 }
 .recent-activity{
-    min-width: 20em;
+    min-width: 30em;
 }
-
+.activity-name{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction:row;
+}
 .collections-container{
     display: -webkit-box;
     display: -webkit-flex;

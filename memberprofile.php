@@ -90,7 +90,7 @@
         </div>
     </div>
 
-    <div class="flex row border-top profile-body">
+    <div class="border-top profile-body">
         <div class="border-right">
             <div class="activity-collections-container recent-activity">
                 <h3>Recent Activity</h3>
@@ -113,35 +113,43 @@
 
                 // Check if there are any results
                 if (mysqli_num_rows($recent_res) == 0){
-                    echo "<div class=\"flex row activity\">";
+                    echo "<div class=\"activity\">";
                         echo "<p>No activity yet!</p>";
                     echo "</div>";   
                 }else if(mysqli_num_rows($recent_res) != 0) {
                     while($row= mysqli_fetch_assoc($recent_res)){
-                        echo "<div class=\"flex row activity\">";
-
-                            //display proper header depending on the activity type
-                            if($row['type'] == 'comment'){
-                                echo "<p>Commented on</p>";
-                            }else if($row['type'] == 'rating'){
-                                echo "<p>Rated</p>";
-                            }
-
-                            $game_query = "SELECT names, game_id
-                            FROM BoardGames
-                            WHERE game_id =" . $row['game_id'];
-        
-                            $name = mysqli_query($db, $game_query);
+                        echo "<div class=\"activity\">";
+                            echo "<div>";
+                                // Date
+                                $dates = explode(" ", $row['created']); // Date, no time stamp
+                                echo "<p>".$dates[0]."</p>";
+                            echo "</div>";
+                            echo "<div class=\"activity-name\">";
                             
-                            if(mysqli_num_rows($name) == 0){
-                                echo "<p>Name not found</p>";
-                            }else{
-                                while($gameinfo= mysqli_fetch_assoc($name)){
-                                    echo "<a href=\"". url_for('BoardGameSite/viewboardgame.php?gameid=') . $gameinfo['game_id'] ."\">". $gameinfo['names'] ."</a>";
-                                    echo "<img src=\"./imgs/arrow-right.svg\">";
+                                $game_query = "SELECT names, game_id
+                                FROM BoardGames
+                                WHERE game_id =" . $row['game_id'];
+            
+                                $name = mysqli_query($db, $game_query);
+                                
+                                if(mysqli_num_rows($name) == 0){
+                                    echo "<p>Name not found</p>";
+                                }else{
+                                    while($gameinfo= mysqli_fetch_assoc($name)){
+                                        //display proper header depending on the activity type
+                                        if($row['type'] == 'comment'){
+                                            echo "<p class=\"activity-game-name\" >Commented on <a href=\"". url_for('BoardGameSite/viewboardgame.php?gameid=') . $gameinfo['game_id'] ."\">". $gameinfo['names'] ."</a></p>";
+                                        }else if($row['type'] == 'rating'){
+                                            echo "<p class=\"activity-game-name\">Rated <a href=\"". url_for('BoardGameSite/viewboardgame.php?gameid=') . $gameinfo['game_id'] ."\">". $gameinfo['names'] ."</a></p>";
+                                        }
+                                        // echo "<a href=\"". url_for('BoardGameSite/viewboardgame.php?gameid=') . $gameinfo['game_id'] ."\">". $gameinfo['names'] ."</a>";
+                                        echo "<img src=\"./imgs/arrow-right.svg\">";
+                                    }
                                 }
-                            }
-                            
+                                
+
+
+                            echo "</div>";
                         echo "</div>";  
                     }
                 }
