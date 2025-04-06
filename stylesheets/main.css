@@ -77,6 +77,7 @@ input[type=submit] {
     border-radius: 10em;
 }
 input[type=submit]:hover {
+    background-color: #F1B63E;
 }
 select {
     background-color: white;
@@ -451,6 +452,13 @@ button:hover{
     display:flex;
     flex-direction:column;
 }
+.label-size-p{
+    font-size: 1.2em; 
+}
+.pagination {
+    width:fit-content;
+    margin:auto;
+}
 .pagination a{
     display:inline-block;
     text-decoration: none;
@@ -458,9 +466,8 @@ button:hover{
     border: thin solid black;
     color: black;
 }
-.pagination a:active{
-    background-color: black;
-    color:white;
+.pagination a:hover{
+    background-color: #FFDE9C;
 }
 .page-numbers{
     display: inline-block;
@@ -471,12 +478,20 @@ td{
     padding:0.4em;
 }
 .gamestable{
-    width:90%;
-    margin:auto;
+    width:89%;
+    margin: 0em auto 3em auto;    
+}
+.pagination-container{
+    padding:2em 5em;
+}
+.showing-pages-text{
+    text-align: center;
+    margin-bottom:0.5em;
 }
 .table-header{
     font-size: 1.4em;
-
+    background-color: #FFDE9C;
+    border: solid black 0.08em;
 }
 #SearchForm{
     padding:2em 5em;
@@ -488,7 +503,7 @@ td{
     display: flex;
     flex-direction: row;
     gap:2em;
-    padding-top:1em;
+    padding:1em 0em 1em 0em;
 }
 .search-column{
     display: -webkit-box;
@@ -496,6 +511,7 @@ td{
     display: -ms-flexbox;
     display: flex;
     flex-direction:column;
+    justify-content: space-between;
     gap:0.5em;
     width:25%;
 }
@@ -514,6 +530,10 @@ td{
     width:5em;
     height:5em;
 }
+.search-form{
+    margin-bottom:1em;
+}
+
 /* ------------------------------ //END Search page ------------------------------ */
 
 

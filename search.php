@@ -5,18 +5,18 @@
 
 ?>
 <div class="body">
-    <div id="SearchForm">
+    <div class="border-bottom" id="SearchForm">
         <h2>Search</h2>
-        <form action="search.php">
+        <form class="search-form" action="search.php">
             <div class="search-form-container">
                 <div class="search-column">
-                    <label class="labelAbove" for="gameName">Board Game Name</label>
+                    <label class="labelAbove label-size-p" for="gameName">Board Game Name</label>
                     <input class="labelAbove" type="text" id="gameName" name="gameName"<?php if (!empty($GameName)) echo "value=".$GameName; ?> >
                     
-                    <label class="labelAbove" for="gameYear">Year</label>
+                    <label class="labelAbove label-size-p" for="gameYear">Year</label>
                     <input class="labelAbove" type="text" id="gameYear" name="gameYear"<?php if (!empty($GameYear)) echo "value=".$GameYear; ?> >
                     
-                    <label class="labelAbove" for="gameDesigner">Designer</label>
+                    <label class="labelAbove label-size-p" for="gameDesigner">Designer</label>
                     <input class="labelAbove" type="text" id="gameDesigner" name="gameDesigner"<?php if (!empty($GameDesigner)) echo "value=".$GameDesigner; ?> >
                 </div>
                 <div class="search-column">
@@ -130,90 +130,87 @@
             </div>
             <input type="submit" value="Submit">
         </form>
-    <?php
-    //Pagination code ---------------------------------------------
-    if(!isset($_GET['page-nr'])){
-        $page = 1;
-    }else{
-        $page = $_GET['page-nr'];
-    }
-
-    echo "<p>Showing ".$page." of ". $pages ." pages</p>";
-    
-    
-    echo "<div class=\"pagination\">";
-        echo "<a href=\"?page-nr=1\">First</a>";
-       
-        if(isset($_GET['page-nr']) && $_GET['page-nr'] > 1 ){
-            echo "<a href=\"?page-nr=". $_GET['page-nr']-1 ."\">Previous</a>";
-        }else{
-            echo "<a>Previous</a>";
-        }
-        echo "<div class=\"page-numbers\">";
-            
-            if($page < $pages-5){
-                for($counter = $page; $counter <= $page+4; $counter ++ ){
-                    echo "<a href=\"?page-nr=".$counter."\">$counter</a>"; 
-                }
-            }else{
-                for($counter = $pages-5; $counter <= $pages; $counter ++ ){
-                    echo "<a href=\"?page-nr=".$counter."\">$counter</a>"; 
-                }
-            }
-        echo "</div>";
-
-        if(!isset($_GET['page-nr'])){
-            echo "<a href=\"?page-nr=2\">Next</a>";
-        }else{
-            if($_GET['page-nr'] >= $pages){
-                echo "<a>Next</a>";
-            }else{ 
-                echo "<a href=\"?page-nr=". $_GET['page-nr']+1 ."\">Next</a>";
-            }
-        }
-        echo "<a href=\"?page-nr=". $pages ."\">Last</a>";
-    echo "</div>";
-    
-    ?>   
     </div>
 
+    <div class="pagination-container">
+        <?php
+        //Pagination code ---------------------------------------------
+        if(!isset($_GET['page-nr'])){
+            $page = 1;
+        }else{
+            $page = $_GET['page-nr'];
+        }    
+        echo "<p class=\"showing-pages-text\">Showing ".$page." of ". $pages ." pages</p>";
 
+        echo "<div class=\"pagination\">";
+            echo "<a href=\"?page-nr=1\">First</a>";
+        
+            if(isset($_GET['page-nr']) && $_GET['page-nr'] > 1 ){
+                echo "<a href=\"?page-nr=". $_GET['page-nr']-1 ."\">Previous</a>";
+            }else{
+                echo "<a>Previous</a>";
+            }
+            echo "<div class=\"page-numbers\">";
+                if($page < $pages-5){
+                    for($counter = $page; $counter <= $page+4; $counter ++ ){
+                        echo "<a href=\"?page-nr=".$counter."\">$counter</a>"; 
+                    }
+                }else{
+                    for($counter = $pages-5; $counter <= $pages; $counter ++ ){
+                        echo "<a href=\"?page-nr=".$counter."\">$counter</a>"; 
+                    }
+                }
+            echo "</div>";
 
-<?php
-    // Display Search results ---------------------------------------------
-    // Loop through the results and display them in a table
-    echo "<table class=\"gamestable\">";
-    echo "<tr>";
-        echo "<td class=\"table-header\">Name</td>";
-        echo "<td class=\"table-header\">Rating</td>";
-        echo "<td class=\"table-header\">Year</td>";
-        echo "<td class=\"table-header\">Min Time</td>";
-        echo "<td class=\"table-header\">Max Time</td>";
-        echo "<td class=\"table-header\">Min Players</td>";
-        echo "<td class=\"table-header\">Max Players</td>";
-        echo "<td class=\"table-header\">Categories</td>";
-        echo "<td class=\"table-header\">Mechanics</td>";
-        echo "<td class=\"table-header\">Owned</td>";
-        echo "<td class=\"table-header\">Designer</td>";
-    echo "</tr>";
-    while ($row = $res2->fetch_assoc()) {
+            if(!isset($_GET['page-nr'])){
+                echo "<a href=\"?page-nr=2\">Next</a>";
+            }else{
+                if($_GET['page-nr'] >= $pages){
+                    echo "<a>Next</a>";
+                }else{ 
+                    echo "<a href=\"?page-nr=". $_GET['page-nr']+1 ."\">Next</a>";
+                }
+            }
+            echo "<a href=\"?page-nr=". $pages ."\">Last</a>";
+        echo "</div>";
+        ?>   
+    </div>
+
+    <?php
+        // Display Search results ---------------------------------------------
+        // Loop through the results and display them in a table
+        echo "<table class=\"gamestable\">";
         echo "<tr>";
-        // If the column values aren't empty, then display them
-        $boardgamepage = url_for('BoardGameSite/viewboardgame.php');
-        echo "<td><a href=\"".$boardgamepage."?gameid=".$row['game_id']."\">" . $row['names'] ."</a></td>";
-        echo "<td>" . $row['avg_rating'] ."</td>";
-        echo "<td>" . $row['year'] ."</td>";
-        echo "<td>" . $row['min_time'] ."</td>";
-        echo "<td>" . $row['max_time'] ."</td>";
-        echo "<td>" . $row['min_players'] ."</td>";
-        echo "<td>" . $row['max_players'] ."</td>";
-        echo "<td>" . $row['Categories'] ."</td>";
-        echo "<td>" . $row['Mechanics'] ."</td>";
-        echo "<td>" . $row['owned'] ."</td>";
-        echo "<td>" . $row['designer'] ."</td>";
-       
-    };
-    echo "</table>";
-    
-?>
+            echo "<td class=\"table-header\">Name</td>";
+            echo "<td class=\"table-header\">Rating</td>";
+            echo "<td class=\"table-header\">Year</td>";
+            echo "<td class=\"table-header\">Min Time</td>";
+            echo "<td class=\"table-header\">Max Time</td>";
+            echo "<td class=\"table-header\">Min Players</td>";
+            echo "<td class=\"table-header\">Max Players</td>";
+            echo "<td class=\"table-header\">Categories</td>";
+            echo "<td class=\"table-header\">Mechanics</td>";
+            echo "<td class=\"table-header\">Owned</td>";
+            echo "<td class=\"table-header\">Designer</td>";
+        echo "</tr>";
+        while ($row = $res2->fetch_assoc()) {
+            echo "<tr>";
+            // If the column values aren't empty, then display them
+            $boardgamepage = url_for('BoardGameSite/viewboardgame.php');
+            echo "<td><a href=\"".$boardgamepage."?gameid=".$row['game_id']."\">" . $row['names'] ."</a></td>";
+            echo "<td>" . $row['avg_rating'] ."</td>";
+            echo "<td>" . $row['year'] ."</td>";
+            echo "<td>" . $row['min_time'] ."</td>";
+            echo "<td>" . $row['max_time'] ."</td>";
+            echo "<td>" . $row['min_players'] ."</td>";
+            echo "<td>" . $row['max_players'] ."</td>";
+            echo "<td>" . $row['Categories'] ."</td>";
+            echo "<td>" . $row['Mechanics'] ."</td>";
+            echo "<td>" . $row['owned'] ."</td>";
+            echo "<td>" . $row['designer'] ."</td>";
+        
+        };
+        echo "</table>";
+        
+    ?>
 </div>
