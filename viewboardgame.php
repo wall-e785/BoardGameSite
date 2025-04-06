@@ -81,13 +81,12 @@
                 <div class="flex-row">
                     <div class="border-right">
                         <!-- Back URL from https://stackoverflow.com/questions/2548566/go-back-to-previous-page -->
-                            <div class="back-button-container">
-                                <div class="back-arrow">
-                                    <?php echo"<a href=\"javascript:history.go(-1)\">"; ?><img class="collection-icon" src="./imgs/arrow-left.svg"></a>
-                                </div>
-                                <?php echo"<a href=\"javascript:history.go(-1)\">"; ?><h6>back</h6></a>
+                        <div class="back-button-container">
+                            <div class="back-arrow">
+                                <?php echo"<a href=\"javascript:history.go(-1)\">"; ?><img class="collection-icon" src="./imgs/arrow-left.svg"></a>
                             </div>
-                        
+                            <?php echo"<a href=\"javascript:history.go(-1)\">"; ?><h6>back</h6></a>
+                        </div>
                     </div>
                     
                     <div class="game-name border-right">

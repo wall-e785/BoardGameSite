@@ -92,7 +92,6 @@ button{
 
 button:hover{
     background-color: #F1B63E;
-
 }
 
 /* ------------------------------ Nav bar ------------------------------ */
@@ -632,6 +631,10 @@ td{
     padding: 2em 3em;
     align-content:flex-end;
 }
+.collection-title-container label{
+    font-size: 2em;
+    margin-bottom:0.5em;
+}
 .collection-createdby-container {
     padding: 2em 3em;
     flex:2;
@@ -708,12 +711,10 @@ td{
     margin-bottom:0em;
     padding:1em;
 }
-
 /* Game card classes adapted from ChatGPT */
 .game-card input[type="checkbox"] {
     display: none; /* Hide the default checkbox */
 }
-  
 /* Base style for the game card */
 .game-card {
     border: 0.1em solid black;
@@ -746,6 +747,21 @@ td{
       border-color: #F1B63E;
       background-color: #FFDE9C;
     }
+}
+.cancel-edit-button{
+    background-color: #FFDE9C;
+    border:none;
+    padding:1em;
+    border-radius: 10em;
+}
+.cancel-edit-button:hover{
+    background-color: #F1B63E;
+    color:black
+}
+.edit-collection-title{
+    font-size: 4em;
+    border: solid 0.03em black;
+    width:100%;
 }
 
 /* ------------------------------ //END View Collection page ------------------------------ */
