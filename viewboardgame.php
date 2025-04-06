@@ -8,11 +8,7 @@
         
         // Retrieve the game ID of the game clicked on.
         if(isset($_GET["gameid"]) && !empty($_GET["gameid"])) $gameid = $_GET["gameid"];
-        // Temporarily saving the game id to send it to rating-script.php
-        $_SESSION['game_id'] = $gameid; 
         
-        require('private/viewboardgame-script.php');
-
         //current URL
         $currentURL = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
@@ -138,9 +134,8 @@
                     </div>
                     <div class="leave-rating-container">
                         <!---------- Leave ratings ----------->
-                        <form class="rating-colletion-form" action="" method="post">
+                        <form class="rating-collection-form">
                             <label for="rating">Leave a Rating:</label>
-                            <?php echo display_errors($errorsRating); ?>
                             <select name="rating" id="rating">
                                 <option value="">   </option> <!-- First option blank -->
                                 <?php
@@ -151,34 +146,32 @@
                                     }
                                 ?>
                             </select> 
-                            <input name="rating-submit" type="submit" value="Submit Rating"/>
+                            <?php echo "<button type=\"button\" id=\"submit-rating\" data-game-id=\"" . $gameid . "\">Submit Rating</button>"; ?>
                         </form>
 
                         <!----------- Add to a collection --------->
-                        <form class="rating-colletion-form" action="" method="post">
+                        <form class="rating-collection-form">
                             <label for="add-to-collection">Add to a collection:</label>
-                            <?php echo display_errors($errorsCollection); ?>
                             <select name="add-to-collection" id="add-to-collection">
                                 <option value="">   </option> <!-- First option blank -->
                                 <?php
                                     if(isset($_SESSION['username'])){ // Only if the user is logged in
                                         // Check what collections user has
-                                        $collection_query_str = "SELECT collection_name, collection_id FROM `Collections` WHERE username='$username'";
+                                        $collection_query_str = "SELECT collection_name, collection_id FROM `Collections` WHERE username='" . $_SESSION['username'] . "'";
                                         $res = mysqli_query($db, $collection_query_str);
                                         
-                                        if (mysqli_num_rows($res) != 0){
-                                            // fail!
-                                        } 
-                                        // Looping through collections that user has
-                                        while ($row = $res->fetch_assoc()) {
-                                            echo "<option value=\"".$row['collection_id']."\">".$row['collection_name']."</option>";
-                                        }
+                                        if (mysqli_num_rows($res) > 0){
+                                             // Looping through collections that user has
+                                            while ($row = $res->fetch_assoc()) {
+                                                echo "<option value=\"".$row['collection_id']."\">".$row['collection_name']."</option>";
+                                            }
+                                        }    
                                         // Free the result 
                                         $res->free_result();
                                     } 
                                 ?>
                             </select> 
-                            <input name="collection-submit" type="submit" value="Add"/>
+                            <?php echo "<button type=\"button\" id=\"add-collection\" data-game-id=\"" . $gameid . "\">Add</button>"; ?>
                         </form>
                     </div>
                 </div>
@@ -216,10 +209,9 @@
             </div>
             <div id="comments" class="padding-lrg comment-container flex column gap1em">
                 <!-- Leave a comment form -->
-                <?php echo display_errors($errorsComments); ?>
-                <form action="viewboardgame.php?gameid=<?php echo $gameid?>" method="post">
+                <form>
                     <textarea class="comment-form" name="comment" id="comment" placeholder="Post your Comment Here ..."></textarea><br>
-                    <input type="submit" name="post-comment" value="Comment"/>
+                    <?php echo "<button type=\"button\" id=\"post-comment\" data-game-id=\"" . $gameid . "\">Comment</button>"; ?>
                 </form>
 
                 <h3>Comments</h3>
@@ -276,4 +268,7 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="JS/edit-comments.js"></script>
+<script src="JS/submit-rating.js"></script>
+<script src="JS/add-to-collection.js"></script>
+<script src="JS/add-comment.js"></script>
 </html>

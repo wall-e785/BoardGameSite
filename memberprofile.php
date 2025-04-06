@@ -18,23 +18,57 @@
         <div id="userstats">
             <div class="userstats-container">
             <?php
-                echo "<h3>Owned: </h3>";
-                echo "<h3>Rated: </h3>";
+
+                //referenced this to review nested queries https://learnsql.com/blog/sql-nested-select/
+                //select all of the games that belong to the user's owned collection.
+                //nested query retrives the collection_id of the owned collection, then referenced
+                //by the main query to count how many entries in BelongTo have that collection_id
+                $owned_query = "SELECT BelongTo.collection_id
+                FROM BelongTo
+                WHERE BelongTo.collection_id IN (
+                    SELECT collection_id
+                    FROM Collections
+                    WHERE username = '". $_SESSION['username'] . "' AND collection_name = 'Owned')";
+
+                //Execute the query
+                $owned_res = mysqli_query($db, $owned_query);
+
+                // Check if there are any results
+                if (mysqli_num_rows($owned_res) == 0 ){
+                    echo "<h3>Owned: 0</h3>";
+                }else if(mysqli_num_rows($owned_res) != 0) {
+                    echo "<h3>Owned: " . mysqli_num_rows($owned_res) . "</h3>";
+                }
+
+                 // Loop through ratings
+                 $ratings_query = "SELECT rating_id 
+                 FROM Ratings
+                 WHERE username = '". $_SESSION['username'] . "'";
+
+                // Execute the query 
+                $rating_res = mysqli_query($db, $ratings_query);
+                // Check if there are any results
+                if (mysqli_num_rows($rating_res) == 0 ){
+                    echo "<h3>Rated: 0</h3>";
+                }else if(mysqli_num_rows($rating_res) != 0) {
+                    echo "<h3>Rated: " . mysqli_num_rows($rating_res) . "</h3>";
+                }
+                $rating_res -> free_result();
 
                  // Loop through comments
-                 $comments_query = "SELECT * 
+                 $comments_query = "SELECT comment_id 
                  FROM Comments
                  WHERE username = '". $_SESSION['username'] . "'";
 
                 // Execute the query 
-                $res = mysqli_query($db, $comments_query);
+                $comment_res = mysqli_query($db, $comments_query);
                 // Check if there are any results
-                if (mysqli_num_rows($res) == 0 ){
+                if (mysqli_num_rows($comment_res) == 0 ){
                     echo "<h3>Commented: 0</h3>";
-                }else if(mysqli_num_rows($res) != 0) {
-                    echo "<h3>Commented: " . mysqli_num_rows($res) . "</h3>";
+                }else if(mysqli_num_rows($comment_res) != 0) {
+                    echo "<h3>Commented: " . mysqli_num_rows($comment_res) . "</h3>";
                 }
-                $res -> free_result();
+                $comment_res -> free_result();
 
                 // Loop through comments
                 $collections_query = "SELECT * 
@@ -62,22 +96,36 @@
                 <h3>Recent Activity</h3>
     
                 <?php
-                // Loop through comments
-                 $comments_query = "SELECT * 
-                 FROM Comments
-                 WHERE username = '". $_SESSION['username'] . "'";
+                //referenced sql order by date here: https://stackoverflow.com/questions/24567274/sql-order-by-datetime-desc
+                //referenced unioning tables from: https://www.w3schools.com/sql/sql_ref_union_all.asp
+                // Select from comments, then union the selection from ratings. Use variable type to keep track of which is which
+                $recent_query = "(SELECT comment_id AS id, comment_date AS created, game_id, 'comment' AS type
+                FROM Comments
+                UNION ALL
+                SELECT rating_id AS id, rating_date AS created, game_id, 'rating' AS type
+                FROM Ratings
+                WHERE username = '". $_SESSION['username'] . "')
+                ORDER BY created DESC
+                LIMIT 10";
 
                 // Execute the query 
-                $res = mysqli_query($db, $comments_query);
+                $recent_res = mysqli_query($db, $recent_query);
+
                 // Check if there are any results
-                if (mysqli_num_rows($res) == 0 ){
+                if (mysqli_num_rows($recent_res) == 0){
                     echo "<div class=\"flex row activity\">";
                         echo "<p>No activity yet!</p>";
                     echo "</div>";   
-                }else if(mysqli_num_rows($res) != 0) {
-                    while($row= mysqli_fetch_assoc($res)){
+                }else if(mysqli_num_rows($recent_res) != 0) {
+                    while($row= mysqli_fetch_assoc($recent_res)){
                         echo "<div class=\"flex row activity\">";
-                            echo "<p>Commented on</p>";
+
+                            //display proper header depending on the activity type
+                            if($row['type'] == 'comment'){
+                                echo "<p>Commented on</p>";
+                            }else if($row['type'] == 'rating'){
+                                echo "<p>Rated</p>";
+                            }
 
                             $game_query = "SELECT names, game_id
                             FROM BoardGames
@@ -94,10 +142,11 @@
                                 }
                             }
                             
-                        echo "</div>";   
+                        echo "</div>";  
                     }
                 }
-                $res -> free_result();
+                $recent_res -> free_result();
+
 
                 ?>
             </div>
