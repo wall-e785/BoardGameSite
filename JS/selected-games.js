@@ -3,7 +3,7 @@ $(document).ready(function() {
 
     $('#submit').on('click', function(){
         var selected_games = [];
-        $('.game:checked').each(function(){
+        $('.game-card-input:checked').each(function(){
             selected_games.push($(this).val());
         });
 
