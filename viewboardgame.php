@@ -235,26 +235,22 @@
                             while($row= mysqli_fetch_assoc($res)) {
                                 //custom data referenced from: https://www.w3schools.com/tags/att_data-.asp
                                 echo "<div class=\"comment-box flex column gap1em\" data-comment-id=\"". $row["comment_id"]."\">";
-                                    echo "<div class=\"flex row space-between\">";
+                                    echo "<div class=\"comment-header\">";
                                         echo "<p>". $row["username"] ."</p>";
-                                            echo "<div class=\"flex row\">";
-                                                echo "<p>". $row["comment_date"] ."</p>";
-                                                //only show delete if the comment is by the logged in user
-                                                if(!empty($_SESSION["username"])){
-                                                    if($row["username"] == $_SESSION["username"]){
-                                                        echo "<a href=\"" . url_for('BoardGameSite/deletecomment.php?commentid=') . $row["comment_id"] . "&gameid=". $row["game_id"] . "\">";
-                                                            echo "<img class=\"comment-delete\" src=\"./imgs/delete.svg\">";
-                                                        echo "</a>";
-                                                    }   
-                                                }
-                                            echo "</div>";
+                                        echo "<div class=\"comment-date\">";
+                                            echo "<p>". $row["comment_date"] ."</p>";
+                                            //only show delete if the comment is by the logged in user
+                                            if(!empty($_SESSION["username"])){
+                                                if($row["username"] == $_SESSION["username"]){
+                                                    echo "<button type=\"button\" class=\"edit-button\" data-comment-id=\"".$row["comment_id"]."\">Edit</button>";
+                                                    echo "<a href=\"" . url_for('BoardGameSite/deletecomment.php?commentid=') . $row["comment_id"] . "&gameid=". $row["game_id"] . "\">";
+                                                        echo "<img class=\"comment-delete\" src=\"./imgs/delete.svg\">";
+                                                    echo "</a>";
+                                                }   
+                                            }
+                                        echo "</div>";
                                     echo "</div>";
                                 echo "<p data-comment-id=\"". $row["comment_id"] ."\">". $row["comment_desc"] ."</p>";
-                                if(!empty($_SESSION["username"])){
-                                    if($row["username"] == $_SESSION["username"]){
-                                        echo "<button type=\"button\" class=\"edit-button\" data-comment-id=\"".$row["comment_id"]."\">Edit</button>";
-                                    }
-                                }
                                 echo "</div>";
                             }
                         }

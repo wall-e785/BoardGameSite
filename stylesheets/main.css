@@ -392,8 +392,26 @@ button:hover{
 }
 .comment-delete{
     width:auto;
-    height:1.25em;
+    height:2em;
     padding-left: .2em;
+}
+.comment-header{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.comment-date{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    gap:0.5em;
+    align-items: center;
 }
 .comment-delete{
     color: black;
@@ -638,7 +656,6 @@ td{
     margin-bottom:0em;
 }
 .edit-button{
-    border: solid black 0.1em;
     border-radius: 1em;
     padding: 0.5em;
     width:fit-content;
