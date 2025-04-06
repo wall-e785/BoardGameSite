@@ -630,13 +630,11 @@ td{
 }
 .collection-preview{
     border: solid black 0.1em;
-    padding: 0.5em;
+    padding: 1em;
 }
 .collection-preview a{
     font-size: 1.4em; 
 }
-
-
 .collection-gallery-item{
     border: solid black 0.1em;
     display: flex;
@@ -647,7 +645,6 @@ td{
 }
 .collection-gallery-text{
     margin:0em 1em 1em 1em;
-    
     word-wrap: break-word; /* Ensures long words wrap */
     overflow-wrap: break-word;
     white-space: normal; /* Allows wrapping */
@@ -663,6 +660,45 @@ td{
     margin-top: 0em;
     margin-bottom:0em;
     padding:1em;
+}
+
+/* Game card classes adapted from ChatGPT */
+.game-card input[type="checkbox"] {
+    display: none; /* Hide the default checkbox */
+}
+  
+/* Base style for the game card */
+.game-card {
+    border: 0.1em solid black;
+    border-radius: 1em;
+    padding: 1em;
+    text-align: center;
+    cursor: pointer;
+}
+.game-card img {
+    height:100%;
+    max-height:10em;
+    width:auto;
+    margin:auto;
+}
+.game-card-title{
+    margin-top:1em;
+} 
+/* Change border color of the label when selected */
+.game-card input[type="checkbox"]:checked ~ * {
+    /* no effect unless you rewrap, see below */
+}
+/* Trick to make the whole card border change on selection */
+.game-card input[type="checkbox"]:checked {
+    outline: 0.1em solid #F1B63E;
+    background-color: #FFDE9C;
+}
+/* Better: Use :has (if browser supports it) */
+@supports(selector(:has(*))) {
+    .game-card:has(input[type="checkbox"]:checked) {
+      border-color: #F1B63E;
+      background-color: #FFDE9C;
+    }
 }
 
 /* ------------------------------ //END View Collection page ------------------------------ */

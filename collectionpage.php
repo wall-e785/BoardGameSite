@@ -4,15 +4,10 @@
 
 <body>
     <div class="body">
-
-
     <?php
-
         require('header.php');
-    
         require_once('private/initialize.php');
         
-
         $name = $_GET['name']; 
         $collectionid = $_GET['collectionid'];
 
@@ -26,12 +21,7 @@
             $collection=mysqli_fetch_assoc($res);
             $collection_username = $collection['username'];
             $collection_date = substr($collection['collection_date'], 0, 10);
-
-            // echo "<h3>Created by " . $collection['username'] . " on " . substr($collection['collection_date'], 0, 10) .  "</h3>";
         }
-
-        
-        // echo "</div>";
     ?>
 
     <div class="collection-header-container">
