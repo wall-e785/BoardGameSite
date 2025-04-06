@@ -541,17 +541,11 @@ td{
     font-size: 1.2em;
     padding-left: .25em;
 }
-.collection-preview{
-    border: solid black 0.1em;
-    padding: 0.5em;
-}
-.collection-preview a{
-    font-size: 1.4em; 
-}
 .collection-img{
     width:12em;
     height:12em;
     background-color: #FFDE9C;
+    margin-bottom: 0.6em;
 }
 .activity-collections-container{
     display: -webkit-box;
@@ -576,7 +570,138 @@ td{
 }
 /* ------------------------------ //END Member profile page ------------------------------ */
 
+/* ------------------------------ View Collection page ------------------------------ */
+.collection-header-container{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 0.1em solid black;
+}
+.collection-title-container{
+    flex:4;
+    padding: 2em 3em;
+    align-content:flex-end;
+}
+.collection-createdby-container {
+    padding: 2em 3em;
+    flex:2;
+}
+.edit-delete-container{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    gap:1em;
+    padding: 0em 3em;
+    justify-content: center;
+    align-content: center;
+    flex-shrink:1;
+}
+.collection-delete-img{
+    width:auto;
+    height: 2em;
+    margin: auto;
+    margin-top: 0em;
+    margin-bottom:0em;
+}
+.edit-button{
+    border: solid black 0.1em;
+    border-radius: 1em;
+    padding: 0.5em;
+    width:fit-content;
+    margin: auto;
+    margin-top: 0em;
+    margin-bottom:0em;
+}
+.edit-button:hover {
+    border: solid #F1B63E 0.1em;
+}
+.make-collection-wrap{
+    flex-wrap: wrap;
+    gap:1em;
+    padding: 3em 5em;
+}
+.make-collection-img{
+    width: auto;
+    height:8em;
+}
+.collection-preview{
+    border: solid black 0.1em;
+    padding: 1em;
+}
+.collection-preview a{
+    font-size: 1.4em; 
+}
+.collection-gallery-item{
+    border: solid black 0.1em;
+    display: flex;
+    flex-direction: column;
+    width:fit-content;
+    min-width:fit-content;
+    max-width: fit-content;
+}
+.collection-gallery-text{
+    margin:0em 1em 1em 1em;
+    word-wrap: break-word; /* Ensures long words wrap */
+    overflow-wrap: break-word;
+    white-space: normal; /* Allows wrapping */
+    max-width: 10em; 
+    font-size: 1.4em; 
+}
+.collection-gallery-img{
+    height: 15em; /* Enforce a fixed width */
+    min-height: 15em; /* Prevent shrinking */
+    max-height: 15em; /* Prevent growing */
+    width:auto;
+    margin: auto;
+    margin-top: 0em;
+    margin-bottom:0em;
+    padding:1em;
+}
 
+/* Game card classes adapted from ChatGPT */
+.game-card input[type="checkbox"] {
+    display: none; /* Hide the default checkbox */
+}
+  
+/* Base style for the game card */
+.game-card {
+    border: 0.1em solid black;
+    border-radius: 1em;
+    padding: 1em;
+    text-align: center;
+    cursor: pointer;
+}
+.game-card img {
+    height:100%;
+    max-height:10em;
+    width:auto;
+    margin:auto;
+}
+.game-card-title{
+    margin-top:1em;
+} 
+/* Change border color of the label when selected */
+.game-card input[type="checkbox"]:checked ~ * {
+    /* no effect unless you rewrap, see below */
+}
+/* Trick to make the whole card border change on selection */
+.game-card input[type="checkbox"]:checked {
+    outline: 0.1em solid #F1B63E;
+    background-color: #FFDE9C;
+}
+/* Better: Use :has (if browser supports it) */
+@supports(selector(:has(*))) {
+    .game-card:has(input[type="checkbox"]:checked) {
+      border-color: #F1B63E;
+      background-color: #FFDE9C;
+    }
+}
+
+/* ------------------------------ //END View Collection page ------------------------------ */
 
 .border-top{
     border-top: solid black 0.1em;
@@ -627,17 +752,6 @@ td{
     padding:1em 2em;
 }
 
-.make-collection-wrap{
-    flex-wrap: wrap;
-    gap:1em;
-}
 
-.make-collection-img{
-    width: auto;
-    height:8em;
-}
 
-.collection-delete-img{
-    width:auto;
-    height: 2em;
-}
+

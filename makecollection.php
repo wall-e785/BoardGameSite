@@ -13,11 +13,11 @@
     <?php
 
 
-    require('header.php');
-    require_once('private/initialize.php');
+        require('header.php');
+        require_once('private/initialize.php');
 
-    $errors = [];
-    $name = ''; 
+        $errors = [];
+        $name = ''; 
     // if(is_post_request()) {
         
 
@@ -70,13 +70,11 @@
                 echo "<h4>Error: Could not retrieve games, try again later.</h4>";
             }else if(mysqli_num_rows($res) != 0) {
                 while($row= mysqli_fetch_assoc($res)){
-                    echo "<div class=\"collection-preview\">";
-                        echo "<div class=\"collection-preview\">";
-                            echo "<img class=\"make-collection-img\" src=\"" . $row['image_url'] . "\">";
-                        echo "</div>";
-                        echo "<h4>". $row['names'] . "</h4>";
-                        echo "<input type=\"checkbox\" name=\"game\" class= \"game\" value=\"" . $row['game_id'] . "\">";
-                    echo "</div>";
+                    echo "<label class=\"game-card\">";
+                        echo "<input type=\"checkbox\" name=\"game\" value=\"" . $row['game_id'] . "\">";
+                        echo "<img src=\"" . $row['image_url'] . "\">";
+                        echo "<p class=\"game-card-title\">".$row['names']."</p>";
+                    echo "</label>";
                 }
             }
             ?>
