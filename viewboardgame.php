@@ -8,11 +8,7 @@
         
         // Retrieve the game ID of the game clicked on.
         if(isset($_GET["gameid"]) && !empty($_GET["gameid"])) $gameid = $_GET["gameid"];
-        // Temporarily saving the game id to send it to rating-script.php
-        $_SESSION['game_id'] = $gameid; 
         
-        require('private/viewboardgame-script.php');
-
         //current URL
         $currentURL = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
@@ -150,7 +146,7 @@
                                     }
                                 ?>
                             </select> 
-                            <?php echo "<button type=\"button\" id=\"submit-rating\" data-game-id=\"" . $_GET["gameid"] . "\">Submit Rating</button>"; ?>
+                            <?php echo "<button type=\"button\" id=\"submit-rating\" data-game-id=\"" . $gameid . "\">Submit Rating</button>"; ?>
                         </form>
 
                         <!----------- Add to a collection --------->
@@ -175,7 +171,7 @@
                                     } 
                                 ?>
                             </select> 
-                            <?php echo "<button type=\"button\" id=\"add-collection\" data-game-id=\"" . $_GET["gameid"] . "\">Add</button>"; ?>
+                            <?php echo "<button type=\"button\" id=\"add-collection\" data-game-id=\"" . $gameid . "\">Add</button>"; ?>
                         </form>
                     </div>
                 </div>
@@ -213,10 +209,9 @@
             </div>
             <div id="comments" class="padding-lrg comment-container flex column gap1em">
                 <!-- Leave a comment form -->
-                <?php echo display_errors($errorsComments); ?>
-                <form action="viewboardgame.php?gameid=<?php echo $gameid?>" method="post">
+                <form>
                     <textarea class="comment-form" name="comment" id="comment" placeholder="Post your Comment Here ..."></textarea><br>
-                    <input type="submit" name="post-comment" value="Comment"/>
+                    <?php echo "<button type=\"button\" id=\"post-comment\" data-game-id=\"" . $gameid . "\">Comment</button>"; ?>
                 </form>
 
                 <h3>Comments</h3>
@@ -275,4 +270,5 @@
 <script src="JS/edit-comments.js"></script>
 <script src="JS/submit-rating.js"></script>
 <script src="JS/add-to-collection.js"></script>
+<script src="JS/add-comment.js"></script>
 </html>
