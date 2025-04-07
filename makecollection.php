@@ -50,7 +50,6 @@
             <h3>1. Name your Collection </h3>
             Name<br />
             <input type="text" name="name" class="collection-name" placeholder="How would you describe this collection?"/><br />
-            <button type="button\" id="make-collection-search">Search</button>
         </div>
 
         <div class="flex column">
@@ -85,7 +84,6 @@
 
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-<script src="JS/selected-games.js"></script>
 <script src="JS/collection-search.js"></script>
 </html>
 

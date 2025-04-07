@@ -2,6 +2,7 @@
 
     require_once('initialize.php');
 
+    //search for names that are like the entered value
     $query = $db->prepare("SELECT game_id, names, image_url FROM BoardGames WHERE names LIKE ?");
     $query->bind_param("s", $input);
 
@@ -12,6 +13,7 @@
 
     //referenced this to encode the sql results into JSON
     //https://stackoverflow.com/questions/383631/json-encode-mysql-results
+    //add the rows into an array to pass to back to the JS file using a JSON object
     $rows = array();
     while($row = mysqli_fetch_assoc($res)){
         $rows[] = $row;
