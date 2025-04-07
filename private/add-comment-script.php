@@ -3,8 +3,6 @@
 
     require_once('initialize.php');
     
-    // Checking what the user submitted
-    $errorsComments = [];
     // Check if logged in
     if(isset($_SESSION['username'])) {
         // Check if comment box has text in it
@@ -19,13 +17,14 @@
             $datetime = date("Y-m-d") . " " . date("H:i:s");
             $gameid = $_POST['gameid'];
             $username = $_SESSION['username'];
-            $insert_str->execute();           
+            $insert_str->execute();  
+            echo "Success! Comment posted.";         
         }else{
             // Give error that comment box must not be empty
-            array_push($errorsComments, 'Comment box must not be empty.');
+            echo "Error: Comment box cannot be empty.";
         }
     }else{
         // If not logged in, throw error that user must make an account or sign in.
-        array_push($errorsComments, 'Log in or make an account to leave a comment.');
+        echo "Error: Log in to leave comments!";
     }
 ?>

@@ -15,7 +15,7 @@ $(document).ready(function() {
             url: 'private/add-comment-script.php',
             data: {comment: content, gameid: game},
             success: function(response){
-                alert("Success. Comment posted!" + response);
+                alert(response);
             }
         });
     });
