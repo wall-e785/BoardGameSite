@@ -85,7 +85,7 @@ $(document).ready(function() {
     });
 
     //referenced getting all checked boxes from: https://stackoverflow.com/questions/59727296/collect-all-the-values-of-all-checboxes-to-pass-through-ajax
-    $('#submit').on('click', function(){
+    $('#save').on('click', function(){
         var collect_name = $('.collection-name').val();
         
         if(selected.length > 0 && collect_name.trim().length != 0){

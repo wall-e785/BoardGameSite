@@ -54,7 +54,7 @@
             </div>
             <div class="make-collection-save-container">
                 <h3>Save collection:</h3>
-                <input type="submit" id = "save" value="Save"/>
+                <button type="submit" id = "save" value="Save">Save</button>
             </div>
         </div>
 
@@ -79,7 +79,6 @@
             </div>
             <div class="make-collection-search">
                 <input type="text" name="search" class="" id="search-input" placeholder="Search for games by name here..."/>
-                <input type="submit" id = "submit" value="Search"/>
             </div>
 
             <div class="make-collection-wrap" id="selector-area">
