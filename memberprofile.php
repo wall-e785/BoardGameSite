@@ -84,7 +84,16 @@
                     echo "<h3>Collections: " . mysqli_num_rows($res) . "</h3>";
                 }
                 $res -> free_result();
+
+                // Only display settings page button if logged in
+                if(isset($_SESSION['username'])){
+                    // If current user is the same as this user page
+                    if($_SESSION['username']==$_GET['user']){
+                        echo "<a class=\"settings-page-button\" href=\"settings.php?username=".$_SESSION['username']."\">Settings</a>";
+                    }
+                }
             ?>
+                
             <!-- settings page button?? -->
             </div>
         </div>

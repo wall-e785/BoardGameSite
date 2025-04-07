@@ -642,6 +642,17 @@ td{
     flex-wrap:wrap;
     gap:2em;
 }
+.settings-page-button{
+    font-size: 1em; 
+    padding:1em;
+    background-color: #FFDE9C;
+    border-radius: 2em;
+}
+.settings-page-button:hover {
+    background-color: #F1B63E;
+    color:black;
+}
+
 /* ------------------------------ //END Member profile page ------------------------------ */
 
 /* ------------------------------ View Collection page ------------------------------ */
@@ -708,7 +719,6 @@ td{
     border-radius: 2em;
     padding: 1em;
     width:fit-content;
-    
     margin-top: 0em;
     margin-bottom:0em;
 }
