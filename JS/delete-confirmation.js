@@ -22,7 +22,6 @@ $(document).ready(function() {
     function deleteComment(){
         if(confirm("Are you sure you want to delete this comment?")){
             //redirect referenced from: w3schools.com/howto/howto_js_redirect_webpage.asp
-            console.log(this);
             window.location.href = this.getAttribute("data-url");
         }
     };

@@ -38,8 +38,9 @@
                     $belongto_query->bind_param("ii", $id, $game_id);
                     $belongto_query->execute();  
                 }
-                redirect_to(url_for('BoardGameSite/memberprofile.php'));
             }
+
+            echo url_for('BoardGameSite/memberprofile.php?user=' . $_SESSION['username']);
 
         }
 

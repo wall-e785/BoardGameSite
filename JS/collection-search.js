@@ -108,22 +108,20 @@ $(document).ready(function() {
         var collect_name = $('.collection-name').val();
         
         if(selected.length > 0 && collect_name.trim().length != 0){
+            console.log("ajax!");
             $.ajax({
                 method: 'POST',
                 url: 'processcollection.php',
                 data: {checked:selected, name: collect_name},
                 success: function(response){
-                    alert("Success. Collection created");
+                    alert("Success: Collection created!");
+                    window.location.href = response;
                 }
             });
-        }else{
-            if(selected_games.length <= 0){
-                alert("Error creating collection: Please select at least one game!");
-            }else if(collect_name.trim().length <=0){
-                alert("Error creating collection: Name cannot be blank!");
-            }else{
-                alert("Error creating collection: Please try again.");
-            }
+        }else if (selected.length <= 0){
+            alert("Error: You must select at least one game!");
+        }else if(collect_name.trim().length ==0){
+            alert("Error: Collection must have a valid name!");
         }
         
     });
