@@ -16,6 +16,10 @@ $(document).ready(function() {
             data: {comment: content, gameid: game},
             success: function(response){
                 alert(response);
+                textArea.value = "";
+                //referenced reload: https://www.w3schools.com/jsref/met_loc_reload.asp
+                //easily reload the comments once posted   
+                location.reload();
             }
         });
     });
