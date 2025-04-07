@@ -14,7 +14,10 @@
             $stmt->close();
             session_destroy();
             
+            // Send to index page
             redirect_to(url_for('BoardGameSite/index.php'));
+        } else if(isset($_POST['save'])){ 
+            echo "<p>saved</p>";
         }
     }
 ?>

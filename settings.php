@@ -8,6 +8,19 @@
         include('private/settings-script.php');
         $username = $_GET['username'];
         $current_user = $_SESSION['username'];
+
+        $user_query_str = "SELECT * FROM `Users` WHERE username='" . $current_user . "'";
+        $res = mysqli_query($db, $user_query_str);
+        $email = null;
+        if (mysqli_num_rows($res) > 0){
+                // Looping through collections that user has
+            while ($row = $res->fetch_assoc()) {
+                $email = $row['email'];
+            }
+        }    
+        // Free the result 
+        $res->free_result();
+
     ?>
     <div class="body">
     <?php
@@ -32,10 +45,11 @@
     </div>
         
     <form action="" method="POST">
-        <div>
+        
+        <!-- <div>
             <h3>Username</h3>
-            <label for="new-username">New Username:</label>
-            <input type="text" name="new-username"/>
+            <label for="new-username">Username:</label>
+            <input type="text" name="new-username" value="<?php echo $username; ?>"/>
         </div>
         <div>
             <h3>Password</h3>
@@ -44,17 +58,16 @@
             <label for="new-password">New Password:</label>
             <input type="text" name="new-password" />
             <label for="new-password-confirm">Confirm New Password:</label>
-            <input type="text" name="new-password-confirm"  />
+            <input type="text" name="new-password-confirm"/>
         </div>
         <div>
         <h3>Email</h3>
-            <label for="new-email">New Email:</label>
-            <input type="text" name="new-email"/>
-            <label for="confirm-new-email">Confirm New Email:</label>
-            <input type="text" name="confirm-new-email"/>
-        </div>
-        <button name="delete_account" type="submit" onclick="return confirmDelete();" >Delete account</button>
-        <input type="submit" id = "save" value="Save"/>
+            <label for="new-email">Email:</label>
+            <input type="text" name="new-email" value="<?php echo $email; ?>"/>
+        </div> -->
+        <button style="margin:2em 3em;" name="delete_account" type="submit" onclick="return confirmDelete();" >Delete account</button>
+        <!-- <input type="submit" id="save" value="Save"/> -->
+       
     </form>
 
 
