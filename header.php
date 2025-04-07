@@ -28,7 +28,7 @@
             
             // if there is a current user session, display profile and sign out
             if(isset($_SESSION['username'])) {
-                echo "<li class=\"border-left\"><a href =" . $profilepage . ">Profile</a></li>";
+                echo "<li class=\"border-left\"><a href =" . $profilepage . "?user=" . $_SESSION['username'] .">Profile</a></li>";
                 echo "<li class=\"border-left\"><a href =" . $signoutpage . ">Sign Out</a></li>";
             }else{
                 // else,  display sign in

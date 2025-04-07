@@ -133,34 +133,33 @@
                     </div>
                     <div class="leave-rating-container">
                         <!---------- Leave ratings ----------->
-                        <form class="rating-collection-form">
-                            <label for="rating">Leave a Rating:</label>
-                            <select name="rating" id="rating">
-                                <option value="">   </option> <!-- First option blank -->
-                                <?php
-                                    // Looping to create numbers
-                                    for ($x = 1; $x <11; $x++) {    
-                                        $selected = ($Rating == $x) ? 'selected' : ''; // Displays user's rating if previously submitted     
-                                        echo "<option value=\"$x\" $selected>".$x."</option>";
-                                    }
-                                ?>
-                            </select> 
-                            <?php echo "<button type=\"button\" id=\"submit-rating\" data-game-id=\"" . $gameid . "\">Submit Rating</button>"; ?>
-                        </form>
+                        <?php
+                        if(!empty($_SESSION['username'])){
+                            echo "<form class=\"rating-collection-form\">";
+                                echo "<label for=\"rating\">Leave a Rating:</label>";
+                                echo "<select name=\"rating\" id=\"rating\">";
+                                    echo "<option value=\"\">   </option>"; //First option blank
+                                        // Looping to create numbers
+                                        for ($x = 1; $x <11; $x++) {    
+                                            $selected = ($Rating == $x) ? 'selected' : ''; // Displays user's rating if previously submitted     
+                                            echo "<option value=\"$x\" $selected>".$x."</option>";
+                                        }
+                                echo "</select>";
+                                echo "<button type=\"button\" id=\"submit-rating\" data-game-id=\"" . $gameid . "\">Submit Rating</button>";
+                            echo "</form>";
 
-                        <!----------- Add to a collection --------->
-                        <form class="rating-collection-form">
-                            <label for="add-to-collection">Add to a collection:</label>
-                            <select name="add-to-collection" id="add-to-collection">
-                                <option value="">   </option> <!-- First option blank -->
-                                <?php
+                            //Add to a collection
+                            echo "<form class=\"rating-collection-form\">";
+                                echo "<label for=\"add-to-collection\">Add to a collection:</label>";
+                                echo "<select name=\"add-to-collection\" id=\"add-to-collection\">";
+                                    echo "<option value=\"\">   </option>"; //First option blank
                                     if(isset($_SESSION['username'])){ // Only if the user is logged in
                                         // Check what collections user has
                                         $collection_query_str = "SELECT collection_name, collection_id FROM `Collections` WHERE username='" . $_SESSION['username'] . "'";
                                         $res = mysqli_query($db, $collection_query_str);
                                         
                                         if (mysqli_num_rows($res) > 0){
-                                             // Looping through collections that user has
+                                                // Looping through collections that user has
                                             while ($row = $res->fetch_assoc()) {
                                                 echo "<option value=\"".$row['collection_id']."\">".$row['collection_name']."</option>";
                                             }
@@ -168,10 +167,13 @@
                                         // Free the result 
                                         $res->free_result();
                                     } 
-                                ?>
-                            </select> 
-                            <?php echo "<button type=\"button\" id=\"add-collection\" data-game-id=\"" . $gameid . "\">Add</button>"; ?>
-                        </form>
+                                echo "</select>";
+                                echo "<button type=\"button\" id=\"add-collection\" data-game-id=\"" . $gameid . "\">Add</button>";
+                            echo "</form>";
+                        }else{
+                            echo "<a href=\"" . url_for('BoardGameSite/signin.php') . "\"><p>Log In to Rate Games/Make Collections</p></a>"; 
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -209,8 +211,14 @@
             <div id="comments" class="padding-lrg comment-container flex column gap1em">
                 <!-- Leave a comment form -->
                 <form>
-                    <textarea class="comment-form" name="comment" id="comment" placeholder="Post your Comment Here ..."></textarea><br>
-                    <?php echo "<button type=\"button\" id=\"post-comment\" data-game-id=\"" . $gameid . "\">Comment</button>"; ?>
+                    <?php
+                        if(!empty($_SESSION['username'])){
+                            echo "<textarea class=\"comment-form\" name=\"comment\" id=\"comment\" placeholder=\"Post your Comment Here ...\"></textarea><br>";
+                            echo "<button type=\"button\" id=\"post-comment\" data-game-id=\"" . $gameid . "\">Comment</button>"; 
+                        }else{
+                            echo "<a href=\"" . url_for('BoardGameSite/signin.php') . "\"><p>Log In to Post Comments</p></a>"; 
+                        }      
+                     ?>
                 </form>
 
                 <h3>Comments</h3>
@@ -233,9 +241,9 @@
                         if(mysqli_num_rows($res) != 0) {
                             while($row= mysqli_fetch_assoc($res)) {
                                 //custom data referenced from: https://www.w3schools.com/tags/att_data-.asp
-                                echo "<div class=\"comment-box flex column gap1em\" data-comment-id=\"". $row["comment_id"]."\">";
+                                echo "<div class=\"comment-box flex column gap1em\" id=\"" . $row["comment_id"] . "\" data-comment-id=\"". $row["comment_id"]."\">";
                                     echo "<div class=\"comment-header\">";
-                                        echo "<p>". $row["username"] ."</p>";
+                                        echo "<a href=\"" . url_for('BoardGameSite/memberprofile.php?user=' . $row["username"]) ."\"><p>". $row["username"] ."</p></a>";
                                         echo "<div class=\"comment-date\">";
                                             echo "<p>". $row["comment_date"] ."</p>";
                                             //only show delete if the comment is by the logged in user
@@ -249,7 +257,7 @@
                                             }
                                         echo "</div>";
                                     echo "</div>";
-                                echo "<p data-comment-id=\"". $row["comment_id"] ."\">". $row["comment_desc"] ."</p>";
+                                    echo "<p class=\"comment-content\" data-comment-id=\"". $row["comment_id"] ."\">". $row["comment_desc"] ."</p>";
                                 echo "</div>";
                             }
                         }
