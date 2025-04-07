@@ -13,5 +13,5 @@
     $delete_belong->execute();           
     $delete_str->execute();           
 
-    redirect_to(url_for('BoardGameSite/memberprofile.php'));
+    redirect_to(url_for('BoardGameSite/memberprofile.php?user=' . $_GET["username"]));
 ?>

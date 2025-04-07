@@ -46,7 +46,7 @@
                 echo "<div class=\"edit-delete-container border-left\">";
                 if($name != "Owned" && $name != "Wishlist" && $name != "Favourites"){ 
                     // Displays delete button only for collections that are not Owned/Wishlist/Favourites
-                    echo "<a href=\"" .  url_for('BoardGameSite/deletecollection.php' . "?collectionid=" . $_GET['collectionid']) . "\"><img class=\"collection-delete-img\" src=\"./imgs/delete.svg\"></a>"; 
+                    echo "<a id=\"delete\" data-url=\"" .  url_for('BoardGameSite/deletecollection.php' . "?collectionid=" . $_GET['collectionid'] . "&username=" . $collection_username) . "\"><img class=\"collection-delete-img\" src=\"./imgs/delete.svg\"></a>"; 
                 }
                     echo "<a class=\"edit-button\" href=\"edit-collection.php?name=".urlencode($name)."&collectionid=".urlencode($collectionid)."\">Edit</a>";
                 echo "</div>";
@@ -91,7 +91,8 @@
             ?>
         </div>
     </div>
-
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="JS/delete-confirmation.js"></script>
 </body>
 </html>
 
