@@ -241,7 +241,7 @@
                         if(mysqli_num_rows($res) != 0) {
                             while($row= mysqli_fetch_assoc($res)) {
                                 //custom data referenced from: https://www.w3schools.com/tags/att_data-.asp
-                                echo "<div class=\"comment-box flex column gap1em\" data-comment-id=\"". $row["comment_id"]."\">";
+                                echo "<div class=\"comment-box flex column gap1em\" id=\"" . $row["comment_id"] . "\" data-comment-id=\"". $row["comment_id"]."\">";
                                     echo "<div class=\"comment-header\">";
                                         echo "<a href=\"" . url_for('BoardGameSite/memberprofile.php?user=' . $row["username"]) ."\"><p>". $row["username"] ."</p></a>";
                                         echo "<div class=\"comment-date\">";
@@ -257,7 +257,7 @@
                                             }
                                         echo "</div>";
                                     echo "</div>";
-                                echo "<p data-comment-id=\"". $row["comment_id"] ."\">". $row["comment_desc"] ."</p>";
+                                    echo "<p class=\"comment-content\" data-comment-id=\"". $row["comment_id"] ."\">". $row["comment_desc"] ."</p>";
                                 echo "</div>";
                             }
                         }

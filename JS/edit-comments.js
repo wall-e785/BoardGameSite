@@ -19,6 +19,9 @@ $(document).ready(function() {
         editField.name = "editing";
         editField.setAttribute("data-comment-id", comment_id);
 
+        //referenced to fill the textarea with the existing comment: https://stackoverflow.com/questions/7815374/get-element-inside-element-by-class-and-id-javascript
+        editField.value = document.getElementById(comment_id).getElementsByClassName("comment-content")[0].textContent;
+
         //create done button
         let doneButton = document.createElement("button");
         doneButton.type = "button";
