@@ -1,5 +1,5 @@
 <?php
-    //removes comments from a game
+    //removes games from a collection
     require_once('private/initialize.php');
 
     $delete_str = $db -> prepare("DELETE FROM BelongTo WHERE collection_id = ? AND game_id = ?");

@@ -12,7 +12,7 @@
         <div class="border-right" id="username">
             <div class="username">
                 <!-- add user profile image?? -->
-                <?php  echo "<h2>" . $_SESSION['username'] . "</h2>"; ?> <!-- Display username -->
+                <?php  echo "<h2>" . $_GET['user'] . "</h2>"; ?> <!-- Display username -->
             </div>
         </div>
         <div id="userstats">
@@ -28,7 +28,7 @@
                 WHERE BelongTo.collection_id IN (
                     SELECT collection_id
                     FROM Collections
-                    WHERE username = '". $_SESSION['username'] . "' AND collection_name = 'Owned')";
+                    WHERE username = '". $_GET['user'] . "' AND collection_name = 'Owned')";
 
                 //Execute the query
                 $owned_res = mysqli_query($db, $owned_query);
@@ -43,7 +43,7 @@
                  // Loop through ratings
                  $ratings_query = "SELECT rating_id 
                  FROM Ratings
-                 WHERE username = '". $_SESSION['username'] . "'";
+                 WHERE username = '". $_GET['user'] . "'";
 
                 // Execute the query 
                 $rating_res = mysqli_query($db, $ratings_query);
@@ -58,7 +58,7 @@
                  // Loop through comments
                  $comments_query = "SELECT comment_id 
                  FROM Comments
-                 WHERE username = '". $_SESSION['username'] . "'";
+                 WHERE username = '". $_GET['user'] . "'";
 
                 // Execute the query 
                 $comment_res = mysqli_query($db, $comments_query);
@@ -73,7 +73,7 @@
                 // Loop through comments
                 $collections_query = "SELECT * 
                 FROM Collections
-                WHERE username = '". $_SESSION['username'] . "'";
+                WHERE username = '". $_GET['user'] . "'";
 
                 // Execute the query 
                 $res = mysqli_query($db, $collections_query);
@@ -104,7 +104,7 @@
                 UNION ALL
                 SELECT rating_id AS id, rating_date AS created, game_id, 'rating' AS type
                 FROM Ratings
-                WHERE username = '". $_SESSION['username'] . "')
+                WHERE username = '". $_GET['user'] . "')
                 ORDER BY created DESC
                 LIMIT 10";
 
@@ -167,7 +167,7 @@
                     // Loop through comments
                     $collections_query = "SELECT collection_name, collection_id 
                     FROM Collections
-                    WHERE username = '". $_SESSION['username'] . "'";
+                    WHERE username = '". $_GET['user'] . "'";
 
                     // Execute the query 
                     $res = mysqli_query($db, $collections_query);
