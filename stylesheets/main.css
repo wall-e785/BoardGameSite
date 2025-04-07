@@ -70,6 +70,10 @@ input{
     border:solid black 0.1em;
     font-size: 1em;
 }
+input[type=text] {
+    padding:0.5em;
+}
+
 input[type=submit] {
     background-color: #FFDE9C;
     border:none;
@@ -660,9 +664,28 @@ td{
     font-size: 2em;
     margin-bottom:0.5em;
 }
+.make-collection-title-container{
+    padding: 2em 3em;
+    align-content:flex-end;
+}
 .collection-createdby-container {
     padding: 2em 3em;
     flex:2;
+}
+.make-collection-save-container{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    gap:1em;
+    padding: 2em 3em;
+    align-items: center;
+}
+.collection-name{
+    width:98%;
+    padding:0.5em;
+    margin-top:1em;
 }
 .edit-delete-container{
     display: -webkit-box;
@@ -695,9 +718,33 @@ td{
     border: solid #F1B63E 0.1em;
 }
 .make-collection-wrap{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
     flex-wrap: wrap;
     gap:1em;
     padding: 3em 5em;
+}
+.make-collection-search-container{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    gap:1em;
+    padding: 2em 3em;
+}
+.make-collection-search{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    gap:1em;
+}
+.make-collection-search input[type=text]{
+    width:100%;
 }
 .make-collection-img{
     width: auto;
@@ -788,7 +835,9 @@ td{
     border: solid 0.03em black;
     width:100%;
 }
+.selected-games{
 
+}
 /* ------------------------------ //END View Collection page ------------------------------ */
 
 .border-top{

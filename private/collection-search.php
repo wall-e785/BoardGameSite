@@ -7,7 +7,7 @@
     $query->bind_param("s", $input);
 
     //referneced wildcards from: https://www.w3schools.com/sql/sql_wildcards.asp
-    $input = "%" . $_POST["input"] . "%";
+    $input = $_POST["input"] . "%";
     $query->execute();
     $res = $query->get_result();
 
