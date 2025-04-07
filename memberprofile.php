@@ -182,8 +182,6 @@
                                     echo "<img class=\"collection-icon\" src=\"./imgs/bookmark-filled.svg\">";
                                 }else if($row["collection_name"] == "Favourites"){
                                     echo "<img class=\"collection-icon\" src=\"./imgs/heart-filled.svg\">";
-                                }else{
-                                    echo "<img class=\"collection-icon\" src=\"./imgs/heart-outline.svg\">";
                                 }
                                 echo "</div>";
                                 echo "<a href=\"" . url_for('BoardGameSite/collectionpage.php') . "?collectionid=" . $row['collection_id'] . "&name=" . $row['collection_name'] . "\">" . $row['collection_name'] ."</a>";

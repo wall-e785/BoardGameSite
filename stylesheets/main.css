@@ -202,9 +202,10 @@ button:hover{
     width:fit-content;
     min-width:fit-content;
     max-width: fit-content;
+    padding: 1em;
 }
 .index-gallery-text{
-    margin:1em 2em;
+    padding-top:1em;
     word-wrap: break-word; /* Ensures long words wrap */
     overflow-wrap: break-word;
     white-space: normal; /* Allows wrapping */
@@ -833,7 +834,8 @@ td{
 .edit-collection-title{
     font-size: 4em;
     border: solid 0.03em black;
-    width:100%;
+    width:94%;
+    
 }
 .selected-games{
 

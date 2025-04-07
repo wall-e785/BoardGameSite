@@ -10,6 +10,17 @@
         require_once('private/initialize.php');
         $name = $_GET['name']; 
         $collectionid = $_GET['collectionid'];
+        $query = "SELECT username, collection_date
+                        FROM Collections
+                        WHERE collection_id =" . $collectionid;
+        
+        $res = mysqli_query($db, $query);
+
+        if (mysqli_num_rows($res) > 0){
+            $collection=mysqli_fetch_assoc($res);
+            $collection_username = $collection['username'];
+            $collection_date = substr($collection['collection_date'], 0, 10);
+        }
     ?>
 
     <form class="collection-header-container" action='edit-collection.php'>
@@ -55,6 +66,11 @@
                             echo "<img class=\"collection-gallery-img\" src=\"" . $img_url . "\">";
                         echo "</div>";
                         echo "<a class=\"collection-gallery-text\"href=\"". url_for('BoardGameSite/viewboardgame.php?gameid=') . $gameid ."\">". $game['names'] . "</a>";
+                        if($collection_username == $_SESSION['username']){
+                            echo "<a href=\"" . url_for('BoardGameSite/deletecollectiongame.php?collectionid=') . $collectionid . "&gameid=". $gameid . "&name=" . $name . "\">";
+                                echo "<img class=\"collection-delete\" src=\"./imgs/delete.svg\">";
+                            echo "</a>";       
+                        }   
                     echo "</div>";
                 }
             }
