@@ -249,7 +249,7 @@
                                             //only show delete if the comment is by the logged in user
                                             if(!empty($_SESSION["username"])){
                                                 if($row["username"] == $_SESSION["username"]){
-                                                    echo "<a href=\"" . url_for('BoardGameSite/deletecomment.php?commentid=') . $row["comment_id"] . "&gameid=". $row["game_id"] . "\">";
+                                                    echo "<a class=\"comment\" data-url=\"" . url_for('BoardGameSite/deletecomment.php?commentid=') . $row["comment_id"] . "&gameid=". $row["game_id"] . "\">";
                                                         echo "<img class=\"comment-delete\" src=\"./imgs/delete.svg\">";
                                                     echo "</a>";
                                                 }   
@@ -279,4 +279,6 @@
 <script src="JS/submit-rating.js"></script>
 <script src="JS/add-to-collection.js"></script>
 <script src="JS/add-comment.js"></script>
+<script src="JS/delete-confirmation.js"></script>
+
 </html>
