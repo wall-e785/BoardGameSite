@@ -14,6 +14,8 @@ $(document).ready(function() {
         //referenced get attribute from: https://www.w3schools.com/jsref/met_element_getattribute.asp
         let comment_id = button.attr("data-comment-id");
 
+        let existing_comment =document.getElementById("comment-" + comment_id);
+
         //referenced creating a textarea from: https://stackoverflow.com/questions/7377399/creating-a-textarea-with-javascript
         let editField = document.createElement("textarea");
         editField.name = "editing";
@@ -42,12 +44,15 @@ $(document).ready(function() {
         //referenced replacewith from: https://stackoverflow.com/questions/69701387/using-replacewith-to-replace-an-element-with-a-domstring-or-multiple-elements-in
         //replace edit button with all of the newly created elements
         button.replaceWith(editField, doneButton, cancelButton);
+        // hide existing comment
+        existing_comment.style.display = "none";
     };
 
     //used to save comments
     function saveComment(){
         let button = $(this);
         let comment_id = button.attr("data-comment-id");
+        let existing_comment =document.getElementById("comment-" + comment_id);
 
         //find the textarea with the right commentid
         let textArea = document.querySelector("textarea[data-comment-id=\"" + comment_id + "\"]");
@@ -79,6 +84,8 @@ $(document).ready(function() {
 
             //replace the done button with the edit button
             button.replaceWith(newButton);
+            // show existing comment
+            existing_comment.style.display = "block";
 
             //query selector referenced from: https://stackoverflow.com/questions/14809528/why-does-js-code-var-a-document-queryselectoradata-a-1-cause-error
             //update the comment dynamically
@@ -95,7 +102,8 @@ $(document).ready(function() {
 
         let button = $(this);
         let comment_id = button.attr("data-comment-id");
-
+        let existing_comment =document.getElementById("comment-" + comment_id);
+        
         //remove the done button/text area
         document.querySelector("button[data-comment-id=\"" + comment_id + "\"][class=\"done-button\"]").remove();
         document.querySelector("textarea[data-comment-id=\"" + comment_id + "\"]").remove();
@@ -110,5 +118,7 @@ $(document).ready(function() {
 
         //replace the cancel button with the done button
         button.replaceWith(newButton);
+        // show existing comment
+        existing_comment.style.display = "block";
     }
 });

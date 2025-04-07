@@ -427,10 +427,7 @@ button:hover{
 .catmec-container{
     flex:2;
 }
-.edit-button{
-    width: 3em;
-    height: auto;
-}
+
 .done-button{
     width: 3.5em;
     height: auto;
@@ -708,10 +705,10 @@ td{
     margin-bottom:0em;
 }
 .edit-button{
-    border-radius: 1em;
-    padding: 0.5em;
+    border-radius: 2em;
+    padding: 1em;
     width:fit-content;
-    margin: auto;
+    
     margin-top: 0em;
     margin-bottom:0em;
 }
@@ -837,9 +834,12 @@ td{
     width:94%;
     
 }
+
 .selected-games{
 
 }
+
+
 /* ------------------------------ //END View Collection page ------------------------------ */
 
 .border-top{
