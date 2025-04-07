@@ -15,7 +15,7 @@ $(document).ready(function() {
             url: 'private/add-to-collection-script.php',
             data: {collection_id: val, gameid: game},
             success: function(response){
-                alert("Success. Game added to collection!" + response);
+                alert(response);
             }
         });
     });
