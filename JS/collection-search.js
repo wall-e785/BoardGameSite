@@ -30,7 +30,7 @@ $(document).ready(function() {
         if(!selected.includes(val)){
             selected.push(val);
             displaying.push(name);
-            display_selected.innerHTML += "<p>" + name + "</p>";
+            display_selected.innerHTML += "<p style=\"border:solid black 0.1em; border-radius:2em; padding:0.5em;\" >" + name + "</p>";
         }else{
             //otherwise, it is being deselected.
             //filter the array and remove the game_id
@@ -45,7 +45,7 @@ $(document).ready(function() {
 
             let new_inner = "";
             for(let i=0; i<displaying.length;i++){
-                new_inner += "<p>" + displaying[i] + "</p>";
+                new_inner += "<p style=\"border:solid black 0.1em; border-radius:2em; padding:0.5em;\">" + displaying[i] + "</p>";
             }
             display_selected.innerHTML = new_inner;
         }

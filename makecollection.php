@@ -78,7 +78,7 @@
                 ?>
             </div>
             <div class="make-collection-search">
-                <input type="text" name="search" class="" id="search-input" placeholder="Search for games by name here..."/>
+                <input type="text" name="search" id="search-input" placeholder="Search for games by name here..."/>
             </div>
 
             <div class="make-collection-wrap" id="selector-area">

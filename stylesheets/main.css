@@ -845,8 +845,11 @@ td{
     
 }
 
-.selected-games{
-
+.selected-game{
+    border: solid black 0.1em;
+    border-radius:2em;
+    padding:1em;
+    color:red
 }
 
 
