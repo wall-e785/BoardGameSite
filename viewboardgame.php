@@ -65,9 +65,9 @@
             $new_count = mysqli_num_rows($res);
             $new_sum = 0;
             while($row= mysqli_fetch_assoc($res)) {
-                $new_sum += floatval($row['rating_num']);
+                $new_sum += floatval($row['rating_num']);    
             }
-            $avg_rating = round(($existing_avg * $num_votes + $new_sum) / ($num_votes + $new_count), 2);
+            $avg_rating = round(($existing_avg * $num_votes + $new_sum) / ($num_votes + $new_count), 5);
         }else{
             // there are no new ratings for this game, so display the existing avg.
             $avg_rating = $existing_avg;
