@@ -108,12 +108,12 @@
                 //referenced sql order by date here: https://stackoverflow.com/questions/24567274/sql-order-by-datetime-desc
                 //referenced unioning tables from: https://www.w3schools.com/sql/sql_ref_union_all.asp
                 // Select from comments, then union the selection from ratings. Use variable type to keep track of which is which
-                $recent_query = "(SELECT comment_id AS id, comment_date AS created, game_id, 'comment' AS type
+                $recent_query = "SELECT * FROM (SELECT username, comment_id AS id, comment_date AS created, game_id, 'comment' AS type
                 FROM Comments
                 UNION ALL
-                SELECT rating_id AS id, rating_date AS created, game_id, 'rating' AS type
-                FROM Ratings
-                WHERE username = '". $_GET['user'] . "')
+                SELECT username, rating_id AS id, rating_date AS created, game_id, 'rating' AS type
+                FROM Ratings) AS combined_recent
+                WHERE combined_recent.username = '". $_GET['user'] . "'
                 ORDER BY created DESC
                 LIMIT 10";
 
