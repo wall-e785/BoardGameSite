@@ -15,7 +15,7 @@ $(document).ready(function() {
             url: 'private/submit-rating-script.php',
             data: {rating: val, gameid: game},
             success: function(response){
-                alert("Success. Rating submitted!");
+                alert(response);
             }
         });
     });

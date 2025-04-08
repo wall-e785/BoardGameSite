@@ -140,9 +140,26 @@
                                 echo "<select name=\"rating\" id=\"rating\">";
                                     echo "<option value=\"\">   </option>"; //First option blank
                                         // Looping to create numbers
+
+                                        $rating_query_str = "SELECT rating_num, username, game_id FROM `Ratings` WHERE username='" . $_SESSION['username'] . "' AND game_id = '" . $_GET['gameid'] . "'";
+                                        $res = mysqli_query($db, $rating_query_str);
+
+                                        $select = -1;
+                                        
+                                        if (mysqli_num_rows($res) > 0){
+                                            // Looping through rating that user has
+                                            while ($row = $res->fetch_assoc()) {
+                                                $select = $row['rating_num'];
+                                            }
+                                        }    
+
                                         for ($x = 1; $x <11; $x++) {    
                                             $selected = ($Rating == $x) ? 'selected' : ''; // Displays user's rating if previously submitted     
-                                            echo "<option value=\"$x\" $selected>".$x."</option>";
+                                            if($x == $select){
+                                                echo "<option selected value=\"$x\" $selected>".$x."</option>";
+                                            }else{
+                                                echo "<option value=\"$x\" $selected>".$x."</option>";
+                                            }
                                         }
                                 echo "</select>";
                                 echo "<button type=\"button\" id=\"submit-rating\" data-game-id=\"" . $gameid . "\">Submit Rating</button>";

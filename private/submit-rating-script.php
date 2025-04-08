@@ -3,7 +3,6 @@
 
     require_once('initialize.php');
 
-    $errorsRating = [];
     // Check if logged in
     if(isset($_SESSION['username'])) {
         $username = $_SESSION['username'];
@@ -43,7 +42,9 @@
                 $gameid = $_POST['gameid'];
                 $username = $_SESSION['username'];
                     
-                $insert_str->execute();  
+                $insert_str->execute(); 
+
+                echo "Success: Rating submitted!";
             }else{ // Update the existing rating instead of reating a new row
                 $update_str = "UPDATE Ratings SET rating_num = ? WHERE rating_id = ?";
                 $statement = mysqli_prepare($db, $update_str);
@@ -54,14 +55,12 @@
                 $rating = $_POST['rating'];
                 // Execute the update
                 mysqli_stmt_execute($statement); 
+                echo "Success: Existing rating was found, your rating has been updated!";
             }     
         }else{
             // Give error that comment box must not be empty
-            array_push($errorsRating, 'Please select a rating.');
+            echo "Error: Please select a rating!";
         }
 
-    }else{
-        // If not logged in, throw error that user must make an account or sign in.
-        array_push($errorsRating, 'Log in or make an account to leave ratings.');
     }
 ?>
