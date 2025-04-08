@@ -7,6 +7,7 @@
 <div class="body">
     <div class="border-bottom" id="SearchForm">
         <h2>Search</h2>
+        <?php echo display_errors($searchErrors); ?>
         <form class="search-form" action="search.php">
             <div class="search-form-container">
                 <div class="search-column">
@@ -40,7 +41,7 @@
                     <p>Average Rating</p>
                     <div class="search-form-numfield">
                         <label for="ratingMin">min: </label>
-                        <input type="text" id="ratingMin" name="ratingMin"<?php if (!empty($RatingMinm)) echo "value=".$RatingMin; ?> >
+                        <input type="text" id="ratingMin" name="ratingMin"<?php if (!empty($RatingMin)) echo "value=".$RatingMin; ?> >
                         <label for="ratingMax"> max: </label>
                         <input type="text" id="ratingMax" name="ratingMax"<?php if (!empty($RatingMax)) echo "value=".$RatingMax; ?> >
                     </div>
