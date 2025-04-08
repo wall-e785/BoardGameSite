@@ -8,7 +8,7 @@ $(document).ready(function() {
             if(delete_button_id.className == "collection"){
                 if(confirm("Are you sure you want to delete this collection?")){
                     //redirect referenced from: w3schools.com/howto/howto_js_redirect_webpage.asp
-                    window.location.href = delete_button.getAttribute("data-url");
+                    window.location.href = delete_button_id.getAttribute("data-url");
                 }
             }
             // 
