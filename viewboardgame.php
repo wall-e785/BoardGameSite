@@ -235,7 +235,7 @@
                         // Check if there are any results
                         if (mysqli_num_rows($res) == 0 ){
                             echo "<p>No Comments yet!</p>";
-                            exit();
+                            //exit();
                         }
                         // Save variables
                         if(mysqli_num_rows($res) != 0) {
@@ -273,12 +273,11 @@
             </div>
         </div>
     </div>
-</body>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="JS/edit-comments.js"></script>
 <script src="JS/submit-rating.js"></script>
 <script src="JS/add-to-collection.js"></script>
 <script src="JS/add-comment.js"></script>
 <script src="JS/delete-confirmation.js"></script>
-
+</body>
 </html>
