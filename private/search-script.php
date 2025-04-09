@@ -16,6 +16,9 @@
     $Mechanic2 = null;
     $Mechanic3 = null;
 
+    // Error array
+    $searchErrors = [];
+
     if( isset($_GET['gameName']) && !empty($_GET['gameName'])){
         $GameName=trim($_GET['gameName']); 
     } 
@@ -196,6 +199,7 @@
             $param_values[] = (int)$GameYear;
         }else{
             // error: year must be a 4 digit number
+            array_push($searchErrors, 'Please enter a 4 digit number.');
         }
     }
 
@@ -212,6 +216,7 @@
             $param_values[] = (int)$PlayersMin;
         }else{
             // error: must be number
+            array_push($searchErrors, 'Number of players must be a number.');
         }
     }
     if (!empty($PlayersMax)){
@@ -221,6 +226,7 @@
             $param_values[] = (int)$PlayersMax;
         }else{
             // error: must be number
+            array_push($searchErrors, 'Number of players must be a number.');
         }
     }
     if (!empty($TimeMin)){
@@ -230,6 +236,7 @@
             $param_values[] = (int)$TimeMin;
         }else{
             // error: must be number
+            array_push($searchErrors, 'Number of minutes must be a number.');
         }
     }
     if (!empty($TimeMax)){
@@ -239,6 +246,7 @@
             $param_values[] = (int)$TimeMax;
         }else{
             // error: must be number
+            array_push($searchErrors, 'Number of minutes must be a number.');
         }
     }
     if (!empty($RatingMin)){
@@ -248,6 +256,7 @@
             $param_values[] = (float)$RatingMin;
         }else{
             // error: must be number
+            array_push($searchErrors, 'Rating be a number.');
         }
     }
     if (!empty($RatingMax)){
@@ -257,6 +266,7 @@
             $param_values[] = (float)$RatingMax;
         }else{
             // error: must be number
+            array_push($searchErrors, 'Rating be a number.');
         }
     }
 
