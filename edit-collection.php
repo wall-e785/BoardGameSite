@@ -4,38 +4,39 @@
 
 <body>
     <div class="body">
-    <?php
+        <?php
         require('header.php');
         include("./private/edit-collection-script.php");
         require_once('private/initialize.php');
-        $name = $_GET['name']; 
+        $name = $_GET['name'];
         $collectionid = $_GET['collectionid'];
         $query = "SELECT username, collection_date
                         FROM Collections
                         WHERE collection_id =" . $collectionid;
-        
+
         $res = mysqli_query($db, $query);
 
-        if (mysqli_num_rows($res) > 0){
-            $collection=mysqli_fetch_assoc($res);
+        if (mysqli_num_rows($res) > 0) {
+            $collection = mysqli_fetch_assoc($res);
             $collection_username = $collection['username'];
             $collection_date = substr($collection['collection_date'], 0, 10);
         }
-    ?>
+        ?>
 
-    <form class="collection-header-container" action='edit-collection.php'>
-        <div class="collection-title-container border-right">
-            <label class="labelAbove" for="collectionName">Collection Name:</label>
-            <input class="edit-collection-title" type="text" name="collectionName" class="collection-name" value="<?php echo $name?>" /><br />
-            <!-- Hidden field for collection ID -->
-            <input type="hidden" name="collectionid" value="<?php echo $collectionid ?>" />
-            
-        </div>
-        <div class="edit-delete-container">
-            <input class="cancel-edit-button" type="submit" id="submit" value="Save"/>
-            <a class="cancel-edit-button"<?php echo"href=\"javascript:history.go(-1)\" "; ?> >cancel</a>
-        </div>
-    </form>
+        <form class="collection-header-container" action='edit-collection.php'>
+            <div class="collection-title-container border-right">
+                <label class="labelAbove" for="collectionName">Collection Name:</label>
+                <input class="edit-collection-title" type="text" name="collectionName" class="collection-name"
+                    value="<?php echo $name ?>" /><br />
+                <!-- Hidden field for collection ID -->
+                <input type="hidden" name="collectionid" value="<?php echo $collectionid ?>" />
+
+            </div>
+            <div class="edit-delete-container">
+                <input class="cancel-edit-button" type="submit" id="submit" value="Save" />
+                <a class="cancel-edit-button" <?php echo "href=\"javascript:history.go(-1)\" "; ?>>cancel</a>
+            </div>
+        </form>
 
         <div class="flex make-collection-wrap">
             <?php
@@ -46,10 +47,10 @@
             // Execute the query 
             $res = mysqli_query($db, $boardgames);
             // Check if there are any results
-            if (mysqli_num_rows($res) == 0 ){
+            if (mysqli_num_rows($res) == 0) {
                 echo "<h4>No games in this collection.</h4>";
-            }else if(mysqli_num_rows($res) != 0) {
-                while($row= mysqli_fetch_assoc($res)){
+            } else if (mysqli_num_rows($res) != 0) {
+                while ($row = mysqli_fetch_assoc($res)) {
                     $gameid = $row['game_id'];
 
                     $gameinfo = "SELECT game_id, names, image_url 
@@ -62,15 +63,15 @@
                     $game_name = $game['names'];
 
                     echo "<div class=\"collection-gallery-item\">";
-                        echo "<div class=\"\">";
-                            echo "<img class=\"collection-gallery-img\" src=\"" . $img_url . "\">";
-                        echo "</div>";
-                        echo "<a class=\"collection-gallery-text\"href=\"". url_for('BoardGameSite/viewboardgame.php?gameid=') . $gameid ."\">". $game['names'] . "</a>";
-                        if($collection_username == $_SESSION['username']){
-                            echo "<a href=\"" . url_for('BoardGameSite/deletecollectiongame.php?collectionid=') . $collectionid . "&gameid=". $gameid . "&name=" . $name . "\">";
-                                echo "<img class=\"collection-delete\" src=\"./imgs/delete.svg\">";
-                            echo "</a>";       
-                        }   
+                    echo "<div class=\"\">";
+                    echo "<img class=\"collection-gallery-img\" src=\"" . $img_url . "\">";
+                    echo "</div>";
+                    echo "<a class=\"collection-gallery-text\"href=\"" . url_for('BoardGameSite/viewboardgame.php?gameid=') . $gameid . "\">" . $game['names'] . "</a>";
+                    if ($collection_username == $_SESSION['username']) {
+                        echo "<a href=\"" . url_for('BoardGameSite/deletecollectiongame.php?collectionid=') . $collectionid . "&gameid=" . $gameid . "&name=" . $name . "\">";
+                        echo "<img class=\"collection-delete\" src=\"./imgs/delete.svg\">";
+                        echo "</a>";
+                    }
                     echo "</div>";
                 }
             }
@@ -79,6 +80,5 @@
     </div>
 
 </body>
+
 </html>
-
-
