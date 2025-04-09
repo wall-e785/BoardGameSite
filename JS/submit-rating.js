@@ -16,6 +16,7 @@ $(document).ready(function() {
             data: {rating: val, gameid: game},
             success: function(response){
                 alert(response);
+                location.reload();
             }
         });
     });
