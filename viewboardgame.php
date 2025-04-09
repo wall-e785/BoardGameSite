@@ -68,10 +68,8 @@
                 $new_sum += floatval($row['rating_num']);    
             }
             $avg_rating = round(($existing_avg * $num_votes + $new_sum) / ($num_votes + $new_count), 5);
-        }else{
-            // there are no new ratings for this game, so display the existing avg.
-            $avg_rating = $existing_avg;
         }
+       
         // Free the result 
         $res->free_result();
 
