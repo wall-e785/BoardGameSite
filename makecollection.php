@@ -59,25 +59,6 @@
                 </div>
 
                 <div class="make-collection-wrap" id="selector-area">
-                    <?php
-                    // $boardgames = "SELECT game_id, names, image_url 
-                    //                 FROM BoardGames";
-                    
-                    // // Execute the query 
-                    // $res = mysqli_query($db, $boardgames);
-                    // // Check if there are any results
-                    // if (mysqli_num_rows($res) == 0 ){
-                    //     echo "<h4>Error: Could not retrieve games, try again later.</h4>";
-                    // }else if(mysqli_num_rows($res) != 0) {
-                    //     while($row= mysqli_fetch_assoc($res)){
-                    //         echo "<label class=\"game-card\">";
-                    //             echo "<input type=\"checkbox\" name=\"game\" value=\"" . $row['game_id'] . "\">";
-                    //             echo "<img src=\"" . $row['image_url'] . "\">";
-                    //             echo "<p class=\"game-card-title\">".$row['names']."</p>";
-                    //         echo "</label>";
-                    //     }
-                    // }
-                    ?>
                 </div>
             </div>
         </form>

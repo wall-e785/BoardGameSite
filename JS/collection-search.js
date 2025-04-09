@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    //get the search input in the document
     var search_input = document.getElementById("search-input");
     
     //used to add click events to each of the checkboxes
@@ -43,6 +44,7 @@ $(document).ready(function() {
             let new_displaying = displaying.filter(deselected_name);
             displaying = new_displaying;
 
+            //update the selected games front-end
             let new_inner = "";
             for(let i=0; i<displaying.length;i++){
                 new_inner += "<p style=\"border:solid black 0.1em; border-radius:2em; padding:0.5em;\">" + displaying[i] + "</p>";
@@ -51,6 +53,7 @@ $(document).ready(function() {
         }
     }
 
+    //filter out values that are equal to val
     function deselected(val){
         return val != remove_this;
     }
@@ -104,17 +107,19 @@ $(document).ready(function() {
     });
 
     //referenced getting all checked boxes from: https://stackoverflow.com/questions/59727296/collect-all-the-values-of-all-checboxes-to-pass-through-ajax
+    //using jQuery, get the save button and add a click listener
     $('#save').on('click', function(){
         var collect_name = $('.collection-name').val();
         
+        //make sure name was filled out
         if(selected.length > 0 && collect_name.trim().length != 0){
-            console.log("ajax!");
             $.ajax({
                 method: 'POST',
                 url: 'processcollection.php',
                 data: {checked:selected, name: collect_name},
                 success: function(response){
                     alert("Success: Collection created!");
+                    //link to the user's profile page
                     window.location.href = response;
                 }
             });
