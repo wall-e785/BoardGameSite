@@ -74,11 +74,14 @@
                 $password = $_POST['signup-password']; 
                 $email = $_POST['signup-email'];
 
-                //check if username exists
+                //check if username/email exists
+                $user_existing_query = "SELECT COUNT(*) as count FROM Users WHERE username = '" . $username . "'";
+                $user_existing_res = mysqli_query($db, $user_existing_query);
+
                 $existing_query = "SELECT COUNT(*) as count FROM Users WHERE email = '" . $email . "'";
                 $existing_res = mysqli_query($db, $existing_query);
 
-                if(mysqli_fetch_assoc($existing_res)['count'] == 0){
+                if(mysqli_fetch_assoc($existing_res)['count'] == 0 && mysqli_fetch_assoc($user_existing_res)['count'] == 0){
                     if($password == $_POST['signup-confirm']){
                         $hashed_password = password_hash($_POST['signup-password'], PASSWORD_DEFAULT);
                         $insert_user_query = "INSERT INTO Users(username, email, hashed_password) VALUES (
@@ -120,7 +123,7 @@
                     }
 
                 }else{
-                array_push($signupErrors, 'Error, this email already has an associated email. Please try logging in instead.');
+                array_push($signupErrors, 'Error, this username/email already has an associated account. Please try logging in instead.');
                 }
             }else{
                 array_push($signupErrors, 'Please make sure all fields are filled!');
