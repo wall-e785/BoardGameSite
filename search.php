@@ -206,7 +206,7 @@ include("./private/search-script.php");
     while ($row = $res2->fetch_assoc()) {
         echo "<tr>";
         // If the column values aren't empty, then display them
-        $boardgamepage = url_for('BoardGameSite/viewboardgame.php');
+        $boardgamepage = url_for('Playtested/viewboardgame.php');
         echo "<td><a href=\"" . $boardgamepage . "?gameid=" . $row['game_id'] . "\">" . $row['names'] . "</a></td>";
         echo "<td>" . $row['avg_rating'] . "</td>";
         echo "<td>" . $row['year'] . "</td>";

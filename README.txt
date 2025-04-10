@@ -1,4 +1,4 @@
 IAT 459 Spring 2025 
-Board Game Site
+Playtested.
 
 Created by Wallace Chau & Jasper Gass

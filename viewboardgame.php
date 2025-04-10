@@ -192,7 +192,7 @@
                             echo "<button type=\"button\" id=\"add-collection\" data-game-id=\"" . $gameid . "\">Add</button>";
                             echo "</form>";
                         } else {
-                            echo "<a href=\"" . url_for('BoardGameSite/signin.php') . "\"><p>Log In to Rate Games/Make Collections</p></a>";
+                            echo "<a href=\"" . url_for('Playtested/signin.php') . "\"><p>Log In to Rate Games/Make Collections</p></a>";
                         }
                         ?>
                     </div>
@@ -237,7 +237,7 @@
                         echo "<textarea class=\"comment-form\" name=\"comment\" id=\"comment\" placeholder=\"Post your Comment Here ...\"></textarea><br>";
                         echo "<button type=\"button\" id=\"post-comment\" data-game-id=\"" . $gameid . "\">Comment</button>";
                     } else {
-                        echo "<a href=\"" . url_for('BoardGameSite/signin.php') . "\"><p>Log In to Post Comments</p></a>";
+                        echo "<a href=\"" . url_for('Playtested/signin.php') . "\"><p>Log In to Post Comments</p></a>";
                     }
                     ?>
                 </form>
@@ -264,13 +264,13 @@
                             //custom data referenced from: https://www.w3schools.com/tags/att_data-.asp
                             echo "<div class=\"comment-box flex column gap1em\" id=\"" . $row["comment_id"] . "\" data-comment-id=\"" . $row["comment_id"] . "\">";
                             echo "<div class=\"comment-header\">";
-                            echo "<a href=\"" . url_for('BoardGameSite/memberprofile.php?user=' . $row["username"]) . "\"><p>" . $row["username"] . "</p></a>";
+                            echo "<a href=\"" . url_for('Playtested/memberprofile.php?user=' . $row["username"]) . "\"><p>" . $row["username"] . "</p></a>";
                             echo "<div class=\"comment-date\">";
                             echo "<p>" . $row["comment_date"] . "</p>";
                             //only show delete if the comment is by the logged in user
                             if (!empty($_SESSION["username"])) {
                                 if ($row["username"] == $_SESSION["username"]) {
-                                    echo "<a class=\"comment\" data-url=\"" . url_for('BoardGameSite/deletecomment.php?commentid=') . $row["comment_id"] . "&gameid=" . $row["game_id"] . "\">";
+                                    echo "<a class=\"comment\" data-url=\"" . url_for('Playtested/deletecomment.php?commentid=') . $row["comment_id"] . "&gameid=" . $row["game_id"] . "\">";
                                     echo "<img class=\"comment-delete\" src=\"./imgs/delete.svg\">";
                                     echo "</a>";
                                 }

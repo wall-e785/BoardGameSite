@@ -1,6 +1,6 @@
 <?php
-
-require_once('db_credentials.php');
+// Get DB credentials from include folder for security.
+include($_SERVER['DOCUMENT_ROOT'] . "/../include/PlaytestedInclude/Playtested_Connect.php");
 
 function db_connect()
 {

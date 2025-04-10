@@ -6,7 +6,7 @@ require('private/signin-script.php');
 // This page should not show if a session is present.
 // Redirect to staff index if a session is detected.
 if (isset($_SESSION['username'])) {
-  redirect_to(url_for('BoardGameSite/memberprofile.php?user=' . $_SESSION['username']));
+  redirect_to(url_for('Playtested/memberprofile.php?user=' . $_SESSION['username']));
 }
 
 ?>

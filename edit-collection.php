@@ -66,9 +66,9 @@
                     echo "<div class=\"\">";
                     echo "<img class=\"collection-gallery-img\" src=\"" . $img_url . "\">";
                     echo "</div>";
-                    echo "<a class=\"collection-gallery-text\"href=\"" . url_for('BoardGameSite/viewboardgame.php?gameid=') . $gameid . "\">" . $game['names'] . "</a>";
+                    echo "<a class=\"collection-gallery-text\"href=\"" . url_for('Playtested/viewboardgame.php?gameid=') . $gameid . "\">" . $game['names'] . "</a>";
                     if ($collection_username == $_SESSION['username']) {
-                        echo "<a href=\"" . url_for('BoardGameSite/deletecollectiongame.php?collectionid=') . $collectionid . "&gameid=" . $gameid . "&name=" . $name . "\">";
+                        echo "<a href=\"" . url_for('Playtested/deletecollectiongame.php?collectionid=') . $collectionid . "&gameid=" . $gameid . "&name=" . $name . "\">";
                         echo "<img class=\"collection-delete\" src=\"./imgs/delete.svg\">";
                         echo "</a>";
                     }

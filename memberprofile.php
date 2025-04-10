@@ -147,11 +147,11 @@
                                 while ($gameinfo = mysqli_fetch_assoc($name)) {
                                     //display proper header depending on the activity type
                                     if ($row['type'] == 'comment') {
-                                        echo "<p class=\"activity-game-name\" >Commented on <a href=\"" . url_for('BoardGameSite/viewboardgame.php?gameid=') . $gameinfo['game_id'] . "\">" . $gameinfo['names'] . "</a></p>";
+                                        echo "<p class=\"activity-game-name\" >Commented on <a href=\"" . url_for('Playtested/viewboardgame.php?gameid=') . $gameinfo['game_id'] . "\">" . $gameinfo['names'] . "</a></p>";
                                     } else if ($row['type'] == 'rating') {
-                                        echo "<p class=\"activity-game-name\">Rated <a href=\"" . url_for('BoardGameSite/viewboardgame.php?gameid=') . $gameinfo['game_id'] . "\">" . $gameinfo['names'] . "</a></p>";
+                                        echo "<p class=\"activity-game-name\">Rated <a href=\"" . url_for('Playtested/viewboardgame.php?gameid=') . $gameinfo['game_id'] . "\">" . $gameinfo['names'] . "</a></p>";
                                     }
-                                    // echo "<a href=\"". url_for('BoardGameSite/viewboardgame.php?gameid=') . $gameinfo['game_id'] ."\">". $gameinfo['names'] ."</a>";
+                                    // echo "<a href=\"". url_for('Playtested/viewboardgame.php?gameid=') . $gameinfo['game_id'] ."\">". $gameinfo['names'] ."</a>";
                                     echo "<img src=\"./imgs/arrow-right.svg\">";
                                 }
                             }
@@ -193,7 +193,7 @@
                                     echo "<img class=\"collection-icon\" src=\"./imgs/heart-filled.svg\">";
                                 }
                                 echo "</div>";
-                                echo "<a href=\"" . url_for('BoardGameSite/collectionpage.php') . "?collectionid=" . $row['collection_id'] . "&name=" . $row['collection_name'] . "\">" . $row['collection_name'] . "</a>";
+                                echo "<a href=\"" . url_for('Playtested/collectionpage.php') . "?collectionid=" . $row['collection_id'] . "&name=" . $row['collection_name'] . "\">" . $row['collection_name'] . "</a>";
                                 echo "</div>";
                             }
                             $res->free_result();
@@ -204,7 +204,7 @@
                                 <img class="collection-icon" src="./imgs/plus-filled.svg">
                             </div>
                             <?php
-                            echo "<a href=\"" . url_for('BoardGameSite/makecollection.php') . "\">New Collection</a>";
+                            echo "<a href=\"" . url_for('Playtested/makecollection.php') . "\">New Collection</a>";
                             ?>
                         </div>
                     </div>

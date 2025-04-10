@@ -12,5 +12,5 @@ $collectionid = $_GET['collectionid'];
 $delete_belong->execute();
 $delete_str->execute();
 
-redirect_to(url_for('BoardGameSite/memberprofile.php?user=' . $_GET["username"]));
+redirect_to(url_for('Playtested/memberprofile.php?user=' . $_GET["username"]));
 ?>

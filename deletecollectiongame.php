@@ -9,5 +9,5 @@ $collection_id = $_GET['collectionid'];
 $game_id = $_GET['gameid'];
 $delete_str->execute();
 
-redirect_to(url_for('BoardGameSite/collectionpage.php?collectionid=') . $collection_id . '&name=' . $_GET['name']);
+redirect_to(url_for('Playtested/collectionpage.php?collectionid=') . $collection_id . '&name=' . $_GET['name']);
 ?>
