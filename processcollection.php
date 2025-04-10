@@ -38,7 +38,7 @@ if (!empty($_POST['checked']) && !empty($_SESSION['username'])) {
             }
         }
 
-        echo url_for('Playtested/memberprofile.php?user=' . $_SESSION['username']);
+        echo url_for('/memberprofile.php?user=' . $_SESSION['username']);
 
     }
 }

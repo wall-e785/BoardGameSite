@@ -48,7 +48,7 @@
                     echo "<img class=\"index-gallery-img\" src=\"" . $row['image_url'] . "\">";
                     echo "<div class=\"index-gallery-text\">";
                     echo "<h3>" . round($row['avg_rating'], 2) . "</h3>";
-                    echo "<a href=\"" . url_for('Playtested/viewboardgame.php?gameid=') . $row['game_id'] . "\"><p>" . $row['names'] . "</p></a>";
+                    echo "<a href=\"" . url_for('viewboardgame.php?gameid=') . $row['game_id'] . "\"><p>" . $row['names'] . "</p></a>";
                     echo "</div>";
                     echo "</div>";
                 }
@@ -64,7 +64,7 @@
                     echo "<img class=\"index-gallery-img\" src=\"" . $row['image_url'] . "\">";
                     echo "<div class=\"index-gallery-text\">";
                     echo "<h3>" . round($row['avg_rating'], 2) . "</h3>";
-                    echo "<a href=\"" . url_for('Playtested/viewboardgame.php?gameid=') . $row['game_id'] . "\"><p>" . $row['names'] . "</p></a>";
+                    echo "<a href=\"" . url_for('viewboardgame.php?gameid=') . $row['game_id'] . "\"><p>" . $row['names'] . "</p></a>";
                     echo "</div>";
                     echo "</div>";
                 }
@@ -80,7 +80,7 @@
                     echo "<img class=\"index-gallery-img\" src=\"" . $row['image_url'] . "\">";
                     echo "<div class=\"index-gallery-text\">";
                     echo "<h3>" . round($row['avg_rating'], 2) . "</h3>";
-                    echo "<a href=\"" . url_for('Playtested/viewboardgame.php?gameid=') . $row['game_id'] . "\"><p>" . $row['names'] . "</p></a>";
+                    echo "<a href=\"" . url_for('viewboardgame.php?gameid=') . $row['game_id'] . "\"><p>" . $row['names'] . "</p></a>";
                     echo "</div>";
                     echo "</div>";
                 }

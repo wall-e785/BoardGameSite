@@ -8,5 +8,5 @@ $delete_str->bind_param("i", $comment_id);
 $comment_id = $_GET['commentid'];
 $delete_str->execute();
 
-redirect_to(url_for('Playtested/viewboardgame.php?gameid=' . $_GET['gameid']));
+redirect_to(url_for('viewboardgame.php?gameid=' . $_GET['gameid']));
 ?>

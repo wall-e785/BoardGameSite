@@ -18,11 +18,11 @@
                 <?php
                 require_once('private/initialize.php');
                 // Create URLs for the nav bar
-                $searchpage = url_for('Playtested/search.php');
-                $signinpage = url_for('Playtested/signin.php');
-                $signoutpage = url_for('Playtested/signout.php');
-                $profilepage = url_for('Playtested/memberprofile.php');
-                $index = url_for('Playtested/index.php');
+                $searchpage = url_for('search.php');
+                $signinpage = url_for('signin.php');
+                $signoutpage = url_for('signout.php');
+                $profilepage = url_for('memberprofile.php');
+                $index = url_for('index.php');
 
                 echo "<li class=\"playtested\"><a class=\"flex row\" href =" . $index . "> <img src=\"./imgs/playtested.svg\"> Playtested.</a></li>";
                 echo "<li class=\"border-left\"><a href =" . $searchpage . ">Search</a></li>";

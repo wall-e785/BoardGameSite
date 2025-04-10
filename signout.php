@@ -8,6 +8,6 @@ unset($_SESSION['username']);
 // $_SESSION['username'] = NULL;
 // End of TODO
 
-redirect_to(url_for('Playtested/index.php'));
+redirect_to(url_for('index.php'));
 
 ?>

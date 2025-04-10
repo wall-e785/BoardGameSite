@@ -51,7 +51,7 @@
                 echo "<div class=\"edit-delete-container border-left\">";
                 if ($name != "Owned" && $name != "Wishlist" && $name != "Favourites") {
                     // Displays delete button only for collections that are not Owned/Wishlist/Favourites
-                    echo "<a id=\"delete\" class= \"collection\" data-url=\"" . url_for('Playtested/deletecollection.php' . "?collectionid=" . $_GET['collectionid'] . "&username=" . $collection_username) . "\"><img class=\"collection-delete-img\" src=\"./imgs/delete.svg\"></a>";
+                    echo "<a id=\"delete\" class= \"collection\" data-url=\"" . url_for('deletecollection.php' . "?collectionid=" . $_GET['collectionid'] . "&username=" . $collection_username) . "\"><img class=\"collection-delete-img\" src=\"./imgs/delete.svg\"></a>";
                 }
                 echo "<a class=\"edit-button\" href=\"edit-collection.php?name=" . urlencode($name) . "&collectionid=" . urlencode($collectionid) . "\">Edit</a>";
                 echo "</div>";
@@ -89,7 +89,7 @@
                     echo "<div class=\"\">";
                     echo "<img class=\"collection-gallery-img\" src=\"" . $img_url . "\">";
                     echo "</div>";
-                    echo "<a class=\"collection-gallery-text\"href=\"" . url_for('Playtested/viewboardgame.php?gameid=') . $gameid . "\">" . $game['names'] . "</a>";
+                    echo "<a class=\"collection-gallery-text\"href=\"" . url_for('viewboardgame.php?gameid=') . $gameid . "\">" . $game['names'] . "</a>";
                     echo "</div>";
                 }
             }

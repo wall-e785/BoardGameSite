@@ -15,7 +15,7 @@ if (isset($_SESSION['username'])) {
         session_destroy();
 
         // Send to index page
-        redirect_to(url_for('Playtested/index.php'));
+        redirect_to(url_for('index.php'));
     } else if (isset($_POST['save'])) {
         echo "<p>saved</p>";
     }

@@ -32,7 +32,7 @@ if (is_post_request()) {
                 // Verify the password
                 if (password_verify($password, $HASHED_PASSWORD)) {
                     $_SESSION['username'] = $_POST['login-username'];
-                    redirect_to(url_for('Playtested/memberprofile.php?user=' . $_SESSION['username']));
+                    redirect_to(url_for('memberprofile.php?user=' . $_SESSION['username']));
                 } else {
                     array_push($signinErrors, 'Incorrect password, please try again.');
                 }
@@ -52,7 +52,7 @@ if (is_post_request()) {
                     $USERNAME = mysqli_fetch_assoc($find_username_res)['username'];
 
                     $_SESSION['username'] = $USERNAME;
-                    redirect_to(url_for('Playtested/memberprofile.php?user=' . $_SESSION['username']));
+                    redirect_to(url_for('memberprofile.php?user=' . $_SESSION['username']));
                 } else {
                     array_push($signinErrors, 'Incorrect password, please try again.');
                 }
@@ -113,7 +113,7 @@ if (is_post_request()) {
                         $username = $_SESSION['username'];
                         $insert_str->execute();
 
-                        redirect_to(url_for('Playtested/memberprofile.php?user=' . $_SESSION['username']));
+                        redirect_to(url_for('memberprofile.php?user=' . $_SESSION['username']));
                     } else {
                         // Display the mysql error if failed
                         array_push($signupErrors, mysqli_error($db));
