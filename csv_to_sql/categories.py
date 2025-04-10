@@ -72,19 +72,3 @@ for x in listOfTuples:
     cursor.execute(insert_query, x)
     conn.commit()
 
-
-# for i in range(0, total_rows, batch_size):
-#     batch_data = [uniqueMechanics[i]]
-    
-#     # Debugging: print a few rows to check data before insertion
-#     print(batch_data[:1])  # Print first 5 rows of the batch to check
-    
-#     cursor.executemany(insert_query, batch_data)
-#     conn.commit()  # Commit after each batch
-#     print(f"Inserted {min(i+batch_size, total_rows)} of {total_rows} rows...")
-
-# # Close connection
-# cursor.close()
-# conn.close()
-
-# print("Batch import completed successfully!")

@@ -25,20 +25,11 @@ df.columns = [col.lower().replace(" ", "_") for col in df.columns]
 
 # Select only relevant columns to match the MySQL table schema
 
-# works 1 OBJECTS
 df = df[[
     "game_id", "names", "min_players", "max_players", 
     "avg_time", "min_time", "max_time", "year", "avg_rating", "image_url", "age", 
     "owned", "designer", "num_votes"
 ]]
-
-# WORKS 2 ARTISTS
-# df = df[[
-#     "artist_role", "artist_prefix", "artist_display_name", "artist_display_bio", 
-#     "artist_suffix", "artist_alpha_sort", "artist_nationality", 
-#     "artist_begin_date", "artist_end_date", "artist_gender", 
-#     "artist_ulan_url", "artist_wikidata_url"
-# ]]
 
 # Convert NaN values and empty strings/spaces to None (NULL in MySQL)
 # Replace NaN and empty strings with None
@@ -46,7 +37,6 @@ df = df.applymap(lambda x: None if pd.isna(x) or (isinstance(x, str) and x.strip
 
 # SQL Insert Statement (Batch Insert)
 
-# works 1 OBJECTS
 insert_query = """
 INSERT INTO BoardGames (
     game_id, names, min_players, max_players,
@@ -54,17 +44,6 @@ INSERT INTO BoardGames (
     owned, designer, num_votes
 ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
 """
-
-# WORKS 2 ARTISTS
-# insert_query = """
-# INSERT INTO artists (
-#     artist_role, artist_prefix, artist_display_name, artist_display_bio, 
-#     artist_suffix, artist_alpha_sort, artist_nationality, 
-#     artist_begin_date, artist_end_date, artist_gender, 
-#     artist_ulan_url, artist_wikidata_url
-# ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-# """
-
 
 # Process data in batches
 total_rows = len(df)
