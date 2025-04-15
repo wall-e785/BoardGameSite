@@ -85,8 +85,8 @@
                         <!-- Back URL from https://stackoverflow.com/questions/2548566/go-back-to-previous-page -->
                         <div class="back-button-container">
                             <div class="back-arrow">
-                                <?php echo "<a href=\"javascript:history.go(-1)\">"; ?><img class="collection-icon"
-                                    src="./imgs/arrow-left.svg"></a>
+                                <?php echo "<a href=\"javascript:history.go(-1)\">"; ?>
+                                    <svg class="collection-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="m313-440 196 196q12 12 11.5 28T508-188q-12 11-28 11.5T452-188L188-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l264-264q11-11 27.5-11t28.5 11q12 12 12 28.5T508-715L313-520h447q17 0 28.5 11.5T800-480q0 17-11.5 28.5T760-440H313Z"/></svg></a>
                             </div>
                             <?php echo "<a href=\"javascript:history.go(-1)\">"; ?>
                             <h6>back</h6></a>
@@ -271,7 +271,8 @@
                             if (!empty($_SESSION["username"])) {
                                 if ($row["username"] == $_SESSION["username"]) {
                                     echo "<a class=\"comment\" data-url=\"" . url_for('deletecomment.php?commentid=') . $row["comment_id"] . "&gameid=" . $row["game_id"] . "\">";
-                                    echo "<img class=\"comment-delete\" src=\"./imgs/delete.svg\">";
+                                    // echo "<img class=\"comment-delete\" src=\"./imgs/delete.svg\">";
+                                    echo "<svg class=\"delete-comment-svg\" width=\"35\" height=\"35\" viewBox=\"0 0 35 35\" fill=\"#000000\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M10.209 30.625C9.4069 30.625 8.72027 30.3394 8.14909 29.7682C7.57791 29.197 7.29232 28.5104 7.29232 27.7083V8.75H5.83398V5.83333H13.1257V4.375H21.8757V5.83333H29.1673V8.75H27.709V27.7083C27.709 28.5104 27.4234 29.197 26.8522 29.7682C26.281 30.3394 25.5944 30.625 24.7923 30.625H10.209ZM24.7923 8.75H10.209V27.7083H24.7923V8.75ZM13.1257 24.7917H16.0423V11.6667H13.1257V24.7917ZM18.959 24.7917H21.8757V11.6667H18.959V24.7917Z\"/></svg>";
                                     echo "</a>";
                                 }
                             }

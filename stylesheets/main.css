@@ -144,22 +144,11 @@ button:hover{
 /* ------------------------------ //END Nav bar ------------------------------ */
 
 /* ------------------------------ Index Page ------------------------------ */
-.index-header-no-user{
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    flex-direction: row;
-    border-bottom: black solid 0.1em;
-}
+
 .index-header-signup{
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    flex-direction: column;
     margin:3em 3em;
     flex-shrink:4;
+    gap:1em;
 }
 .index-header-no-user-container{
     padding:2em 3em;   
@@ -171,16 +160,29 @@ button:hover{
     padding:2em 0em;
     border-bottom: black solid 0.1em;
 }
-.index-title{
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    flex-direction: row;
-    /* margin:3em 0em; */
-}
 .playtested-icon{
     width:12em;
+    height:100%;
+}
+.signup-today-button{
+    border-radius: 2em;
+    border: solid black 0.1em;
+    gap:1em;
+    align-items: center;
+    padding:0em 1em 0em 1em;
+    width:fit-content;
+    align-self: center;
+}
+.signup-today-button:hover  svg{
+    fill:#F1B63E;
+}
+
+.signup-today-button p{
+    width:fit-content;
+}
+
+.signup-icon{
+    width:4em;
     height:100%;
 }
 .index-img-scroll-container{
@@ -352,6 +354,12 @@ button:hover{
     flex-direction: column;
     justify-content: center;
 }
+.back-button-container:hover svg{
+    fill:#F1B63E;
+}
+.back-button-container:hover h6{
+    color:#F1B63E;
+}
 .avg-rating{
     display: -webkit-box;
     display: -webkit-flex;
@@ -420,6 +428,9 @@ button:hover{
 }
 .comment-delete{
     color: black;
+}
+.delete-comment-svg:hover{
+    fill:#F1B63E;
 }
 .comment-delete:hover{
     color: #F1B63E;
@@ -604,9 +615,8 @@ td{
     padding: 1em 2em;
     justify-content: space-between;
 }
-.activity-game-name{
-    font-size: 1.2em;
-    width:fit-content;
+.activity-game-name:hover svg{
+    fill:#F1B63E;
 }
 .collection-img{
     width:12em;
@@ -628,11 +638,7 @@ td{
     min-width: 30em;
 }
 .activity-name{
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    flex-direction:row;
+    gap:1em;
 }
 .collections-container{
     display: -webkit-box;
@@ -856,13 +862,15 @@ td{
 .border-left{
     border-left: 0.1em solid black;
 }
+.border-bottom{
+    border-left: 0.1em solid black;
+}
 
 .flex{
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    
 }
 
 .row{

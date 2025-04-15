@@ -133,7 +133,7 @@
                             $dates = explode(" ", $row['created']); // Date, no time stamp
                             echo "<p>" . $dates[0] . "</p>";
                             echo "</div>";
-                            echo "<div class=\"activity-name\">";
+                            echo "<div class=\"flex row activity-name\">";
 
                             $game_query = "SELECT names, game_id
                                 FROM BoardGames
@@ -147,12 +147,25 @@
                                 while ($gameinfo = mysqli_fetch_assoc($name)) {
                                     //display proper header depending on the activity type
                                     if ($row['type'] == 'comment') {
-                                        echo "<p class=\"activity-game-name\" >Commented on <a href=\"" . url_for('viewboardgame.php?gameid=') . $gameinfo['game_id'] . "\">" . $gameinfo['names'] . "</a></p>";
+                                        echo "<p class=\"\" >Commented on </p>";
+                                        echo "<a href=\"" . url_for('viewboardgame.php?gameid=') . $gameinfo['game_id'] . "\">";
+                                        echo"<div class=\"flex row activity-game-name\">";
+                                            echo "<p>" . $gameinfo['names'] . "</p>";
+                                            echo "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\" width=\"24px\" fill=\"#000000\"><path d=\"M647-440H200q-17 0-28.5-11.5T160-480q0-17 11.5-28.5T200-520h447L451-716q-12-12-11.5-28t12.5-28q12-11 28-11.5t28 11.5l264 264q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L508-188q-11 11-27.5 11T452-188q-12-12-12-28.5t12-28.5l195-195Z\"/></svg>";
+                                        echo"</div>";
+                                        echo "</a>";  
                                     } else if ($row['type'] == 'rating') {
-                                        echo "<p class=\"activity-game-name\">Rated <a href=\"" . url_for('viewboardgame.php?gameid=') . $gameinfo['game_id'] . "\">" . $gameinfo['names'] . "</a></p>";
+                                        echo "<p class=\"\">Rated </p>";
+                                        echo "<a href=\"" . url_for('viewboardgame.php?gameid=') . $gameinfo['game_id'] . "\">";
+                                        echo"<div class=\"flex row activity-game-name\">";
+                                            echo "<p>" . $gameinfo['names'] . "</p>";
+                                            echo "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\" width=\"24px\" fill=\"#000000\"><path d=\"M647-440H200q-17 0-28.5-11.5T160-480q0-17 11.5-28.5T200-520h447L451-716q-12-12-11.5-28t12.5-28q12-11 28-11.5t28 11.5l264 264q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L508-188q-11 11-27.5 11T452-188q-12-12-12-28.5t12-28.5l195-195Z\"/></svg>";
+                                        echo"</div>";
+                                        echo "</a>";    
                                     }
                                     // echo "<a href=\"". url_for('/viewboardgame.php?gameid=') . $gameinfo['game_id'] ."\">". $gameinfo['names'] ."</a>";
-                                    echo "<img src=\"./imgs/arrow-right.svg\">";
+                                    // echo "<img src=\"./imgs/arrow-right.svg\">";
+                                    
                                 }
                             }
 
