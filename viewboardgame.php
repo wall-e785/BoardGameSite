@@ -249,7 +249,8 @@
                     // Loop through comments
                     $comments_query = "SELECT * 
                                             FROM Comments
-                                            WHERE game_id =" . $_GET['gameid'];
+                                            WHERE game_id =" . $_GET['gameid']."
+                                            ORDER BY comment_date DESC ";
 
                     // Execute the query 
                     $res = mysqli_query($db, $comments_query);
