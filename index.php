@@ -35,7 +35,7 @@
             echo "</div>";
         } else {
             // User is logged in, so just display the title
-            echo "<div class=\"index-title index-header-signedin\">";
+            echo "<div class=\"flex row index-header-signedin\">";
                 echo "<img class=\"playtested-icon\" src=\"./imgs/playtested.svg\">";
                 echo "<div>";
                     echo "<h1>Playtested.</h1>";
