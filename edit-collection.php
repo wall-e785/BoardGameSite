@@ -25,9 +25,17 @@
 
         <form class="collection-header-container" action='edit-collection.php'>
             <div class="collection-title-container border-right">
-                <label class="labelAbove" for="collectionName">Collection Name:</label>
-                <input class="edit-collection-title" type="text" name="collectionName" class="collection-name"
+                <?php 
+                // Do not allow user to edit Owned, Wishlist, or Favourites
+                if ($name === "Owned" || $name === "Wishlist" || $name === "Favourites") {
+                    echo "<h2>$name</h2>";
+                }else{ ?>
+                    <label class="labelAbove" for="collectionName">Collection Name:</label>
+                    <?php echo display_errors($editCollectionErrors); ?>
+                    <input class="edit-collection-title" type="text" name="collectionName" class="collection-name"
                     value="<?php echo $name ?>" /><br />
+                <?php } ?>
+                
                 <!-- Hidden field for collection ID -->
                 <input type="hidden" name="collectionid" value="<?php echo $collectionid ?>" />
 
@@ -37,7 +45,7 @@
                 <a class="cancel-edit-button" <?php echo "href=\"javascript:history.go(-1)\" "; ?>>cancel</a>
             </div>
         </form>
-
+        
         <div class="flex make-collection-wrap">
             <?php
             $boardgames = "SELECT game_id
